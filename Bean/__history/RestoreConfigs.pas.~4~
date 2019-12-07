@@ -1,0 +1,15 @@
+unit RestoreConfigs;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, System.Types;
+
+type
+  TRestoreConfigs = class
+
+  end;
+
+implementation
+
+end.
