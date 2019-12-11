@@ -4,3 +4,5 @@
 *.res
 *.stat
 *.ini
+*.json
+__history
