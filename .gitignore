@@ -5,4 +5,5 @@
 *.stat
 *.ini
 *.json
-__history
+__history/
+*/__history/
