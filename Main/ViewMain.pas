@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons,
   System.ImageList, Vcl.ImgList, System.Actions, Vcl.ActnList, FireDAC.Stan.Def,
   FireDAC.VCLUI.Wait, FireDAC.Phys.IBWrapper, FireDAC.Stan.Intf, FireDAC.Phys,
-  FireDAC.Phys.IBBase, Vcl.ComCtrls;
+  FireDAC.Phys.IBBase, Vcl.ComCtrls, Vcl.ExtCtrls;
 
 type
   TWindowMain = class(TForm)
@@ -31,7 +31,6 @@ type
     Edit1: TEdit;
     Edit2: TEdit;
     Label2: TLabel;
-    Edit3: TEdit;
     Label3: TLabel;
     Edit4: TEdit;
     Label4: TLabel;
@@ -39,10 +38,7 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Edit5: TEdit;
-  private
-    { Private declarations }
-  public
-    { Public declarations }
+    Edit3: TEdit;
   end;
 
 var
