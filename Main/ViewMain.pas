@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons,
   System.ImageList, Vcl.ImgList, System.Actions, Vcl.ActnList, FireDAC.Stan.Def,
   FireDAC.VCLUI.Wait, FireDAC.Phys.IBWrapper, FireDAC.Stan.Intf, FireDAC.Phys,
-  FireDAC.Phys.IBBase, Vcl.ComCtrls, Vcl.ExtCtrls;
+  FireDAC.Phys.IBBase, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.CheckLst;
 
 type
   TWindowMain = class(TForm)
@@ -15,8 +15,7 @@ type
     MemoErrors: TMemo;
     LblLog: TLabel;
     LblErrors: TLabel;
-    SpeedButton1: TSpeedButton;
-    SpeedButton3: TSpeedButton;
+    BtnRestore: TSpeedButton;
     Actions: TActionList;
     Images: TImageList;
     ActOpenFile: TAction;
@@ -26,19 +25,22 @@ type
     TabConfigs: TTabSheet;
     Restore: TFDIBRestore;
     LblBackupFiles: TLabel;
-    ListBox1: TListBox;
-    Label1: TLabel;
-    Edit1: TEdit;
-    Edit2: TEdit;
-    Label2: TLabel;
-    Label3: TLabel;
-    Edit4: TEdit;
-    Label4: TLabel;
-    ComboBox1: TComboBox;
-    Label5: TLabel;
-    Label6: TLabel;
-    Edit5: TEdit;
-    Edit3: TEdit;
+    ListBackupFiles: TListBox;
+    LblHost: TLabel;
+    TxtHost: TEdit;
+    TxtPort: TEdit;
+    LblPort: TLabel;
+    LblDestFile: TLabel;
+    TxtUser: TEdit;
+    LblUser: TLabel;
+    TxtProtocol: TComboBox;
+    LblProtocol: TLabel;
+    LblPassword: TLabel;
+    TxtPassword: TEdit;
+    TxtDestFile: TEdit;
+    SpeedButton1: TSpeedButton;
+    CheckListOptions: TCheckListBox;
+    LblOptions: TLabel;
   end;
 
 var

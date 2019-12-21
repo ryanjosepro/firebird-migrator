@@ -4,8 +4,8 @@ object WindowMain: TWindowMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Firebird Restorer'
-  ClientHeight = 579
-  ClientWidth = 821
+  ClientHeight = 582
+  ClientWidth = 823
   Color = clBtnFace
   Constraints.MinHeight = 272
   Constraints.MinWidth = 774
@@ -3436,29 +3436,29 @@ object WindowMain: TWindowMain
   OldCreateOrder = False
   Position = poMainFormCenter
   DesignSize = (
-    821
-    579)
+    823
+    582)
   PixelsPerInch = 96
   TextHeight = 13
   object Page: TPageControl
     Left = 8
     Top = 8
-    Width = 805
-    Height = 563
+    Width = 807
+    Height = 566
     ActivePage = TabConfigs
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitWidth = 795
-    ExplicitHeight = 553
+    ExplicitWidth = 805
+    ExplicitHeight = 563
     object TabRestore: TTabSheet
       Caption = 'Restaura'#231#227'o'
-      ExplicitWidth = 787
-      ExplicitHeight = 525
+      ExplicitWidth = 797
+      ExplicitHeight = 535
       DesignSize = (
-        797
-        535)
+        799
+        538)
       object LblErrors: TLabel
-        Left = 409
+        Left = 411
         Top = 3
         Width = 25
         Height = 13
@@ -3473,18 +3473,9 @@ object WindowMain: TWindowMain
         Height = 13
         Caption = 'Log'
       end
-      object SpeedButton1: TSpeedButton
-        Left = 8
-        Top = 495
-        Width = 132
-        Height = 37
-        Action = ActOpenFile
-        Anchors = [akLeft, akBottom]
-        ExplicitTop = 476
-      end
-      object SpeedButton3: TSpeedButton
-        Left = 662
-        Top = 495
+      object BtnRestore: TSpeedButton
+        Left = 664
+        Top = 498
         Width = 132
         Height = 37
         Action = ActRestore
@@ -3492,150 +3483,186 @@ object WindowMain: TWindowMain
         ExplicitLeft = 639
         ExplicitTop = 476
       end
+      object SpeedButton1: TSpeedButton
+        Left = 8
+        Top = 498
+        Width = 132
+        Height = 37
+        Action = ActOpenFile
+        Anchors = [akLeft, akBottom]
+        ExplicitTop = 476
+      end
       object MemoErrors: TMemo
-        Left = 409
+        Left = 411
         Top = 19
         Width = 385
-        Height = 470
+        Height = 473
         Anchors = [akTop, akRight, akBottom]
         ReadOnly = True
-        TabOrder = 0
-        ExplicitLeft = 399
-        ExplicitHeight = 460
+        TabOrder = 1
+        ExplicitLeft = 409
+        ExplicitHeight = 470
       end
       object MemoLog: TMemo
         Left = 8
         Top = 19
-        Width = 395
-        Height = 470
+        Width = 397
+        Height = 473
         Anchors = [akLeft, akTop, akRight, akBottom]
         ReadOnly = True
-        TabOrder = 1
-        ExplicitWidth = 385
-        ExplicitHeight = 460
+        TabOrder = 0
+        ExplicitWidth = 395
+        ExplicitHeight = 470
       end
     end
     object TabConfigs: TTabSheet
       Caption = 'Configura'#231#245'es'
       ImageIndex = 1
-      ExplicitWidth = 787
-      ExplicitHeight = 525
+      ExplicitWidth = 797
+      ExplicitHeight = 535
       DesignSize = (
-        797
-        535)
+        799
+        538)
       object LblBackupFiles: TLabel
-        Left = 3
+        Left = 408
         Top = 3
         Width = 94
         Height = 13
         Caption = 'Arquivos de backup'
       end
-      object Label1: TLabel
-        Left = 421
-        Top = 70
+      object LblHost: TLabel
+        Left = 5
+        Top = 215
         Width = 22
         Height = 13
         Anchors = [akTop, akRight]
         Caption = 'Host'
-        ExplicitLeft = 411
+        ExplicitLeft = 3
       end
-      object Label2: TLabel
-        Left = 421
-        Top = 147
+      object LblPort: TLabel
+        Left = 5
+        Top = 261
         Width = 26
         Height = 13
         Anchors = [akTop, akRight]
         Caption = 'Porta'
-        ExplicitLeft = 411
+        ExplicitLeft = 3
       end
-      object Label3: TLabel
+      object LblDestFile: TLabel
         Left = 3
-        Top = 193
+        Top = 3
         Width = 90
         Height = 13
         Caption = 'Arquivo de destino'
       end
-      object Label4: TLabel
+      object LblUser: TLabel
         Left = 3
-        Top = 241
+        Top = 51
         Width = 36
         Height = 13
         Caption = 'Usu'#225'rio'
       end
-      object Label5: TLabel
-        Left = 421
-        Top = 3
+      object LblProtocol: TLabel
+        Left = 5
+        Top = 169
         Width = 45
         Height = 13
         Anchors = [akTop, akRight]
         Caption = 'Protocolo'
-        ExplicitLeft = 411
+        ExplicitLeft = 3
       end
-      object Label6: TLabel
+      object LblPassword: TLabel
         Left = 3
-        Top = 289
+        Top = 99
         Width = 30
         Height = 13
         Caption = 'Senha'
       end
-      object ListBox1: TListBox
-        Left = 3
+      object LblOptions: TLabel
+        Left = 408
+        Top = 169
+        Width = 36
+        Height = 13
+        Anchors = [akTop, akRight]
+        Caption = 'Op'#231#245'es'
+      end
+      object ListBackupFiles: TListBox
+        Left = 408
         Top = 22
-        Width = 400
-        Height = 165
-        Anchors = [akLeft, akTop, akRight]
+        Width = 388
+        Height = 117
+        Anchors = [akTop, akRight]
         ItemHeight = 13
         TabOrder = 0
-        ExplicitWidth = 390
       end
-      object Edit1: TEdit
-        Left = 421
-        Top = 89
-        Width = 373
-        Height = 21
-        Anchors = [akTop, akRight]
-        TabOrder = 1
-        ExplicitLeft = 411
-      end
-      object Edit2: TEdit
-        Left = 421
-        Top = 166
-        Width = 373
-        Height = 21
-        Anchors = [akTop, akRight]
-        TabOrder = 2
-        ExplicitLeft = 411
-      end
-      object Edit4: TEdit
+      object TxtHost: TEdit
         Left = 3
-        Top = 260
+        Top = 234
+        Width = 390
+        Height = 21
+        TabOrder = 1
+      end
+      object TxtPort: TEdit
+        Left = 3
+        Top = 280
+        Width = 390
+        Height = 21
+        TabOrder = 2
+      end
+      object TxtUser: TEdit
+        Left = 3
+        Top = 70
         Width = 390
         Height = 21
         TabOrder = 3
       end
-      object ComboBox1: TComboBox
-        Left = 421
-        Top = 22
-        Width = 373
-        Height = 21
-        Anchors = [akTop, akRight]
-        TabOrder = 4
-        ExplicitLeft = 411
-      end
-      object Edit5: TEdit
+      object TxtProtocol: TComboBox
         Left = 3
-        Top = 308
+        Top = 188
+        Width = 390
+        Height = 21
+        TabOrder = 4
+      end
+      object TxtPassword: TEdit
+        Left = 3
+        Top = 118
         Width = 390
         Height = 21
         PasswordChar = '*'
         TabOrder = 5
       end
-      object Edit3: TEdit
+      object TxtDestFile: TEdit
         Left = 3
-        Top = 212
+        Top = 22
         Width = 390
         Height = 21
         TabOrder = 6
+      end
+      object CheckListOptions: TCheckListBox
+        Left = 408
+        Top = 188
+        Width = 388
+        Height = 113
+        Columns = 2
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ItemHeight = 18
+        Items.Strings = (
+          'DeactivateIdx'
+          'NoShadow'
+          'NoValidity'
+          'OneAtATime'
+          'Replace'
+          'UseAllSpace'
+          'Validate'
+          'FixFSSData'
+          'FixFSSMetaData'
+          'MetaDataOnly')
+        ParentFont = False
+        TabOrder = 7
       end
     end
   end
@@ -3656,7 +3683,7 @@ object WindowMain: TWindowMain
     Left = 352
     Top = 376
     Bitmap = {
-      494C010101001400040020002000FFFFFFFFFF00FFFFFFFFFFFFFFFF424D3600
+      494C010101001400040020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000002000000001002000000000000040
       000000000000000000000000000000000000000000FF000000FF000000FF0000
       00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
@@ -4188,7 +4215,8 @@ object WindowMain: TWindowMain
       7FF000070000000000000000000000007FE3FFFF000000000000000000000000
       0007FFFF0000000000000000000000000007FFFF000000000000000000000000
       800FFFFF000000000000000000000000FFFFFFFF000000000000000000000000
-      FFFFFFFF000000000000000000000000}
+      FFFFFFFF00000000000000000000000000000000000000000000000000000000
+      000000000000}
   end
   object Restore: TFDIBRestore
     Left = 452
