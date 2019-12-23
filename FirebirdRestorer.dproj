@@ -112,7 +112,6 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="Main\Restoration.pas"/>
         <DCCReference Include="Main\ViewMain.pas">
             <Form>WindowMain</Form>
             <FormType>dfm</FormType>
@@ -120,7 +119,6 @@
         <DCCReference Include="Code\MyArrays.pas"/>
         <DCCReference Include="Code\MyDialogs.pas"/>
         <DCCReference Include="Code\MyUtils.pas"/>
-        <DCCReference Include="Bean\RestoreConfigs.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
