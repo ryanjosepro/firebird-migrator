@@ -1,2 +1,2 @@
 # FirebirdRestorer
-Project created to make a Firebird backup restorer...
+Firebird migrator with a advanced error handling
