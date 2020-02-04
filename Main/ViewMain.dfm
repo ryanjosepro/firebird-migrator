@@ -3,7 +3,7 @@ object WindowMain: TWindowMain
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'Firebird Restorer'
+  Caption = 'Firebird Migrator'
   ClientHeight = 589
   ClientWidth = 823
   Color = clBtnFace
@@ -3458,7 +3458,6 @@ object WindowMain: TWindowMain
     TabOrder = 0
     object TabRestore: TTabSheet
       Caption = 'Restaura'#231#227'o'
-      ExplicitHeight = 545
       DesignSize = (
         799
         507)
@@ -3502,6 +3501,9 @@ object WindowMain: TWindowMain
     object TabConfigs: TTabSheet
       Caption = 'Configura'#231#245'es'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
       ExplicitHeight = 597
       DesignSize = (
         799
