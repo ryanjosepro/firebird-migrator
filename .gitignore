@@ -171,3 +171,7 @@ Thumbs.db
 
 *.todo
 ModelSupport*
+
+*.json
+Win32/
+Win64/
