@@ -82,6 +82,9 @@ begin
 
   TabConfigs.Enabled := false;
 
+  MemoLog.Clear;
+  MemoErrors.Clear;
+
   try
     RestoreThread := TRestoreThread.Create;
 

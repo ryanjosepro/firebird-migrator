@@ -3501,10 +3501,8 @@ object WindowMain: TWindowMain
     object TabConfigs: TTabSheet
       Caption = 'Configura'#231#245'es'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 597
+      ExplicitLeft = 20
+      ExplicitTop = 28
       DesignSize = (
         799
         507)
@@ -3897,6 +3895,9 @@ object WindowMain: TWindowMain
   end
   object SaveDbFile: TFileSaveDialog
     FavoriteLinks = <>
+    FileName = 
+      'C:\Users\Ryan\Documents\Delphi Projects\FirebirdMigrator\Databas' +
+      'e.FDB'
     FileTypes = <
       item
         DisplayName = 'Firebird Database (*.FDB)'
