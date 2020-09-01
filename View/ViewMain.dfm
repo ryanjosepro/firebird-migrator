@@ -3440,29 +3440,22 @@ object WindowMain: TWindowMain
     589)
   PixelsPerInch = 96
   TextHeight = 13
-  object BtnRestore: TSpeedButton
-    Left = 683
-    Top = 549
-    Width = 132
-    Height = 37
-    Action = ActRestore
-    Anchors = [akRight, akBottom]
-  end
   object Page: TPageControl
-    Left = 8
-    Top = 8
-    Width = 807
-    Height = 535
-    ActivePage = TabRestore
+    Left = 0
+    Top = 0
+    Width = 825
+    Height = 593
+    ActivePage = TabConfigs
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabRestore: TTabSheet
       Caption = 'Restaura'#231#227'o'
+      ExplicitHeight = 525
       DesignSize = (
-        799
-        507)
+        817
+        565)
       object LblErrors: TLabel
-        Left = 411
+        Left = 429
         Top = 3
         Width = 25
         Height = 13
@@ -3477,11 +3470,19 @@ object WindowMain: TWindowMain
         Height = 13
         Caption = 'Log'
       end
+      object BtnRestore: TSpeedButton
+        Left = 682
+        Top = 525
+        Width = 132
+        Height = 37
+        Action = ActRestore
+        Anchors = [akRight, akBottom]
+      end
       object MemoErrors: TMemo
-        Left = 411
-        Top = 19
+        Left = 429
+        Top = 22
         Width = 385
-        Height = 478
+        Height = 497
         Anchors = [akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
@@ -3490,8 +3491,8 @@ object WindowMain: TWindowMain
       object MemoLog: TMemo
         Left = 8
         Top = 19
-        Width = 397
-        Height = 478
+        Width = 415
+        Height = 543
         Anchors = [akLeft, akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
@@ -3501,11 +3502,11 @@ object WindowMain: TWindowMain
     object TabConfigs: TTabSheet
       Caption = 'Configura'#231#245'es'
       ImageIndex = 1
-      ExplicitLeft = 20
-      ExplicitTop = 28
+      ExplicitWidth = 799
+      ExplicitHeight = 507
       DesignSize = (
-        799
-        507)
+        817
+        565)
       object LblBackupFiles: TLabel
         Left = 408
         Top = 3
@@ -3514,7 +3515,7 @@ object WindowMain: TWindowMain
         Caption = 'Arquivos de backup'
       end
       object LblHost: TLabel
-        Left = 5
+        Left = 23
         Top = 215
         Width = 22
         Height = 13
@@ -3523,7 +3524,7 @@ object WindowMain: TWindowMain
         ExplicitLeft = 3
       end
       object LblPort: TLabel
-        Left = 5
+        Left = 23
         Top = 261
         Width = 26
         Height = 13
@@ -3546,7 +3547,7 @@ object WindowMain: TWindowMain
         Caption = 'Usu'#225'rio'
       end
       object LblProtocol: TLabel
-        Left = 5
+        Left = 23
         Top = 169
         Width = 45
         Height = 13
@@ -3562,15 +3563,16 @@ object WindowMain: TWindowMain
         Caption = 'Senha'
       end
       object LblOptions: TLabel
-        Left = 408
+        Left = 426
         Top = 169
         Width = 36
         Height = 13
         Anchors = [akTop, akRight]
         Caption = 'Op'#231#245'es'
+        ExplicitLeft = 408
       end
       object BtnRemove: TSpeedButton
-        Left = 769
+        Left = 787
         Top = 51
         Width = 27
         Height = 24
@@ -3579,9 +3581,10 @@ object WindowMain: TWindowMain
         Anchors = [akTop, akRight]
         ParentShowHint = False
         ShowHint = True
+        ExplicitLeft = 769
       end
       object BtnAdd: TSpeedButton
-        Left = 769
+        Left = 787
         Top = 21
         Width = 27
         Height = 24
@@ -3590,9 +3593,10 @@ object WindowMain: TWindowMain
         Anchors = [akTop, akRight]
         ParentShowHint = False
         ShowHint = True
+        ExplicitLeft = 769
       end
       object BtnDbFile: TSpeedButton
-        Left = 366
+        Left = 384
         Top = 21
         Width = 27
         Height = 23
@@ -3601,15 +3605,17 @@ object WindowMain: TWindowMain
         Anchors = [akTop, akRight]
         ParentShowHint = False
         ShowHint = True
+        ExplicitLeft = 366
       end
       object ListBackupFiles: TListBox
-        Left = 408
+        Left = 426
         Top = 22
         Width = 361
         Height = 117
         Anchors = [akTop, akRight]
         ItemHeight = 13
         TabOrder = 3
+        ExplicitLeft = 408
       end
       object TxtHost: TEdit
         Left = 3
@@ -3702,13 +3708,6 @@ object WindowMain: TWindowMain
         TabOrder = 8
       end
     end
-  end
-  object Restore: TFDIBRestore
-    OnError = RestoreError
-    DriverLink = FBDriverLink
-    OnProgress = RestoreProgress
-    Left = 644
-    Top = 120
   end
   object Images: TImageList
     BlendColor = clWhite
@@ -3908,7 +3907,14 @@ object WindowMain: TWindowMain
     Top = 120
   end
   object FBDriverLink: TFDPhysFBDriverLink
-    Left = 644
-    Top = 72
+    Left = 455
+    Top = 176
+  end
+  object FBRestore: TFDIBRestore
+    OnError = FBRestoreError
+    DriverLink = FBDriverLink
+    OnProgress = FBRestoreProgress
+    Left = 543
+    Top = 174
   end
 end

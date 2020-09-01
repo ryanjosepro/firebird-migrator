@@ -7,8 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   System.Actions, Vcl.ActnList, FireDAC.Stan.Def, FireDAC.VCLUI.Wait, FireDAC.Phys.IBWrapper,
   FireDAC.Stan.Intf, FireDAC.Phys, FireDAC.Phys.IBBase, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.CheckLst,
-  ACBrBase,
-  MyUtils, FireDAC.Phys.FBDef, FireDAC.Phys.FB;
+  ACBrBase, MyUtils, FireDAC.Phys.FBDef, FireDAC.Phys.FB;
 
 type
   TWindowMain = class(TForm)
@@ -16,11 +15,9 @@ type
     MemoErrors: TMemo;
     LblLog: TLabel;
     LblErrors: TLabel;
-    BtnRestore: TSpeedButton;
     Page: TPageControl;
     TabRestore: TTabSheet;
     TabConfigs: TTabSheet;
-    Restore: TFDIBRestore;
     LblBackupFiles: TLabel;
     ListBackupFiles: TListBox;
     LblHost: TLabel;
@@ -51,20 +48,20 @@ type
     ActRestore: TAction;
     SaveDbFile: TFileSaveDialog;
     FBDriverLink: TFDPhysFBDriverLink;
+    FBRestore: TFDIBRestore;
+    BtnRestore: TSpeedButton;
     procedure ActEscExecute(Sender: TObject);
     procedure ActDbFileExecute(Sender: TObject);
     procedure ActRmvBackupExecute(Sender: TObject);
     procedure ActAddBackupExecute(Sender: TObject);
     procedure ActRestoreExecute(Sender: TObject);
-    procedure RestoreError(ASender, AInitiator: TObject; var AException: Exception);
-    procedure RestoreProgress(ASender: TFDPhysDriverService; const AMessage: string);
-  end;
+    procedure FBRestoreError(ASender, AInitiator: TObject; var AException: Exception);
+    procedure FBRestoreProgress(ASender: TFDPhysDriverService; const AMessage: string);
 
-  TRestoreThread = class(TThread)
-  protected
-    procedure Execute; override;
-  public
-    constructor Create;
+  private
+    procedure Backup;
+    procedure Restore;
+
   end;
 
 var
@@ -75,8 +72,6 @@ implementation
 {$R *.dfm}
 
 procedure TWindowMain.ActRestoreExecute(Sender: TObject);
-var
-  RestoreThread: TRestoreThread;
 begin
   Page.ActivePageIndex := 0;
 
@@ -86,9 +81,7 @@ begin
   MemoErrors.Clear;
 
   try
-    RestoreThread := TRestoreThread.Create;
-
-    RestoreThread.Execute;
+    Restore;
   finally
     TabConfigs.Enabled := true;
   end;
@@ -126,79 +119,65 @@ begin
   end;
 end;
 
-procedure TWindowMain.RestoreError(ASender, AInitiator: TObject; var AException: Exception);
-begin
-  WindowMain.MemoErrors.Lines.Add(AException.Message);
-end;
-
-procedure TWindowMain.RestoreProgress(ASender: TFDPhysDriverService; const AMessage: string);
-begin
-  WindowMain.MemoLog.Lines.Add(AMessage);
-end;
-
 procedure TWindowMain.ActEscExecute(Sender: TObject);
 begin
   Close;
 end;
 
-{ TRestoreThread }
-
-constructor TRestoreThread.Create;
+procedure TWindowMain.Backup;
 begin
-  inherited Create(true);
+  //
 end;
 
-procedure TRestoreThread.Execute;
+procedure TWindowMain.Restore;
 var
   BackupFile: string;
   I: integer;
 begin
   inherited;
 
-  with WindowMain do
+  FBRestore.Database := TxtDestFile.Text;
+  FBRestore.UserName := TxtUser.Text;
+  FBRestore.Password := TxtPassword.Text;
+
+  FBRestore.BackupFiles.Clear;
+  FBRestore.BackupFiles := ListBackupFiles.Items;
+  FBRestore.Protocol := TIBProtocol(BoxProtocol.ItemIndex);
+  FBRestore.Host := TxtHost.Text;
+  FBRestore.Port := StrToInt(TxtPort.Text);
+  FBRestore.Verbose := CheckVerbose.Checked;
+  FBRestore.Options := [];
+
+  for I := 0 to CheckListOptions.Count - 1 do
   begin
-    Restore.Database := TxtDestFile.Text;
-    Restore.UserName := TxtUser.Text;
-    Restore.Password := TxtPassword.Text;
-
-    Restore.BackupFiles.Clear;
-
-    for BackupFile in ListBackupFiles.Items do
+    if CheckListOptions.Checked[I] then
     begin
-      Restore.BackupFiles.Add(BackupFile);
-    end;
-
-    Restore.Protocol := TIBProtocol(BoxProtocol.ItemIndex);
-
-    Restore.Host := TxtHost.Text;
-
-    Restore.Port := StrToInt(TxtPort.Text);
-
-    Restore.Options := [];
-
-    for I := 0 to CheckListOptions.Count - 1 do
-    begin
-      if CheckListOptions.Checked[I] then
-      begin
-        case I of
-        0: Restore.Options := Restore.Options + [roDeactivateIdx];
-        1: Restore.Options := Restore.Options + [roNoShadow];
-        2: Restore.Options := Restore.Options + [roNoValidity];
-        3: Restore.Options := Restore.Options + [roOneAtATime];
-        4: Restore.Options := Restore.Options + [roReplace];
-        5: Restore.Options := Restore.Options + [roUseAllSpace];
-        6: Restore.Options := Restore.Options + [roValidate];
-        7: Restore.Options := Restore.Options + [roFixFSSData];
-        8: Restore.Options := Restore.Options + [roFixFSSMetaData];
-        9: Restore.Options := Restore.Options + [roMetaDataOnly];
-        end;
+      case I of
+      0: FBRestore.Options := FBRestore.Options + [roDeactivateIdx];
+      1: FBRestore.Options := FBRestore.Options + [roNoShadow];
+      2: FBRestore.Options := FBRestore.Options + [roNoValidity];
+      3: FBRestore.Options := FBRestore.Options + [roOneAtATime];
+      4: FBRestore.Options := FBRestore.Options + [roReplace];
+      5: FBRestore.Options := FBRestore.Options + [roUseAllSpace];
+      6: FBRestore.Options := FBRestore.Options + [roValidate];
+      7: FBRestore.Options := FBRestore.Options + [roFixFSSData];
+      8: FBRestore.Options := FBRestore.Options + [roFixFSSMetaData];
+      9: FBRestore.Options := FBRestore.Options + [roMetaDataOnly];
       end;
     end;
-
-    Restore.Verbose := CheckVerbose.Checked;
-
-    Restore.Restore;
   end;
+
+  FBRestore.Restore;
+end;
+
+procedure TWindowMain.FBRestoreProgress(ASender: TFDPhysDriverService; const AMessage: string);
+begin
+  WindowMain.MemoLog.Lines.Add(AMessage);
+end;
+
+procedure TWindowMain.FBRestoreError(ASender, AInitiator: TObject; var AException: Exception);
+begin
+  WindowMain.MemoErrors.Lines.Add(AException.Message);
 end;
 
 end.
