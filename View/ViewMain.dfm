@@ -3445,12 +3445,11 @@ object WindowMain: TWindowMain
     Top = 0
     Width = 825
     Height = 593
-    ActivePage = TabConfigs
+    ActivePage = TabRestore
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabRestore: TTabSheet
       Caption = 'Restaura'#231#227'o'
-      ExplicitHeight = 525
       DesignSize = (
         817
         565)
@@ -3502,8 +3501,6 @@ object WindowMain: TWindowMain
     object TabConfigs: TTabSheet
       Caption = 'Configura'#231#245'es'
       ImageIndex = 1
-      ExplicitWidth = 799
-      ExplicitHeight = 507
       DesignSize = (
         817
         565)
@@ -3615,7 +3612,6 @@ object WindowMain: TWindowMain
         Anchors = [akTop, akRight]
         ItemHeight = 13
         TabOrder = 3
-        ExplicitLeft = 408
       end
       object TxtHost: TEdit
         Left = 3
