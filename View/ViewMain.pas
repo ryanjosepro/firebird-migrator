@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   System.Actions, Vcl.ActnList, FireDAC.Stan.Def, FireDAC.VCLUI.Wait, FireDAC.Phys.IBWrapper,
   FireDAC.Stan.Intf, FireDAC.Phys, FireDAC.Phys.IBBase, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.CheckLst,
-  ACBrBase, MyUtils, FireDAC.Phys.FBDef, FireDAC.Phys.FB;
+  ACBrBase, MyUtils, FireDAC.Phys.FBDef, FireDAC.Phys.FB, NsEditBtn;
 
 type
   TWindowMain = class(TForm)
@@ -16,49 +16,78 @@ type
     LblLog: TLabel;
     LblErrors: TLabel;
     Page: TPageControl;
-    TabRestore: TTabSheet;
+    TabMigration: TTabSheet;
     TabConfigs: TTabSheet;
-    LblBackupFiles: TLabel;
-    ListBackupFiles: TListBox;
-    LblHost: TLabel;
-    TxtHost: TEdit;
-    TxtPort: TEdit;
-    LblPort: TLabel;
-    LblDestFile: TLabel;
-    TxtUser: TEdit;
-    LblUser: TLabel;
-    BoxProtocol: TComboBox;
-    LblProtocol: TLabel;
-    LblPassword: TLabel;
-    TxtPassword: TEdit;
-    TxtDestFile: TEdit;
-    CheckListOptions: TCheckListBox;
-    LblOptions: TLabel;
     Images: TImageList;
     Actions: TActionList;
     ActAddBackup: TAction;
     ActRmvBackup: TAction;
     ActEsc: TAction;
-    BtnRemove: TSpeedButton;
-    BtnAdd: TSpeedButton;
-    BtnDbFile: TSpeedButton;
     ActDbFile: TAction;
-    OpenBackupFile: TFileOpenDialog;
-    CheckVerbose: TCheckBox;
+    OpenFile: TFileOpenDialog;
     ActRestore: TAction;
-    SaveDbFile: TFileSaveDialog;
+    SaveFile: TFileSaveDialog;
     FBDriverLink: TFDPhysFBDriverLink;
     FBRestore: TFDIBRestore;
+    FBBackup: TFDIBBackup;
+    BtnMigrate: TSpeedButton;
+    ActMigrate: TAction;
+    GroupBoxSource: TGroupBox;
+    GroupBoxDest: TGroupBox;
+    TxtHostSource: TEdit;
+    LblHostSource: TLabel;
+    LblPortSource: TLabel;
+    TxtPortSource: TEdit;
+    LblUserSource: TLabel;
+    TxtUserSource: TEdit;
+    LblPasswordSource: TLabel;
+    TxtPasswordSource: TEdit;
+    TxtDbSource: TNsEditBtn;
+    LblDbSource: TLabel;
+    LblHostDest: TLabel;
+    LblPortDest: TLabel;
+    LblUserDest: TLabel;
+    LblPasswordDest: TLabel;
+    LblDbDest: TLabel;
+    TxtDbDest: TNsEditBtn;
+    TabRestore: TTabSheet;
+    TxtDestFile: TNsEditBtn;
+    LblDestFile: TLabel;
+    LblUser: TLabel;
+    TxtUser: TEdit;
+    LblPassword: TLabel;
+    TxtPassword: TEdit;
+    LblProtocol: TLabel;
+    BoxProtocol: TComboBox;
+    TxtHost: TEdit;
+    LblHost: TLabel;
+    LblPort: TLabel;
+    TxtPort: TEdit;
+    CheckVerbose: TCheckBox;
+    LblBackupFiles: TLabel;
+    ListBackupFiles: TListBox;
+    BtnAdd: TSpeedButton;
+    BtnRemove: TSpeedButton;
+    LblOptions: TLabel;
+    CheckListOptions: TCheckListBox;
     BtnRestore: TSpeedButton;
+    TxtHostDest: TEdit;
+    TxtPortDest: TEdit;
+    TxtUserDest: TEdit;
+    TxtPasswordDest: TEdit;
     procedure ActEscExecute(Sender: TObject);
-    procedure ActDbFileExecute(Sender: TObject);
-    procedure ActRmvBackupExecute(Sender: TObject);
     procedure ActAddBackupExecute(Sender: TObject);
+    procedure ActRmvBackupExecute(Sender: TObject);
     procedure ActRestoreExecute(Sender: TObject);
     procedure FBRestoreError(ASender, AInitiator: TObject; var AException: Exception);
     procedure FBRestoreProgress(ASender: TFDPhysDriverService; const AMessage: string);
+    procedure ActMigrateExecute(Sender: TObject);
 
   private
+    procedure CarregarArquivo(Sender: TObject);
+    procedure CarregarPasta(Sender: TObject);
+    procedure SalvarArquivo(Sender: TObject);
+    procedure SalvarPasta(Sender: TObject);
     procedure Backup;
     procedure Restore;
 
@@ -70,6 +99,11 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TWindowMain.ActMigrateExecute(Sender: TObject);
+begin
+  //
+end;
 
 procedure TWindowMain.ActRestoreExecute(Sender: TObject);
 begin
@@ -87,19 +121,13 @@ begin
   end;
 end;
 
-procedure TWindowMain.ActDbFileExecute(Sender: TObject);
-begin
-  if SaveDbFile.Execute then
-  begin
-    TxtDestFile.Text := SaveDbFile.FileName;
-  end;
-end;
-
 procedure TWindowMain.ActAddBackupExecute(Sender: TObject);
 begin
-  if OpenBackupFile.Execute then
+  OpenFile.Options := OpenFile.Options - [fdoPickFolders];
+
+  if OpenFile.Execute then
   begin
-    ListBackupFiles.Items.Add(OpenBackupFile.FileName);
+    ListBackupFiles.Items.Add(OpenFile.FileName);
   end;
 end;
 
@@ -124,10 +152,61 @@ begin
   Close;
 end;
 
-procedure TWindowMain.Backup;
+//
+
+procedure TWindowMain.FBRestoreProgress(ASender: TFDPhysDriverService; const AMessage: string);
 begin
-  //
+  WindowMain.MemoLog.Lines.Add(AMessage);
 end;
+
+procedure TWindowMain.FBRestoreError(ASender, AInitiator: TObject; var AException: Exception);
+begin
+  WindowMain.MemoErrors.Lines.Add(AException.Message);
+end;
+
+//
+
+procedure TWindowMain.CarregarArquivo(Sender: TObject);
+begin
+  OpenFile.Options := OpenFile.Options - [fdoPickFolders];
+
+  if OpenFile.Execute then
+  begin
+    (Sender as TNsEditBtn).Text := OpenFile.FileName;
+  end;
+end;
+
+procedure TWindowMain.CarregarPasta(Sender: TObject);
+begin
+  OpenFile.Options := OpenFile.Options + [fdoPickFolders];
+
+  if OpenFile.Execute then
+  begin
+    (Sender as TNsEditBtn).Text := OpenFile.FileName;
+  end;
+end;
+
+procedure TWindowMain.SalvarArquivo(Sender: TObject);
+begin
+  SaveFile.Options := OpenFile.Options - [fdoPickFolders];
+
+  if SaveFile.Execute then
+  begin
+    (Sender as TNsEditBtn).Text := SaveFile.FileName;
+  end;
+end;
+
+procedure TWindowMain.SalvarPasta(Sender: TObject);
+begin
+  SaveFile.Options := OpenFile.Options + [fdoPickFolders];
+
+  if SaveFile.Execute then
+  begin
+    (Sender as TNsEditBtn).Text := SaveFile.FileName;
+  end;
+end;
+
+//
 
 procedure TWindowMain.Restore;
 var
@@ -170,14 +249,9 @@ begin
   FBRestore.Restore;
 end;
 
-procedure TWindowMain.FBRestoreProgress(ASender: TFDPhysDriverService; const AMessage: string);
+procedure TWindowMain.Backup;
 begin
-  WindowMain.MemoLog.Lines.Add(AMessage);
-end;
-
-procedure TWindowMain.FBRestoreError(ASender, AInitiator: TObject; var AException: Exception);
-begin
-  WindowMain.MemoErrors.Lines.Add(AException.Message);
+  //
 end;
 
 end.

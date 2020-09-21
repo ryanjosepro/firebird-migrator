@@ -116,11 +116,11 @@
             <Form>WindowMain</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Code\MyArrays.pas"/>
         <DCCReference Include="Code\MyDialogs.pas"/>
         <DCCReference Include="Code\MyUtils.pas"/>
         <DCCReference Include="Controller\Backup.pas"/>
         <DCCReference Include="Controller\Restore.pas"/>
+        <DCCReference Include="Controller\Migration.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

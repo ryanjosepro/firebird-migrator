@@ -3,12 +3,13 @@ unit Restore;
 interface
 
 uses
-  System.SysUtils, System.Variants, System.Classes;
+  System.SysUtils, System.Variants, System.Classes, FireDAC.Phys.FB, FireDAC.Phys.IBBase;
 
 type
-  TRestoreOptions = class
+  TRestore = class
   private
-
+    FBDriverLink: TFDPhysFBDriverLink;
+    Restore: TFDIBRestore;
   public
 
 

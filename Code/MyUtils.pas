@@ -4,10 +4,12 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Types, System.Variants, System.StrUtils,
-  ShellAPI, Vcl.Forms, Windows, IOUtils,
-  MyArrays;
-
+  ShellAPI, Vcl.Forms, Windows, IOUtils;
 type
+  TIntegerArray = array of integer;
+  TStringArray = array of string;
+  TStringMatrix = array of TStringArray;
+
 
   TUtils = class
   public

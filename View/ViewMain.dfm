@@ -4,8 +4,8 @@ object WindowMain: TWindowMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Firebird Migrator'
-  ClientHeight = 589
-  ClientWidth = 823
+  ClientHeight = 636
+  ClientWidth = 864
   Color = clBtnFace
   Constraints.MinHeight = 272
   Constraints.MinWidth = 774
@@ -3436,52 +3436,51 @@ object WindowMain: TWindowMain
   OldCreateOrder = False
   Position = poMainFormCenter
   DesignSize = (
-    823
-    589)
+    864
+    636)
   PixelsPerInch = 96
   TextHeight = 13
   object Page: TPageControl
     Left = 0
     Top = 0
-    Width = 825
-    Height = 593
-    ActivePage = TabRestore
+    Width = 866
+    Height = 633
+    ActivePage = TabConfigs
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    object TabRestore: TTabSheet
-      Caption = 'Restaura'#231#227'o'
+    object TabMigration: TTabSheet
+      Caption = 'Migra'#231#227'o'
       DesignSize = (
-        817
-        565)
+        858
+        605)
       object LblErrors: TLabel
-        Left = 429
-        Top = 3
+        Left = 470
+        Top = 2
         Width = 25
         Height = 13
         Anchors = [akTop, akRight]
         Caption = 'Erros'
-        ExplicitLeft = 399
       end
       object LblLog: TLabel
         Left = 8
-        Top = 0
+        Top = 3
         Width = 17
         Height = 13
         Caption = 'Log'
       end
-      object BtnRestore: TSpeedButton
-        Left = 682
-        Top = 525
-        Width = 132
+      object BtnMigrate: TSpeedButton
+        Left = 470
+        Top = 565
+        Width = 385
         Height = 37
-        Action = ActRestore
+        Action = ActMigrate
         Anchors = [akRight, akBottom]
       end
       object MemoErrors: TMemo
-        Left = 429
-        Top = 22
+        Left = 470
+        Top = 21
         Width = 385
-        Height = 497
+        Height = 538
         Anchors = [akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
@@ -3489,9 +3488,9 @@ object WindowMain: TWindowMain
       end
       object MemoLog: TMemo
         Left = 8
-        Top = 19
-        Width = 415
-        Height = 543
+        Top = 21
+        Width = 456
+        Height = 581
         Anchors = [akLeft, akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
@@ -3501,36 +3500,280 @@ object WindowMain: TWindowMain
     object TabConfigs: TTabSheet
       Caption = 'Configura'#231#245'es'
       ImageIndex = 1
-      DesignSize = (
-        817
-        565)
-      object LblBackupFiles: TLabel
-        Left = 408
-        Top = 3
-        Width = 94
-        Height = 13
-        Caption = 'Arquivos de backup'
-      end
-      object LblHost: TLabel
-        Left = 23
-        Top = 215
-        Width = 22
-        Height = 13
-        Anchors = [akTop, akRight]
-        Caption = 'Host'
-        ExplicitLeft = 3
-      end
-      object LblPort: TLabel
-        Left = 23
-        Top = 261
-        Width = 26
-        Height = 13
-        Anchors = [akTop, akRight]
-        Caption = 'Porta'
-        ExplicitLeft = 3
-      end
-      object LblDestFile: TLabel
+      object GroupBoxSource: TGroupBox
         Left = 3
+        Top = 0
+        Width = 852
+        Height = 70
+        Caption = 'Fonte'
+        TabOrder = 0
+        object LblHostSource: TLabel
+          Left = 3
+          Top = 16
+          Width = 22
+          Height = 13
+          Caption = 'Host'
+        end
+        object LblPortSource: TLabel
+          Left = 111
+          Top = 16
+          Width = 26
+          Height = 13
+          Caption = 'Porta'
+        end
+        object LblUserSource: TLabel
+          Left = 199
+          Top = 16
+          Width = 36
+          Height = 13
+          Caption = 'Usu'#225'rio'
+        end
+        object LblPasswordSource: TLabel
+          Left = 303
+          Top = 16
+          Width = 30
+          Height = 13
+          Caption = 'Senha'
+        end
+        object LblDbSource: TLabel
+          Left = 415
+          Top = 16
+          Width = 68
+          Height = 13
+          Caption = 'Arquivo Fonte'
+        end
+        object TxtHostSource: TEdit
+          Left = 3
+          Top = 35
+          Width = 102
+          Height = 21
+          TabOrder = 0
+          Text = 'localhost'
+        end
+        object TxtPortSource: TEdit
+          Left = 111
+          Top = 35
+          Width = 82
+          Height = 21
+          NumbersOnly = True
+          TabOrder = 1
+          Text = '3050'
+        end
+        object TxtUserSource: TEdit
+          Left = 199
+          Top = 35
+          Width = 98
+          Height = 21
+          TabOrder = 2
+          Text = 'SYSDBA'
+        end
+        object TxtPasswordSource: TEdit
+          Left = 303
+          Top = 35
+          Width = 106
+          Height = 21
+          PasswordChar = '*'
+          TabOrder = 3
+          Text = 'masterkey'
+        end
+        object TxtDbSource: TNsEditBtn
+          Left = 415
+          Top = 35
+          Width = 434
+          Height = 21
+          Glyph.Data = {
+            7E050000424D7E0500000000000036000000280000001A0000000D0000000100
+            2000000000004805000000000000000000000000000000000000FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00E8C2A300D8996400FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00AEAE
+            AE0080808000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00E8C2A300C05B0700C05B0700E8C2A300FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00AEAEAE004646460047474700AEAEAE00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00E8C2A300C05B0700C05B0700D899
+            6400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00AEAEAE0046464600474747007F7F7F00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00ECCDB200C8702700C05C0900C8702700CE7F3D00C05B
+            0700D8996400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00BCBC
+            BC0057575700474747005757570065656500474747007F7F7F00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00ECCDB300C2600F00DEA97D00F3E0D000E0AD
+            8300C4651600D99C6900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00BCBCBC004B4B4B0091919100D5D5D500959595004F4F4F0082828200FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00C9712800E5BC9A00FF00
+            FF00FF00FF00FF00FF00E0AE8400C9722900FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF0058585800A7A7A700FF00FF00FF00FF00FF00FF009696
+            960059595900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00C15D
+            0A00F6E7DA00FF00FF00FF00FF00FF00FF00FF00FF00C15D0A00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF0048484800DDDDDD00FF00FF00FF00
+            FF00FF00FF00D1D1D10048484800FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00C9722900E4BA9600FF00FF00FF00FF00FF00FF00E2B48E00C972
+            2900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF0059595900A5A5
+            A500FF00FF00FF00FF00FF00FF009E9E9E0059595900FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00ECCDB200C66A1E00E5BB9900F6E7DB00E3B6
+            9100C3631400ECCDB200FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00BCBCBC0052525200A6A6A600DEDEDE00A0A0A0004C4C4C00BCBCBC00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00EBCCB100C870
+            2600C05C0800C8702700EBCCB100FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00BBBBBB00575757004747470058585800BABA
+            BA00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00}
+          TabOrder = 4
+          OnBtnClick = CarregarArquivo
+        end
+      end
+      object GroupBoxDest: TGroupBox
+        Left = 3
+        Top = 87
+        Width = 852
+        Height = 74
+        Caption = 'Destino'
+        TabOrder = 1
+        object LblHostDest: TLabel
+          Left = 3
+          Top = 16
+          Width = 22
+          Height = 13
+          Caption = 'Host'
+        end
+        object LblPortDest: TLabel
+          Left = 111
+          Top = 16
+          Width = 26
+          Height = 13
+          Caption = 'Porta'
+        end
+        object LblUserDest: TLabel
+          Left = 199
+          Top = 16
+          Width = 36
+          Height = 13
+          Caption = 'Usu'#225'rio'
+        end
+        object LblPasswordDest: TLabel
+          Left = 303
+          Top = 16
+          Width = 30
+          Height = 13
+          Caption = 'Senha'
+        end
+        object LblDbDest: TLabel
+          Left = 415
+          Top = 16
+          Width = 90
+          Height = 13
+          Caption = 'Arquivo de destino'
+        end
+        object TxtDbDest: TNsEditBtn
+          Left = 415
+          Top = 35
+          Width = 434
+          Height = 21
+          Glyph.Data = {
+            7E050000424D7E0500000000000036000000280000001A0000000D0000000100
+            2000000000004805000000000000000000000000000000000000FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00E8C2A300D8996400FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00AEAE
+            AE0080808000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00E8C2A300C05B0700C05B0700E8C2A300FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00AEAEAE004646460047474700AEAEAE00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00E8C2A300C05B0700C05B0700D899
+            6400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00AEAEAE0046464600474747007F7F7F00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00ECCDB200C8702700C05C0900C8702700CE7F3D00C05B
+            0700D8996400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00BCBC
+            BC0057575700474747005757570065656500474747007F7F7F00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00ECCDB300C2600F00DEA97D00F3E0D000E0AD
+            8300C4651600D99C6900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00BCBCBC004B4B4B0091919100D5D5D500959595004F4F4F0082828200FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00C9712800E5BC9A00FF00
+            FF00FF00FF00FF00FF00E0AE8400C9722900FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF0058585800A7A7A700FF00FF00FF00FF00FF00FF009696
+            960059595900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00C15D
+            0A00F6E7DA00FF00FF00FF00FF00FF00FF00FF00FF00C15D0A00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF0048484800DDDDDD00FF00FF00FF00
+            FF00FF00FF00D1D1D10048484800FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00C9722900E4BA9600FF00FF00FF00FF00FF00FF00E2B48E00C972
+            2900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF0059595900A5A5
+            A500FF00FF00FF00FF00FF00FF009E9E9E0059595900FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00ECCDB200C66A1E00E5BB9900F6E7DB00E3B6
+            9100C3631400ECCDB200FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00BCBCBC0052525200A6A6A600DEDEDE00A0A0A0004C4C4C00BCBCBC00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00EBCCB100C870
+            2600C05C0800C8702700EBCCB100FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00BBBBBB00575757004747470058585800BABA
+            BA00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00}
+          TabOrder = 0
+          OnBtnClick = SalvarArquivo
+        end
+        object TxtHostDest: TEdit
+          Left = 3
+          Top = 35
+          Width = 102
+          Height = 21
+          TabOrder = 1
+          Text = 'localhost'
+        end
+        object TxtPortDest: TEdit
+          Left = 111
+          Top = 35
+          Width = 82
+          Height = 21
+          NumbersOnly = True
+          TabOrder = 2
+          Text = '3050'
+        end
+        object TxtUserDest: TEdit
+          Left = 199
+          Top = 35
+          Width = 98
+          Height = 21
+          TabOrder = 3
+          Text = 'SYSDBA'
+        end
+        object TxtPasswordDest: TEdit
+          Left = 303
+          Top = 35
+          Width = 106
+          Height = 21
+          PasswordChar = '*'
+          TabOrder = 4
+          Text = 'masterkey'
+        end
+      end
+    end
+    object TabRestore: TTabSheet
+      Caption = 'Restaura'#231#227'o'
+      ImageIndex = 2
+      TabVisible = False
+      ExplicitLeft = 8
+      ExplicitTop = 28
+      DesignSize = (
+        858
+        605)
+      object LblDestFile: TLabel
+        Left = 0
         Top = 3
         Width = 90
         Height = 13
@@ -3538,51 +3781,50 @@ object WindowMain: TWindowMain
       end
       object LblUser: TLabel
         Left = 3
-        Top = 51
+        Top = 49
         Width = 36
         Height = 13
         Caption = 'Usu'#225'rio'
       end
-      object LblProtocol: TLabel
-        Left = 23
-        Top = 169
-        Width = 45
-        Height = 13
-        Anchors = [akTop, akRight]
-        Caption = 'Protocolo'
-        ExplicitLeft = 3
-      end
       object LblPassword: TLabel
         Left = 3
-        Top = 99
+        Top = 97
         Width = 30
         Height = 13
         Caption = 'Senha'
       end
-      object LblOptions: TLabel
-        Left = 426
-        Top = 169
-        Width = 36
+      object LblProtocol: TLabel
+        Left = 3
+        Top = 167
+        Width = 45
+        Height = 13
+        Caption = 'Protocolo'
+      end
+      object LblHost: TLabel
+        Left = 3
+        Top = 213
+        Width = 22
+        Height = 13
+        Caption = 'Host'
+      end
+      object LblPort: TLabel
+        Left = 3
+        Top = 259
+        Width = 26
+        Height = 13
+        Caption = 'Porta'
+      end
+      object LblBackupFiles: TLabel
+        Left = 443
+        Top = 1
+        Width = 94
         Height = 13
         Anchors = [akTop, akRight]
-        Caption = 'Op'#231#245'es'
-        ExplicitLeft = 408
-      end
-      object BtnRemove: TSpeedButton
-        Left = 787
-        Top = 51
-        Width = 27
-        Height = 24
-        Cursor = crHandPoint
-        Action = ActRmvBackup
-        Anchors = [akTop, akRight]
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 769
+        Caption = 'Arquivos de backup'
       end
       object BtnAdd: TSpeedButton
-        Left = 787
-        Top = 21
+        Left = 828
+        Top = 19
         Width = 27
         Height = 24
         Cursor = crHandPoint
@@ -3590,60 +3832,112 @@ object WindowMain: TWindowMain
         Anchors = [akTop, akRight]
         ParentShowHint = False
         ShowHint = True
-        ExplicitLeft = 769
       end
-      object BtnDbFile: TSpeedButton
-        Left = 384
-        Top = 21
+      object BtnRemove: TSpeedButton
+        Left = 828
+        Top = 49
         Width = 27
-        Height = 23
+        Height = 24
         Cursor = crHandPoint
-        Action = ActDbFile
+        Action = ActRmvBackup
         Anchors = [akTop, akRight]
         ParentShowHint = False
         ShowHint = True
-        ExplicitLeft = 366
       end
-      object ListBackupFiles: TListBox
-        Left = 426
-        Top = 22
-        Width = 361
-        Height = 117
+      object LblOptions: TLabel
+        Left = 443
+        Top = 167
+        Width = 36
+        Height = 13
         Anchors = [akTop, akRight]
-        ItemHeight = 13
-        TabOrder = 3
+        Caption = 'Op'#231#245'es'
       end
-      object TxtHost: TEdit
+      object BtnRestore: TSpeedButton
+        Left = 726
+        Top = 568
+        Width = 132
+        Height = 37
+        Action = ActRestore
+        Anchors = [akRight, akBottom]
+      end
+      object TxtDestFile: TNsEditBtn
         Left = 3
-        Top = 234
+        Top = 22
         Width = 390
         Height = 21
-        TabOrder = 5
-        Text = 'localhost'
-      end
-      object TxtPort: TEdit
-        Left = 3
-        Top = 280
-        Width = 390
-        Height = 21
-        TabOrder = 6
-        Text = '3050'
+        Glyph.Data = {
+          7E050000424D7E0500000000000036000000280000001A0000000D0000000100
+          2000000000004805000000000000000000000000000000000000FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00E8C2A300D8996400FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00AEAE
+          AE0080808000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00E8C2A300C05B0700C05B0700E8C2A300FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00AEAEAE004646460047474700AEAEAE00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00E8C2A300C05B0700C05B0700D899
+          6400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00AEAEAE0046464600474747007F7F7F00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00ECCDB200C8702700C05C0900C8702700CE7F3D00C05B
+          0700D8996400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00BCBC
+          BC0057575700474747005757570065656500474747007F7F7F00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00ECCDB300C2600F00DEA97D00F3E0D000E0AD
+          8300C4651600D99C6900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00BCBCBC004B4B4B0091919100D5D5D500959595004F4F4F0082828200FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00C9712800E5BC9A00FF00
+          FF00FF00FF00FF00FF00E0AE8400C9722900FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF0058585800A7A7A700FF00FF00FF00FF00FF00FF009696
+          960059595900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00C15D
+          0A00F6E7DA00FF00FF00FF00FF00FF00FF00FF00FF00C15D0A00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF0048484800DDDDDD00FF00FF00FF00
+          FF00FF00FF00D1D1D10048484800FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00C9722900E4BA9600FF00FF00FF00FF00FF00FF00E2B48E00C972
+          2900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF0059595900A5A5
+          A500FF00FF00FF00FF00FF00FF009E9E9E0059595900FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00ECCDB200C66A1E00E5BB9900F6E7DB00E3B6
+          9100C3631400ECCDB200FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00BCBCBC0052525200A6A6A600DEDEDE00A0A0A0004C4C4C00BCBCBC00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00EBCCB100C870
+          2600C05C0800C8702700EBCCB100FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00BBBBBB00575757004747470058585800BABA
+          BA00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00}
+        TabOrder = 0
+        OnBtnClick = SalvarArquivo
       end
       object TxtUser: TEdit
         Left = 3
-        Top = 70
+        Top = 68
         Width = 390
         Height = 21
         TabOrder = 1
         Text = 'SYSDBA'
       end
+      object TxtPassword: TEdit
+        Left = 3
+        Top = 116
+        Width = 390
+        Height = 21
+        PasswordChar = '*'
+        TabOrder = 2
+        Text = 'masterkey'
+      end
       object BoxProtocol: TComboBox
         Left = 3
-        Top = 188
+        Top = 186
         Width = 390
         Height = 21
         ItemIndex = 1
-        TabOrder = 4
+        TabOrder = 3
         Text = 'TCPIP'
         Items.Strings = (
           'Local'
@@ -3651,27 +3945,47 @@ object WindowMain: TWindowMain
           'NetBEUI'
           'SPX')
       end
-      object TxtPassword: TEdit
+      object TxtHost: TEdit
         Left = 3
-        Top = 118
+        Top = 232
         Width = 390
         Height = 21
-        PasswordChar = '*'
-        TabOrder = 2
-        Text = 'masterkey'
+        TabOrder = 4
+        Text = 'localhost'
       end
-      object TxtDestFile: TEdit
+      object TxtPort: TEdit
         Left = 3
-        Top = 22
-        Width = 363
+        Top = 278
+        Width = 390
         Height = 21
-        TabOrder = 0
+        TabOrder = 5
+        Text = '3050'
+      end
+      object CheckVerbose: TCheckBox
+        Left = 3
+        Top = 318
+        Width = 62
+        Height = 17
+        Caption = 'Verbose'
+        Checked = True
+        State = cbChecked
+        TabOrder = 6
+      end
+      object ListBackupFiles: TListBox
+        Left = 443
+        Top = 20
+        Width = 379
+        Height = 117
+        Anchors = [akTop, akRight]
+        ItemHeight = 13
+        TabOrder = 7
       end
       object CheckListOptions: TCheckListBox
-        Left = 408
-        Top = 188
-        Width = 361
+        Left = 443
+        Top = 186
+        Width = 379
         Height = 113
+        Anchors = [akTop, akRight]
         Columns = 2
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -3691,16 +4005,6 @@ object WindowMain: TWindowMain
           'FixFSSMetaData'
           'MetaDataOnly')
         ParentFont = False
-        TabOrder = 7
-      end
-      object CheckVerbose: TCheckBox
-        Left = 3
-        Top = 320
-        Width = 62
-        Height = 17
-        Caption = 'Verbose'
-        Checked = True
-        State = cbChecked
         TabOrder = 8
       end
     end
@@ -3708,8 +4012,8 @@ object WindowMain: TWindowMain
   object Images: TImageList
     BlendColor = clWhite
     BkColor = clWhite
-    Left = 456
-    Top = 72
+    Left = 16
+    Top = 568
     Bitmap = {
       494C010103005005040010001000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
@@ -3852,15 +4156,18 @@ object WindowMain: TWindowMain
   end
   object Actions: TActionList
     Images = Images
-    Left = 544
-    Top = 72
+    Left = 72
+    Top = 568
+    object ActMigrate: TAction
+      Caption = 'Migrate'
+      OnExecute = ActMigrateExecute
+    end
     object ActRestore: TAction
       Caption = 'Restaurar'
       OnExecute = ActRestoreExecute
     end
     object ActDbFile: TAction
       ImageIndex = 0
-      OnExecute = ActDbFileExecute
     end
     object ActAddBackup: TAction
       Hint = 'Adicionar arquivo de backup'
@@ -3877,7 +4184,7 @@ object WindowMain: TWindowMain
       OnExecute = ActEscExecute
     end
   end
-  object OpenBackupFile: TFileOpenDialog
+  object OpenFile: TFileOpenDialog
     FavoriteLinks = <>
     FileTypes = <
       item
@@ -3885,32 +4192,34 @@ object WindowMain: TWindowMain
         FileMask = '*.FBK'
       end>
     Options = []
-    Left = 544
-    Top = 120
+    Left = 128
+    Top = 568
   end
-  object SaveDbFile: TFileSaveDialog
+  object SaveFile: TFileSaveDialog
     FavoriteLinks = <>
-    FileName = 
-      'C:\Users\Ryan\Documents\Delphi Projects\FirebirdMigrator\Databas' +
-      'e.FDB'
+    FileName = 'C:\Users\Ryan\Desktop\a'
     FileTypes = <
       item
         DisplayName = 'Firebird Database (*.FDB)'
         FileMask = '*.FDB'
       end>
     Options = []
-    Left = 452
-    Top = 120
+    Left = 185
+    Top = 568
   end
   object FBDriverLink: TFDPhysFBDriverLink
-    Left = 455
-    Top = 176
+    Left = 246
+    Top = 570
   end
   object FBRestore: TFDIBRestore
     OnError = FBRestoreError
     DriverLink = FBDriverLink
     OnProgress = FBRestoreProgress
-    Left = 543
-    Top = 174
+    Left = 367
+    Top = 570
+  end
+  object FBBackup: TFDIBBackup
+    Left = 312
+    Top = 571
   end
 end
