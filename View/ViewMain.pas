@@ -7,7 +7,9 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   System.Actions, Vcl.ActnList, FireDAC.Stan.Def, FireDAC.VCLUI.Wait, FireDAC.Phys.IBWrapper,
   FireDAC.Stan.Intf, FireDAC.Phys, FireDAC.Phys.IBBase, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.CheckLst,
-  ACBrBase, FireDAC.Phys.FBDef, FireDAC.Phys.FB, NsEditBtn;
+  ACBrBase, FireDAC.Phys.FBDef, FireDAC.Phys.FB, NsEditBtn, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Pool,
+  FireDAC.Stan.Async, Data.DB, FireDAC.Comp.Client;
 
 type
   TWindowMain = class(TForm)
@@ -29,7 +31,6 @@ type
     SaveFile: TFileSaveDialog;
     FBDriverLink: TFDPhysFBDriverLink;
     FBRestore: TFDIBRestore;
-    FBBackup: TFDIBBackup;
     BtnMigrate: TSpeedButton;
     ActMigrate: TAction;
     GroupBoxSource: TGroupBox;
@@ -42,7 +43,6 @@ type
     TxtUserSource: TEdit;
     LblPasswordSource: TLabel;
     TxtPasswordSource: TEdit;
-    TxtDbSource: TNsEditBtn;
     LblDbSource: TLabel;
     LblHostDest: TLabel;
     LblPortDest: TLabel;
@@ -50,7 +50,7 @@ type
     LblPasswordDest: TLabel;
     LblDbDest: TLabel;
     TxtDbDest: TNsEditBtn;
-    TabRestore: TTabSheet;
+    TabTemp: TTabSheet;
     TxtDestFile: TNsEditBtn;
     LblDestFile: TLabel;
     LblUser: TLabel;
@@ -68,13 +68,21 @@ type
     ListBackupFiles: TListBox;
     BtnAdd: TSpeedButton;
     BtnRemove: TSpeedButton;
-    LblOptions: TLabel;
-    CheckListOptions: TCheckListBox;
-    BtnRestore: TSpeedButton;
+    LblRestoreOptions: TLabel;
+    CheckListRestore: TCheckListBox;
+    BtnStart: TSpeedButton;
     TxtHostDest: TEdit;
     TxtPortDest: TEdit;
     TxtUserDest: TEdit;
     TxtPasswordDest: TEdit;
+    TxtDbSource: TNsEditBtn;
+    BtnTestSourceConn: TButton;
+    ConnTest: TFDConnection;
+    FBBackup: TFDIBBackup;
+    ActBackup: TAction;
+    CheckListBackup: TCheckListBox;
+    LblBackupOptions: TLabel;
+    RadioGroupMethod: TRadioGroup;
     procedure ActEscExecute(Sender: TObject);
     procedure ActAddBackupExecute(Sender: TObject);
     procedure ActRmvBackupExecute(Sender: TObject);
@@ -82,12 +90,17 @@ type
     procedure FBRestoreError(ASender, AInitiator: TObject; var AException: Exception);
     procedure FBRestoreProgress(ASender: TFDPhysDriverService; const AMessage: string);
     procedure ActMigrateExecute(Sender: TObject);
+    procedure BtnTestSourceConnClick(Sender: TObject);
+    procedure ActBackupExecute(Sender: TObject);
+    procedure BtnStartClick(Sender: TObject);
+    procedure TxtDestFileBtnClick(Sender: TObject);
 
   private
-    procedure CarregarArquivo(Sender: TObject);
+    procedure CarregarArquivo(Sender: TObject; DisplayName, FileMask: string);
+    procedure SalvarArquivo(Sender: TObject; DisplayName, FileMask: string);
     procedure CarregarPasta(Sender: TObject);
-    procedure SalvarArquivo(Sender: TObject);
     procedure SalvarPasta(Sender: TObject);
+    procedure Backup;
     procedure Restore;
 
   end;
@@ -137,29 +150,62 @@ begin
   end;
 end;
 
-procedure TWindowMain.ActRestoreExecute(Sender: TObject);
+procedure TWindowMain.BtnStartClick(Sender: TObject);
 begin
-  Page.ActivePageIndex := 0;
+  case RadioGroupMethod.ItemIndex of
+  0:
+    ActBackup.Execute;
+  1:
+    ActRestore.Execute;
+  end;
+end;
 
-  TabConfigs.Enabled := false;
+procedure TWindowMain.TxtDestFileBtnClick(Sender: TObject);
+var
+  DisplayName, FileMask: string;
+begin
+  DisplayName := 'Firebird Database (*.FDB)';
+  FileMask := '*.fdb';
 
-  MemoLog.Clear;
-  MemoErrors.Clear;
-
-  try
-    Restore;
-  finally
-    TabConfigs.Enabled := true;
+  case RadioGroupMethod.ItemIndex of
+  0:
+    CarregarArquivo(Sender, DisplayName, FileMask);
+  1:
+    SalvarArquivo(Sender, DisplayName, FileMask);
   end;
 end;
 
 procedure TWindowMain.ActAddBackupExecute(Sender: TObject);
+var
+  DisplayName, FileMask: string;
 begin
-  OpenFile.Options := OpenFile.Options - [fdoPickFolders];
+  DisplayName := 'Firebird Backup (*.FBK)';
+  FileMask := '*.fbk';
 
-  if OpenFile.Execute then
+  case RadioGroupMethod.ItemIndex of
+
+  0:
   begin
-    ListBackupFiles.Items.Add(OpenFile.FileName);
+    SaveFile.FileTypes[0].DisplayName := DisplayName;
+    SaveFile.FileTypes[0].FileMask := FileMask;
+
+    if SaveFile.Execute then
+    begin
+      ListBackupFiles.Items.Add(SaveFile.FileName);
+    end;
+  end;
+
+  1:
+  begin
+    OpenFile.FileTypes[0].DisplayName := DisplayName;
+    OpenFile.FileTypes[0].FileMask := FileMask;
+
+    if OpenFile.Execute then
+    begin
+      ListBackupFiles.Items.Add(OpenFile.FileName);
+    end;
+  end;
+
   end;
 end;
 
@@ -176,6 +222,33 @@ begin
   else
   begin
     ListBackupFiles.ItemIndex := Index - 1;
+  end;
+end;
+
+procedure TWindowMain.BtnTestSourceConnClick(Sender: TObject);
+begin
+  ConnTest.Close;
+
+  TFDPhysFBConnectionDefParams(ConnTest.Params).Server := TxtHostSource.Text;
+  TFDPhysFBConnectionDefParams(ConnTest.Params).Port := StrToInt(TxtPortSource.Text);
+
+  with ConnTest.Params do
+  begin
+    UserName := TxtUserSource.Text;
+    Password := TxtPasswordSource.Text;
+    Database := TxtDbSource.Text;
+  end;
+
+  try
+    try
+      ConnTest.Open;
+
+      ShowMessage('Conexão Ok!');
+    Except on E: Exception do
+      ShowMessage('Erro: ' + E.Message);
+    end;
+  finally
+    ConnTest.Close;
   end;
 end;
 
@@ -198,13 +271,29 @@ end;
 
 //
 
-procedure TWindowMain.CarregarArquivo(Sender: TObject);
+procedure TWindowMain.CarregarArquivo(Sender: TObject; DisplayName, FileMask: string);
 begin
   OpenFile.Options := OpenFile.Options - [fdoPickFolders];
+
+  OpenFile.FileTypes[0].DisplayName := DisplayName;
+  OpenFile.FileTypes[0].FileMask := FileMask;
 
   if OpenFile.Execute then
   begin
     (Sender as TNsEditBtn).Text := OpenFile.FileName;
+  end;
+end;
+
+procedure TWindowMain.SalvarArquivo(Sender: TObject; DisplayName, FileMask: string);
+begin
+  SaveFile.Options := SaveFile.Options - [fdoPickFolders];
+
+  SaveFile.FileTypes[0].DisplayName := DisplayName;
+  SaveFile.FileTypes[0].FileMask := FileMask;
+
+  if SaveFile.Execute then
+  begin
+    (Sender as TNsEditBtn).Text := SaveFile.FileName;
   end;
 end;
 
@@ -218,19 +307,9 @@ begin
   end;
 end;
 
-procedure TWindowMain.SalvarArquivo(Sender: TObject);
-begin
-  SaveFile.Options := OpenFile.Options - [fdoPickFolders];
-
-  if SaveFile.Execute then
-  begin
-    (Sender as TNsEditBtn).Text := SaveFile.FileName;
-  end;
-end;
-
 procedure TWindowMain.SalvarPasta(Sender: TObject);
 begin
-  SaveFile.Options := OpenFile.Options + [fdoPickFolders];
+  SaveFile.Options := SaveFile.Options + [fdoPickFolders];
 
   if SaveFile.Execute then
   begin
@@ -239,6 +318,80 @@ begin
 end;
 
 //
+
+procedure TWindowMain.ActBackupExecute(Sender: TObject);
+begin
+  Page.ActivePageIndex := 0;
+
+  TabConfigs.Enabled := false;
+  TabTemp.Enabled := false;
+
+  MemoLog.Clear;
+  MemoErrors.Clear;
+
+  try
+    Backup;
+  finally
+    TabConfigs.Enabled := true;
+    TabTemp.Enabled := true;
+  end;
+end;
+
+procedure TWindowMain.ActRestoreExecute(Sender: TObject);
+begin
+  Page.ActivePageIndex := 0;
+
+  TabConfigs.Enabled := false;
+  TabTemp.Enabled := false;
+
+  MemoLog.Clear;
+  MemoErrors.Clear;
+
+  try
+    Restore;
+  finally
+    TabConfigs.Enabled := true;
+    TabTemp.Enabled := true;
+  end;
+end;
+
+procedure TWindowMain.Backup;
+var
+  I: integer;
+begin
+  inherited;
+
+  FBBackup.Database := TxtDestFile.Text;
+  FBBackup.UserName := TxtUser.Text;
+  FBBackup.Password := TxtPassword.Text;
+
+  FBBackup.BackupFiles.Clear;
+  FBBackup.BackupFiles := ListBackupFiles.Items;
+  FBBackup.Protocol := TIBProtocol(BoxProtocol.ItemIndex);
+  FBBackup.Host := TxtHost.Text;
+  FBBackup.Port := StrToInt(TxtPort.Text);
+  FBBackup.Verbose := CheckVerbose.Checked;
+  FBBackup.Options := [];
+
+  for I := 0 to CheckListBackup.Count - 1 do
+  begin
+    if CheckListBackup.Checked[I] then
+    begin
+      case I of
+      0: FBBackup.Options := FBBackup.Options + [boIgnoreChecksum];
+      1: FBBackup.Options := FBBackup.Options + [boIgnoreLimbo];
+      2: FBBackup.Options := FBBackup.Options + [boMetadataOnly];
+      3: FBBackup.Options := FBBackup.Options + [boNoGarbageCollect];
+      4: FBBackup.Options := FBBackup.Options + [boOldDescriptions];
+      5: FBBackup.Options := FBBackup.Options + [boNonTransportable];
+      6: FBBackup.Options := FBBackup.Options + [boConvert];
+      7: FBBackup.Options := FBBackup.Options + [boExpand];
+      end;
+    end;
+  end;
+
+  FBBackup.Backup;
+end;
 
 procedure TWindowMain.Restore;
 var
@@ -259,9 +412,9 @@ begin
   FBRestore.Verbose := CheckVerbose.Checked;
   FBRestore.Options := [];
 
-  for I := 0 to CheckListOptions.Count - 1 do
+  for I := 0 to CheckListRestore.Count - 1 do
   begin
-    if CheckListOptions.Checked[I] then
+    if CheckListRestore.Checked[I] then
     begin
       case I of
       0: FBRestore.Options := FBRestore.Options + [roDeactivateIdx];

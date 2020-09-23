@@ -4,8 +4,8 @@ object WindowMain: TWindowMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Firebird Migrator'
-  ClientHeight = 636
-  ClientWidth = 866
+  ClientHeight = 634
+  ClientWidth = 828
   Color = clBtnFace
   Constraints.MinHeight = 272
   Constraints.MinWidth = 774
@@ -3436,25 +3436,29 @@ object WindowMain: TWindowMain
   OldCreateOrder = False
   Position = poMainFormCenter
   DesignSize = (
-    866
-    636)
+    828
+    634)
   PixelsPerInch = 96
   TextHeight = 13
   object Page: TPageControl
     Left = 0
     Top = 0
-    Width = 868
-    Height = 633
-    ActivePage = TabMigration
+    Width = 830
+    Height = 631
+    ActivePage = TabTemp
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
+    ExplicitWidth = 868
+    ExplicitHeight = 633
     object TabMigration: TTabSheet
       Caption = 'Migra'#231#227'o'
+      ExplicitWidth = 860
+      ExplicitHeight = 605
       DesignSize = (
-        860
-        605)
+        822
+        603)
       object LblErrors: TLabel
-        Left = 472
+        Left = 434
         Top = 2
         Width = 25
         Height = 13
@@ -3470,45 +3474,62 @@ object WindowMain: TWindowMain
         Caption = 'Log'
       end
       object BtnMigrate: TSpeedButton
-        Left = 472
-        Top = 565
+        Left = 434
+        Top = 563
         Width = 385
         Height = 37
         Action = ActMigrate
         Anchors = [akRight, akBottom]
         ExplicitLeft = 470
+        ExplicitTop = 565
       end
       object MemoErrors: TMemo
-        Left = 472
+        Left = 434
         Top = 21
         Width = 385
-        Height = 538
+        Height = 536
         Anchors = [akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
         TabOrder = 1
+        ExplicitLeft = 472
+        ExplicitHeight = 538
       end
       object MemoLog: TMemo
         Left = 8
         Top = 21
-        Width = 458
-        Height = 581
+        Width = 420
+        Height = 579
         Anchors = [akLeft, akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
         TabOrder = 0
+        ExplicitWidth = 458
+        ExplicitHeight = 581
       end
     end
     object TabConfigs: TTabSheet
       Caption = 'Configura'#231#245'es'
       ImageIndex = 1
+      ExplicitLeft = 8
+      ExplicitTop = 28
+      ExplicitWidth = 860
+      ExplicitHeight = 605
+      DesignSize = (
+        822
+        603)
       object GroupBoxSource: TGroupBox
         Left = 3
         Top = 0
-        Width = 852
-        Height = 70
+        Width = 811
+        Height = 97
+        Anchors = [akLeft, akTop, akRight]
         Caption = 'Fonte'
         TabOrder = 0
+        ExplicitWidth = 852
+        DesignSize = (
+          811
+          97)
         object LblHostSource: TLabel
           Left = 3
           Top = 16
@@ -3581,8 +3602,9 @@ object WindowMain: TWindowMain
         object TxtDbSource: TNsEditBtn
           Left = 415
           Top = 35
-          Width = 434
+          Width = 393
           Height = 21
+          Anchors = [akLeft, akTop, akRight]
           Glyph.Data = {
             7E050000424D7E0500000000000036000000280000001A0000000D0000000100
             2000000000004805000000000000000000000000000000000000FF00FF00FF00
@@ -3630,16 +3652,32 @@ object WindowMain: TWindowMain
             FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
             FF00}
           TabOrder = 4
-          OnBtnClick = CarregarArquivo
+          ExplicitWidth = 434
+        end
+        object BtnTestSourceConn: TButton
+          Left = 703
+          Top = 69
+          Width = 105
+          Height = 25
+          Anchors = [akTop, akRight]
+          Caption = 'Testar Conex'#227'o'
+          TabOrder = 5
+          OnClick = BtnTestSourceConnClick
+          ExplicitLeft = 720
         end
       end
       object GroupBoxDest: TGroupBox
         Left = 3
-        Top = 87
-        Width = 852
+        Top = 103
+        Width = 811
         Height = 74
+        Anchors = [akLeft, akTop, akRight]
         Caption = 'Destino'
         TabOrder = 1
+        ExplicitWidth = 852
+        DesignSize = (
+          811
+          74)
         object LblHostDest: TLabel
           Left = 3
           Top = 16
@@ -3678,8 +3716,9 @@ object WindowMain: TWindowMain
         object TxtDbDest: TNsEditBtn
           Left = 415
           Top = 35
-          Width = 434
+          Width = 393
           Height = 21
+          Anchors = [akLeft, akTop, akRight]
           Glyph.Data = {
             7E050000424D7E0500000000000036000000280000001A0000000D0000000100
             2000000000004805000000000000000000000000000000000000FF00FF00FF00
@@ -3727,7 +3766,7 @@ object WindowMain: TWindowMain
             FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
             FF00}
           TabOrder = 0
-          OnBtnClick = SalvarArquivo
+          ExplicitWidth = 434
         end
         object TxtHostDest: TEdit
           Left = 3
@@ -3765,12 +3804,16 @@ object WindowMain: TWindowMain
         end
       end
     end
-    object TabRestore: TTabSheet
-      Caption = 'Restaura'#231#227'o'
+    object TabTemp: TTabSheet
+      Caption = 'Temp'
       ImageIndex = 2
+      ExplicitLeft = 8
+      ExplicitTop = 28
+      ExplicitWidth = 860
+      ExplicitHeight = 605
       DesignSize = (
-        860
-        605)
+        822
+        603)
       object LblDestFile: TLabel
         Left = 0
         Top = 3
@@ -3814,15 +3857,16 @@ object WindowMain: TWindowMain
         Caption = 'Porta'
       end
       object LblBackupFiles: TLabel
-        Left = 450
+        Left = 412
         Top = 1
         Width = 94
         Height = 13
         Anchors = [akTop, akRight]
         Caption = 'Arquivos de backup'
+        ExplicitLeft = 450
       end
       object BtnAdd: TSpeedButton
-        Left = 830
+        Left = 792
         Top = 19
         Width = 27
         Height = 24
@@ -3834,7 +3878,7 @@ object WindowMain: TWindowMain
         ExplicitLeft = 828
       end
       object BtnRemove: TSpeedButton
-        Left = 830
+        Left = 792
         Top = 49
         Width = 27
         Height = 24
@@ -3845,22 +3889,31 @@ object WindowMain: TWindowMain
         ShowHint = True
         ExplicitLeft = 828
       end
-      object LblOptions: TLabel
-        Left = 450
+      object LblRestoreOptions: TLabel
+        Left = 412
         Top = 167
-        Width = 36
+        Width = 77
         Height = 13
         Anchors = [akTop, akRight]
-        Caption = 'Op'#231#245'es'
+        Caption = 'Op'#231#245'es Restore'
+        ExplicitLeft = 450
       end
-      object BtnRestore: TSpeedButton
-        Left = 725
-        Top = 565
-        Width = 132
-        Height = 37
-        Action = ActRestore
+      object BtnStart: TSpeedButton
+        Left = 412
+        Top = 528
+        Width = 379
+        Height = 72
         Anchors = [akRight, akBottom]
-        ExplicitLeft = 723
+        Caption = 'Iniciar'
+        OnClick = BtnStartClick
+      end
+      object LblBackupOptions: TLabel
+        Left = 608
+        Top = 167
+        Width = 73
+        Height = 13
+        Anchors = [akTop, akRight]
+        Caption = 'Op'#231#245'es Backup'
       end
       object TxtDestFile: TNsEditBtn
         Left = 3
@@ -3914,7 +3967,7 @@ object WindowMain: TWindowMain
           FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
           FF00}
         TabOrder = 0
-        OnBtnClick = SalvarArquivo
+        OnBtnClick = TxtDestFileBtnClick
       end
       object TxtUser: TEdit
         Left = 3
@@ -3965,7 +4018,7 @@ object WindowMain: TWindowMain
       end
       object CheckVerbose: TCheckBox
         Left = 3
-        Top = 318
+        Top = 360
         Width = 62
         Height = 17
         Caption = 'Verbose'
@@ -3974,7 +4027,7 @@ object WindowMain: TWindowMain
         TabOrder = 6
       end
       object ListBackupFiles: TListBox
-        Left = 450
+        Left = 407
         Top = 20
         Width = 379
         Height = 117
@@ -3982,13 +4035,13 @@ object WindowMain: TWindowMain
         ItemHeight = 13
         TabOrder = 7
       end
-      object CheckListOptions: TCheckListBox
-        Left = 450
+      object CheckListRestore: TCheckListBox
+        Left = 412
         Top = 186
-        Width = 379
-        Height = 113
+        Width = 183
+        Height = 191
         Anchors = [akTop, akRight]
-        Columns = 2
+        Columns = 1
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -15
@@ -4008,6 +4061,45 @@ object WindowMain: TWindowMain
           'MetaDataOnly')
         ParentFont = False
         TabOrder = 8
+        ExplicitLeft = 417
+      end
+      object CheckListBackup: TCheckListBox
+        Left = 608
+        Top = 186
+        Width = 183
+        Height = 191
+        Anchors = [akTop, akRight]
+        Columns = 1
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ItemHeight = 18
+        Items.Strings = (
+          'IgnoreChecksum'
+          'IgnoreLim'
+          'MetadataOnly'
+          'NoGarbageCollect'
+          'OldDescriptions'
+          'NonTransportable'
+          'Convert'
+          'Expand')
+        ParentFont = False
+        TabOrder = 9
+      end
+      object RadioGroupMethod: TRadioGroup
+        Left = 412
+        Top = 383
+        Width = 379
+        Height = 105
+        Caption = 'M'#233'todo'
+        Columns = 2
+        ItemIndex = 0
+        Items.Strings = (
+          'Backup'
+          'Restore')
+        TabOrder = 10
       end
     end
   end
@@ -4164,8 +4256,12 @@ object WindowMain: TWindowMain
       Caption = 'Migrate'
       OnExecute = ActMigrateExecute
     end
+    object ActBackup: TAction
+      Caption = 'Backup'
+      OnExecute = ActBackupExecute
+    end
     object ActRestore: TAction
-      Caption = 'Restaurar'
+      Caption = 'Restore'
       OnExecute = ActRestoreExecute
     end
     object ActDbFile: TAction
@@ -4187,41 +4283,60 @@ object WindowMain: TWindowMain
     end
   end
   object OpenFile: TFileOpenDialog
+    DefaultFolder = 'C:\'
     FavoriteLinks = <>
     FileTypes = <
       item
-        DisplayName = 'Firebird Backup (*.FBK)'
-        FileMask = '*.FBK'
+        DisplayName = 'Firebird Database (*.FDB)'
+        FileMask = '*.fdb'
+      end
+      item
+        DisplayName = 'Todos os Arquivos (*.*)'
+        FileMask = '*'
       end>
     Options = []
     Left = 128
     Top = 568
   end
   object SaveFile: TFileSaveDialog
+    DefaultFolder = 'C:\'
     FavoriteLinks = <>
-    FileName = 'C:\Users\Ryan\Desktop\a'
     FileTypes = <
       item
         DisplayName = 'Firebird Database (*.FDB)'
-        FileMask = '*.FDB'
+        FileMask = '*.fdb'
       end>
     Options = []
-    Left = 185
+    Left = 201
     Top = 568
   end
   object FBDriverLink: TFDPhysFBDriverLink
-    Left = 246
-    Top = 570
+    Left = 60
+    Top = 436
   end
   object FBRestore: TFDIBRestore
     OnError = FBRestoreError
     DriverLink = FBDriverLink
     OnProgress = FBRestoreProgress
-    Left = 367
-    Top = 570
+    Verbose = True
+    Statistics = [bsTime, bsDelta, bsReads, bsWrites]
+    Left = 185
+    Top = 438
+  end
+  object ConnTest: TFDConnection
+    Params.Strings = (
+      'Protocol=TCPIP'
+      'DriverID=FB'
+      'User_Name=sysdba'
+      'Password=masterkey')
+    Left = 268
+    Top = 568
   end
   object FBBackup: TFDIBBackup
-    Left = 312
-    Top = 571
+    DriverLink = FBDriverLink
+    Verbose = True
+    Statistics = [bsTime, bsDelta, bsReads, bsWrites]
+    Left = 128
+    Top = 436
   end
 end

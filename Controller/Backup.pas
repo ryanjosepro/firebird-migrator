@@ -49,7 +49,9 @@ begin
     Backup.Database := Database;
   end;
 
-  Backup.BackupFiles.Text := Config.GetWorkFolder + 'BackupFile.fbk';
+  Backup.BackupFiles.Clear;
+
+  Backup.BackupFiles.Add(Config.GetWorkFolder + 'BackupFile.fbk');
 
   Backup.OnProgress := RestoreProgress;
   Backup.OnError := RestoreError;
