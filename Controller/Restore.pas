@@ -12,7 +12,6 @@ type
     Restore: TFDIBRestore;
   public
 
-
   end;
 
 implementation

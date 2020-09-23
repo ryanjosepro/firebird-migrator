@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, System.ImageList, Vcl.ImgList,
   System.Actions, Vcl.ActnList, FireDAC.Stan.Def, FireDAC.VCLUI.Wait, FireDAC.Phys.IBWrapper,
   FireDAC.Stan.Intf, FireDAC.Phys, FireDAC.Phys.IBBase, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.CheckLst,
-  ACBrBase, MyUtils, FireDAC.Phys.FBDef, FireDAC.Phys.FB, NsEditBtn;
+  ACBrBase, FireDAC.Phys.FBDef, FireDAC.Phys.FB, NsEditBtn;
 
 type
   TWindowMain = class(TForm)
@@ -88,7 +88,6 @@ type
     procedure CarregarPasta(Sender: TObject);
     procedure SalvarArquivo(Sender: TObject);
     procedure SalvarPasta(Sender: TObject);
-    procedure Backup;
     procedure Restore;
 
   end;
@@ -98,11 +97,44 @@ var
 
 implementation
 
+uses
+  Migration;
+
 {$R *.dfm}
 
 procedure TWindowMain.ActMigrateExecute(Sender: TObject);
+var
+  MigrationConfig: TMigrationConfig;
+  Migration: TMigration;
 begin
-  //
+  MigrationConfig := TMigrationConfig.Create;
+
+  try
+    with MigrationConfig.Source do
+    begin
+      Host := TxtHostSource.Text;
+      Port := StrToInt(TxtPortSource.Text);
+      User := TxtUserSource.Text;
+      Password := TxtPasswordSource.Text;
+      Database := TxtDbSource.Text;
+    end;
+
+    with MigrationConfig.Dest do
+    begin
+      Host := TxtHostDest.Text;
+      Port := StrToInt(TxtPortDest.Text);
+      User := TxtUserDest.Text;
+      Password := TxtPasswordDest.Text;
+      Database := TxtDbDest.Text;
+    end;
+
+    Migration := TMigration.Create(MigrationConfig);
+
+    Migration.Migrate(MemoLog, MemoErrors);
+  finally
+    MigrationConfig.Free;
+    Migration.Free;
+  end;
 end;
 
 procedure TWindowMain.ActRestoreExecute(Sender: TObject);
@@ -247,11 +279,6 @@ begin
   end;
 
   FBRestore.Restore;
-end;
-
-procedure TWindowMain.Backup;
-begin
-  //
 end;
 
 end.

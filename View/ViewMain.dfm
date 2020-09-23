@@ -5,7 +5,7 @@ object WindowMain: TWindowMain
   BorderStyle = bsSingle
   Caption = 'Firebird Migrator'
   ClientHeight = 636
-  ClientWidth = 864
+  ClientWidth = 866
   Color = clBtnFace
   Constraints.MinHeight = 272
   Constraints.MinWidth = 774
@@ -3436,30 +3436,31 @@ object WindowMain: TWindowMain
   OldCreateOrder = False
   Position = poMainFormCenter
   DesignSize = (
-    864
+    866
     636)
   PixelsPerInch = 96
   TextHeight = 13
   object Page: TPageControl
     Left = 0
     Top = 0
-    Width = 866
+    Width = 868
     Height = 633
-    ActivePage = TabConfigs
+    ActivePage = TabMigration
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabMigration: TTabSheet
       Caption = 'Migra'#231#227'o'
       DesignSize = (
-        858
+        860
         605)
       object LblErrors: TLabel
-        Left = 470
+        Left = 472
         Top = 2
         Width = 25
         Height = 13
         Anchors = [akTop, akRight]
         Caption = 'Erros'
+        ExplicitLeft = 470
       end
       object LblLog: TLabel
         Left = 8
@@ -3469,15 +3470,16 @@ object WindowMain: TWindowMain
         Caption = 'Log'
       end
       object BtnMigrate: TSpeedButton
-        Left = 470
+        Left = 472
         Top = 565
         Width = 385
         Height = 37
         Action = ActMigrate
         Anchors = [akRight, akBottom]
+        ExplicitLeft = 470
       end
       object MemoErrors: TMemo
-        Left = 470
+        Left = 472
         Top = 21
         Width = 385
         Height = 538
@@ -3489,7 +3491,7 @@ object WindowMain: TWindowMain
       object MemoLog: TMemo
         Left = 8
         Top = 21
-        Width = 456
+        Width = 458
         Height = 581
         Anchors = [akLeft, akTop, akRight, akBottom]
         ReadOnly = True
@@ -3766,11 +3768,8 @@ object WindowMain: TWindowMain
     object TabRestore: TTabSheet
       Caption = 'Restaura'#231#227'o'
       ImageIndex = 2
-      TabVisible = False
-      ExplicitLeft = 8
-      ExplicitTop = 28
       DesignSize = (
-        858
+        860
         605)
       object LblDestFile: TLabel
         Left = 0
@@ -3815,7 +3814,7 @@ object WindowMain: TWindowMain
         Caption = 'Porta'
       end
       object LblBackupFiles: TLabel
-        Left = 443
+        Left = 450
         Top = 1
         Width = 94
         Height = 13
@@ -3823,7 +3822,7 @@ object WindowMain: TWindowMain
         Caption = 'Arquivos de backup'
       end
       object BtnAdd: TSpeedButton
-        Left = 828
+        Left = 830
         Top = 19
         Width = 27
         Height = 24
@@ -3832,9 +3831,10 @@ object WindowMain: TWindowMain
         Anchors = [akTop, akRight]
         ParentShowHint = False
         ShowHint = True
+        ExplicitLeft = 828
       end
       object BtnRemove: TSpeedButton
-        Left = 828
+        Left = 830
         Top = 49
         Width = 27
         Height = 24
@@ -3843,9 +3843,10 @@ object WindowMain: TWindowMain
         Anchors = [akTop, akRight]
         ParentShowHint = False
         ShowHint = True
+        ExplicitLeft = 828
       end
       object LblOptions: TLabel
-        Left = 443
+        Left = 450
         Top = 167
         Width = 36
         Height = 13
@@ -3853,12 +3854,13 @@ object WindowMain: TWindowMain
         Caption = 'Op'#231#245'es'
       end
       object BtnRestore: TSpeedButton
-        Left = 726
-        Top = 568
+        Left = 725
+        Top = 565
         Width = 132
         Height = 37
         Action = ActRestore
         Anchors = [akRight, akBottom]
+        ExplicitLeft = 723
       end
       object TxtDestFile: TNsEditBtn
         Left = 3
@@ -3972,7 +3974,7 @@ object WindowMain: TWindowMain
         TabOrder = 6
       end
       object ListBackupFiles: TListBox
-        Left = 443
+        Left = 450
         Top = 20
         Width = 379
         Height = 117
@@ -3981,7 +3983,7 @@ object WindowMain: TWindowMain
         TabOrder = 7
       end
       object CheckListOptions: TCheckListBox
-        Left = 443
+        Left = 450
         Top = 186
         Width = 379
         Height = 113
