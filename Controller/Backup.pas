@@ -9,13 +9,13 @@ uses
 
 type
   TBackup = class
+    procedure RestoreProgress(ASender: TFDPhysDriverService; const AMessage: string);
+    procedure RestoreError(ASender, AInitiator: TObject; var AException: Exception);
   private
     FBDriverLink: TFDPhysFBDriverLink;
     Backup: TFDIBBackup;
     Log: TMemo;
     LogErrors: TMemo;
-    procedure RestoreProgress(ASender: TFDPhysDriverService; const AMessage: string);
-    procedure RestoreError(ASender, AInitiator: TObject; var AException: Exception);
   public
     constructor Create(Config: TMigrationConfig);
     destructor Destroy;

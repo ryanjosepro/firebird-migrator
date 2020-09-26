@@ -76,7 +76,7 @@ var
 begin
   Backup := TBackup.Create(Config);
 
-  Backup.Execute;
+  Backup.Execute(Log, LogError);
 end;
 
 end.
