@@ -3445,9 +3445,10 @@ object WindowMain: TWindowMain
     Top = 0
     Width = 853
     Height = 631
-    ActivePage = TabAdmin
+    ActivePage = TabMigration
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
+    TabWidth = 100
     object TabMigration: TTabSheet
       Caption = 'Migra'#231#227'o'
       ImageIndex = 1
@@ -3470,19 +3471,9 @@ object WindowMain: TWindowMain
         Height = 13
         Caption = 'Log'
       end
-      object BtnMigrate: TSpeedButton
-        Left = 457
-        Top = 563
-        Width = 385
-        Height = 37
-        Action = ActMigrate
-        Anchors = [akRight, akBottom]
-        ExplicitLeft = 470
-        ExplicitTop = 565
-      end
       object GroupBoxSource: TGroupBox
         Left = 3
-        Top = -4
+        Top = 2
         Width = 834
         Height = 85
         Anchors = [akLeft, akTop, akRight]
@@ -3628,7 +3619,7 @@ object WindowMain: TWindowMain
       end
       object GroupBoxDest: TGroupBox
         Left = 3
-        Top = 87
+        Top = 92
         Width = 834
         Height = 74
         Anchors = [akLeft, akTop, akRight]
@@ -3724,7 +3715,7 @@ object WindowMain: TWindowMain
             FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
             FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
             FF00}
-          TabOrder = 0
+          TabOrder = 4
           OnBtnClick = TxtDbDestBtnClick
         end
         object TxtHostDest: TEdit
@@ -3732,7 +3723,7 @@ object WindowMain: TWindowMain
           Top = 35
           Width = 102
           Height = 21
-          TabOrder = 1
+          TabOrder = 0
           Text = 'localhost'
         end
         object TxtPortDest: TEdit
@@ -3741,7 +3732,7 @@ object WindowMain: TWindowMain
           Width = 82
           Height = 21
           NumbersOnly = True
-          TabOrder = 2
+          TabOrder = 1
           Text = '3050'
         end
         object TxtUserDest: TEdit
@@ -3749,7 +3740,7 @@ object WindowMain: TWindowMain
           Top = 35
           Width = 98
           Height = 21
-          TabOrder = 3
+          TabOrder = 2
           Text = 'SYSDBA'
         end
         object TxtPasswordDest: TEdit
@@ -3758,7 +3749,7 @@ object WindowMain: TWindowMain
           Width = 106
           Height = 21
           PasswordChar = '*'
-          TabOrder = 4
+          TabOrder = 3
           Text = 'masterkey'
         end
       end
@@ -3770,7 +3761,7 @@ object WindowMain: TWindowMain
         Anchors = [akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
-        TabOrder = 2
+        TabOrder = 3
       end
       object MemoLog: TMemo
         Left = 3
@@ -3780,7 +3771,16 @@ object WindowMain: TWindowMain
         Anchors = [akLeft, akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
-        TabOrder = 3
+        TabOrder = 2
+      end
+      object BtnMigrate: TButton
+        Left = 452
+        Top = 563
+        Width = 385
+        Height = 37
+        Action = ActMigrate
+        Anchors = [akRight, akBottom]
+        TabOrder = 4
       end
     end
     object TabAdmin: TTabSheet
@@ -3862,15 +3862,6 @@ object WindowMain: TWindowMain
         ParentShowHint = False
         ShowHint = True
         ExplicitLeft = 828
-      end
-      object BtnStart: TSpeedButton
-        Left = 430
-        Top = 528
-        Width = 379
-        Height = 72
-        Anchors = [akRight, akBottom]
-        Caption = 'Iniciar'
-        OnClick = BtnStartClick
       end
       object LblOptions: TLabel
         Left = 430
@@ -4012,7 +4003,7 @@ object WindowMain: TWindowMain
         Items.Strings = (
           'Backup'
           'Restore')
-        TabOrder = 8
+        TabOrder = 9
         OnClick = RadioGroupMethodClick
       end
       object CheckListOptions: TCheckListBox
@@ -4038,7 +4029,17 @@ object WindowMain: TWindowMain
           'Convert'
           'Expand')
         ParentFont = False
-        TabOrder = 9
+        TabOrder = 8
+      end
+      object BtnStart: TButton
+        Left = 430
+        Top = 528
+        Width = 379
+        Height = 72
+        Anchors = [akRight, akBottom]
+        Caption = 'Iniciar'
+        TabOrder = 10
+        OnClick = BtnStartClick
       end
     end
   end

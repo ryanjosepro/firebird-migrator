@@ -7,7 +7,8 @@ uses
   MyUtils in 'Code\MyUtils.pas',
   Backup in 'Controller\Backup.pas',
   Restore in 'Controller\Restore.pas',
-  Migration in 'Controller\Migration.pas';
+  Migration in 'Controller\Migration.pas',
+  Config in 'Controller\Config.pas';
 
 {$R *.res}
 

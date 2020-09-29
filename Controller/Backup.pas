@@ -9,8 +9,8 @@ uses
 
 type
   TBackup = class
-    procedure RestoreProgress(ASender: TFDPhysDriverService; const AMessage: string);
-    procedure RestoreError(ASender, AInitiator: TObject; var AException: Exception);
+    procedure BackupProgress(ASender: TFDPhysDriverService; const AMessage: string);
+    procedure BackupError(ASender, AInitiator: TObject; var AException: Exception);
   private
     FBDriverLink: TFDPhysFBDriverLink;
     Backup: TFDIBBackup;
@@ -18,9 +18,10 @@ type
     LogErrors: TMemo;
   public
     constructor Create(Config: TMigrationConfig);
-    destructor Destroy;
 
-    procedure Execute(Log: TMemo = nil; LogError: TMemo = nil);
+    procedure Execute(Log: TMemo = nil; LogErrors: TMemo = nil);
+
+    destructor Destroy;
   end;
 
 implementation
@@ -51,13 +52,13 @@ begin
 
   Backup.BackupFiles.Clear;
 
-  Backup.BackupFiles.Add(Config.GetWorkFolder + 'BackupFile.fbk');
+  Backup.BackupFiles.Add(Config.GetBackupFile);
 
-  Backup.OnProgress := RestoreProgress;
-  Backup.OnError := RestoreError;
+  Backup.OnProgress := BackupProgress;
+  Backup.OnError := BackupError;
 end;
 
-procedure TBackup.RestoreProgress(ASender: TFDPhysDriverService; const AMessage: string);
+procedure TBackup.BackupProgress(ASender: TFDPhysDriverService; const AMessage: string);
 begin
   if Log <> nil then
   begin
@@ -65,7 +66,7 @@ begin
   end;
 end;
 
-procedure TBackup.RestoreError(ASender, AInitiator: TObject; var AException: Exception);
+procedure TBackup.BackupError(ASender, AInitiator: TObject; var AException: Exception);
 begin
   if LogErrors <> nil then
   begin
@@ -73,10 +74,17 @@ begin
   end;
 end;
 
-procedure TBackup.Execute(Log: TMemo = nil; LogError: TMemo = nil);
+procedure TBackup.Execute(Log: TMemo = nil; LogErrors: TMemo = nil);
 begin
   self.Log := Log;
-  self.LogErrors := LogError;
+  self.LogErrors := LogErrors;
+
+  if Self.Log <> nil then
+  begin
+    Self.Log.Lines.Add('');
+    Self.Log.Lines.Add('************* BACKUP *************');
+    Self.Log.Lines.Add('');
+  end;
 
   Backup.Backup;
 end;

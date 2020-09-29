@@ -62,7 +62,6 @@ type
     ListBackupFiles: TListBox;
     BtnAdd: TSpeedButton;
     BtnRemove: TSpeedButton;
-    BtnStart: TSpeedButton;
     TxtHostDest: TEdit;
     TxtPortDest: TEdit;
     TxtUserDest: TEdit;
@@ -78,8 +77,9 @@ type
     MemoLog: TMemo;
     LblErrors: TLabel;
     LblLog: TLabel;
-    BtnMigrate: TSpeedButton;
     CheckListOptions: TCheckListBox;
+    BtnMigrate: TButton;
+    BtnStart: TButton;
     procedure ActEscExecute(Sender: TObject);
     procedure ActAddBackupExecute(Sender: TObject);
     procedure ActRmvBackupExecute(Sender: TObject);
@@ -101,6 +101,9 @@ type
     procedure CarregarPasta(Sender: TObject);
     procedure SalvarPasta(Sender: TObject);
 
+    procedure LoadConfigs;
+    procedure SaveConfigs;
+
   end;
 
 var
@@ -109,9 +112,53 @@ var
 implementation
 
 uses
-  Migration;
+  Migration, Config;
 
 {$R *.dfm}
+
+procedure TWindowMain.LoadConfigs;
+begin
+  TxtHostSource.Text := TConfig.GetConfig('SOURCE', 'Host', 'localhost');
+  TxtPortSource.Text := TConfig.GetConfig('SOURCE', 'Port', '3050');
+  TxtUserSource.Text := TConfig.GetConfig('SOURCE', 'User', 'SYSDBA');
+  TxtPassword.Text := TConfig.GetConfig('SOURCE', 'Password', 'masterkey');
+  TxtDbSource.Text := TConfig.GetConfig('SOURCE', 'Database', '');
+
+  TxtHostDest.Text := TConfig.GetConfig('DEST', 'Host', 'localhost');
+  TxtPortDest.Text := TConfig.GetConfig('DEST', 'Port', '3050');
+  TxtUserDest.Text := TConfig.GetConfig('DEST', 'User', 'SYSDBA');
+  TxtPasswordDest.Text := TConfig.GetConfig('DEST', 'Password', 'masterkey');
+  TxtDbDest.Text := TConfig.GetConfig('DEST', 'Database', '');
+end;
+
+procedure TWindowMain.SaveConfigs;
+var
+  Config: TMigrationConfig;
+begin
+  Config := TMigrationConfig.Create;
+
+  with Config.Source do
+  begin
+    Host := TxtHostSource.Text;
+    Port := StrToInt(TxtPortSource.Text);
+    User := TxtUserSource.Text;
+    Password := TxtPasswordSource.Text;
+    Database := TxtDbSource.Text;
+  end;
+
+  with Config.Dest do
+  begin
+    Host := TxtHostDest.Text;
+    Port := StrToInt(TxtPortDest.Text);
+    User := TxtUserDest.Text;
+    Password := TxtPasswordDest.Text;
+    Database := TxtDbDest.Text;
+  end;
+
+  TConfig.SetGeral(Config);
+
+  Config.Free;
+end;
 
 procedure TWindowMain.ActMigrateExecute(Sender: TObject);
 var
