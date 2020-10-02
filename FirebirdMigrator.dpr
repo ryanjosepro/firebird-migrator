@@ -1,5 +1,7 @@
 program FirebirdMigrator;
 
+{$R *.dres}
+
 uses
   Vcl.Forms,
   ViewMain in 'View\ViewMain.pas' {WindowMain},

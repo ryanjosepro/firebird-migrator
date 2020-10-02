@@ -31,28 +31,29 @@ implementation
 constructor TBackup.Create(Config: TMigrationConfig);
 begin
   FBDriverLink := TFDPhysFBDriverLink.Create(nil);
+  FBDriverLink.VendorLib := Config.GetPathSourceDll;
 
   Backup := TFDIBBackup.Create(nil);
   Backup.DriverLink := FBDriverLink;
 
-  Backup.Protocol := ipTCPIP;
+  //Backup.Protocol := ipTCPIP;
 
   Backup.Statistics := [bsTime, bsDelta, bsReads, bsWrites];
 
   Backup.Verbose := true;
 
-  with Config.Source do
-  begin
-    Backup.Host := Host;
-    Backup.Port := Port;
-    Backup.UserName := User;
-    Backup.Password := Password;
-    Backup.Database := Database;
-  end;
+  //with Config.Source do
+  //begin
+  //  Backup.Host := Host;
+  //  Backup.Port := Port;
+  //  Backup.UserName := User;
+  //  Backup.Password := Password;
+  //    Backup.Database := Database;
+  //end;
 
   Backup.BackupFiles.Clear;
 
-  Backup.BackupFiles.Add(Config.GetBackupFile);
+  Backup.BackupFiles.Add(Config.GetPathBackupFile);
 
   Backup.OnProgress := BackupProgress;
   Backup.OnError := BackupError;

@@ -80,6 +80,10 @@ type
     CheckListOptions: TCheckListBox;
     BtnMigrate: TButton;
     BtnStart: TButton;
+    LblDll: TLabel;
+    TxtDll: TNsEditBtn;
+    BoxVersion: TComboBox;
+    ComboBox1: TComboBox;
     procedure ActEscExecute(Sender: TObject);
     procedure ActAddBackupExecute(Sender: TObject);
     procedure ActRmvBackupExecute(Sender: TObject);
@@ -94,6 +98,7 @@ type
     procedure TxtDbSourceBtnClick(Sender: TObject);
     procedure TxtDbDestBtnClick(Sender: TObject);
     procedure RadioGroupMethodClick(Sender: TObject);
+    procedure TxtDllBtnClick(Sender: TObject);
 
   private
     procedure CarregarArquivo(Sender: TObject; DisplayName, FileMask: string);
@@ -346,6 +351,16 @@ begin
   end;
 end;
 
+procedure TWindowMain.TxtDllBtnClick(Sender: TObject);
+var
+  DisplayName, FileMask: string;
+begin
+  DisplayName := 'Dinamic Link Library (*.DLL)';
+  FileMask := '*.dll';
+
+  CarregarArquivo(Sender, DisplayName, FileMask);
+end;
+
 procedure TWindowMain.ActAddBackupExecute(Sender: TObject);
 var
   DisplayName, FileMask: string;
@@ -421,15 +436,17 @@ begin
   Application.ProcessMessages;
 
   try
+    FBDriverLink.VendorLib := TxtDll.Text;
+
     FBBackup.Database := TxtDestFile.Text;
     FBBackup.UserName := TxtUser.Text;
     FBBackup.Password := TxtPassword.Text;
 
     FBBackup.BackupFiles.Clear;
     FBBackup.BackupFiles := ListBackupFiles.Items;
-    FBBackup.Protocol := TIBProtocol(BoxProtocol.ItemIndex);
-    FBBackup.Host := TxtHost.Text;
-    FBBackup.Port := StrToInt(TxtPort.Text);
+    //FBBackup.Protocol := TIBProtocol(BoxProtocol.ItemIndex);
+    //FBBackup.Host := TxtHost.Text;
+    //FBBackup.Port := StrToInt(TxtPort.Text);
     FBBackup.Verbose := CheckVerbose.Checked;
     FBBackup.Options := [];
 
@@ -470,15 +487,17 @@ begin
   Application.ProcessMessages;
 
   try
+    FBDriverLink.VendorLib := TxtDll.Text;
+
     FBRestore.Database := TxtDestFile.Text;
     FBRestore.UserName := TxtUser.Text;
     FBRestore.Password := TxtPassword.Text;
 
     FBRestore.BackupFiles.Clear;
     FBRestore.BackupFiles := ListBackupFiles.Items;
-    FBRestore.Protocol := TIBProtocol(BoxProtocol.ItemIndex);
-    FBRestore.Host := TxtHost.Text;
-    FBRestore.Port := StrToInt(TxtPort.Text);
+    //FBRestore.Protocol := TIBProtocol(BoxProtocol.ItemIndex);
+    //FBRestore.Host := TxtHost.Text;
+    //FBRestore.Port := StrToInt(TxtPort.Text);
     FBRestore.Verbose := CheckVerbose.Checked;
     FBRestore.Options := [];
 

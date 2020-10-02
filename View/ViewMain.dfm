@@ -3457,16 +3457,15 @@ object WindowMain: TWindowMain
         603)
       object LblErrors: TLabel
         Left = 452
-        Top = 164
+        Top = 167
         Width = 25
         Height = 13
         Anchors = [akTop, akRight]
         Caption = 'Erros'
-        ExplicitLeft = 429
       end
       object LblLog: TLabel
         Left = 3
-        Top = 165
+        Top = 167
         Width = 17
         Height = 13
         Caption = 'Log'
@@ -3475,19 +3474,20 @@ object WindowMain: TWindowMain
         Left = 3
         Top = 2
         Width = 834
-        Height = 85
+        Height = 91
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Fonte'
         TabOrder = 0
         DesignSize = (
           834
-          85)
+          91)
         object LblHostSource: TLabel
           Left = 3
           Top = 16
           Width = 22
           Height = 13
           Caption = 'Host'
+          Visible = False
         end
         object LblPortSource: TLabel
           Left = 111
@@ -3495,6 +3495,7 @@ object WindowMain: TWindowMain
           Width = 26
           Height = 13
           Caption = 'Porta'
+          Visible = False
         end
         object LblUserSource: TLabel
           Left = 199
@@ -3502,6 +3503,7 @@ object WindowMain: TWindowMain
           Width = 36
           Height = 13
           Caption = 'Usu'#225'rio'
+          Visible = False
         end
         object LblPasswordSource: TLabel
           Left = 303
@@ -3509,9 +3511,10 @@ object WindowMain: TWindowMain
           Width = 30
           Height = 13
           Caption = 'Senha'
+          Visible = False
         end
         object LblDbSource: TLabel
-          Left = 415
+          Left = 199
           Top = 16
           Width = 68
           Height = 13
@@ -3522,6 +3525,7 @@ object WindowMain: TWindowMain
           Top = 35
           Width = 102
           Height = 21
+          Enabled = False
           TabOrder = 0
           Text = 'localhost'
         end
@@ -3530,6 +3534,7 @@ object WindowMain: TWindowMain
           Top = 35
           Width = 82
           Height = 21
+          Enabled = False
           NumbersOnly = True
           TabOrder = 1
           Text = '3050'
@@ -3539,6 +3544,7 @@ object WindowMain: TWindowMain
           Top = 35
           Width = 98
           Height = 21
+          Enabled = False
           TabOrder = 2
           Text = 'SYSDBA'
         end
@@ -3547,16 +3553,23 @@ object WindowMain: TWindowMain
           Top = 35
           Width = 106
           Height = 21
+          Enabled = False
           PasswordChar = '*'
           TabOrder = 3
           Text = 'masterkey'
         end
         object TxtDbSource: TNsEditBtn
-          Left = 415
+          Left = 199
           Top = 35
-          Width = 416
-          Height = 21
+          Width = 632
+          Height = 26
           Anchors = [akLeft, akTop, akRight]
+          AutoSize = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Tahoma'
+          Font.Style = []
           Glyph.Data = {
             7E050000424D7E0500000000000036000000280000001A0000000D0000000100
             2000000000004805000000000000000000000000000000000000FF00FF00FF00
@@ -3603,37 +3616,62 @@ object WindowMain: TWindowMain
             FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
             FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
             FF00}
+          ParentFont = False
           TabOrder = 4
           OnBtnClick = TxtDbSourceBtnClick
         end
         object BtnTestSourceConn: TButton
           Left = 726
-          Top = 56
+          Top = 63
           Width = 105
           Height = 25
           Anchors = [akTop, akRight]
           Caption = 'Testar Conex'#227'o'
           TabOrder = 5
+          Visible = False
           OnClick = BtnTestSourceConnClick
+        end
+        object BoxVersion: TComboBox
+          Left = 3
+          Top = 35
+          Width = 190
+          Height = 26
+          Style = csDropDownList
+          Anchors = [akLeft, akTop, akRight]
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ItemIndex = 0
+          ParentFont = False
+          TabOrder = 6
+          Text = 'Firebird 2.1.7.18553'
+          Items.Strings = (
+            'Firebird 2.1.7.18553'
+            'Firebird 2.5.8.27089'
+            'Firebird 3.0.4.33054'
+            'Firebird 4.0.0.19630')
         end
       end
       object GroupBoxDest: TGroupBox
         Left = 3
-        Top = 92
+        Top = 99
         Width = 834
-        Height = 74
+        Height = 69
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Destino'
         TabOrder = 1
         DesignSize = (
           834
-          74)
+          69)
         object LblHostDest: TLabel
           Left = 3
           Top = 16
           Width = 22
           Height = 13
           Caption = 'Host'
+          Visible = False
         end
         object LblPortDest: TLabel
           Left = 111
@@ -3641,6 +3679,7 @@ object WindowMain: TWindowMain
           Width = 26
           Height = 13
           Caption = 'Porta'
+          Visible = False
         end
         object LblUserDest: TLabel
           Left = 199
@@ -3648,6 +3687,7 @@ object WindowMain: TWindowMain
           Width = 36
           Height = 13
           Caption = 'Usu'#225'rio'
+          Visible = False
         end
         object LblPasswordDest: TLabel
           Left = 303
@@ -3655,74 +3695,21 @@ object WindowMain: TWindowMain
           Width = 30
           Height = 13
           Caption = 'Senha'
+          Visible = False
         end
         object LblDbDest: TLabel
-          Left = 415
+          Left = 199
           Top = 16
           Width = 90
           Height = 13
           Caption = 'Arquivo de destino'
-        end
-        object TxtDbDest: TNsEditBtn
-          Left = 415
-          Top = 35
-          Width = 416
-          Height = 21
-          Anchors = [akLeft, akTop, akRight]
-          Glyph.Data = {
-            7E050000424D7E0500000000000036000000280000001A0000000D0000000100
-            2000000000004805000000000000000000000000000000000000FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00E8C2A300D8996400FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00AEAE
-            AE0080808000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00E8C2A300C05B0700C05B0700E8C2A300FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00AEAEAE004646460047474700AEAEAE00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00E8C2A300C05B0700C05B0700D899
-            6400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00AEAEAE0046464600474747007F7F7F00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00ECCDB200C8702700C05C0900C8702700CE7F3D00C05B
-            0700D8996400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00BCBC
-            BC0057575700474747005757570065656500474747007F7F7F00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00ECCDB300C2600F00DEA97D00F3E0D000E0AD
-            8300C4651600D99C6900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00BCBCBC004B4B4B0091919100D5D5D500959595004F4F4F0082828200FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00C9712800E5BC9A00FF00
-            FF00FF00FF00FF00FF00E0AE8400C9722900FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF0058585800A7A7A700FF00FF00FF00FF00FF00FF009696
-            960059595900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00C15D
-            0A00F6E7DA00FF00FF00FF00FF00FF00FF00FF00FF00C15D0A00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF0048484800DDDDDD00FF00FF00FF00
-            FF00FF00FF00D1D1D10048484800FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00C9722900E4BA9600FF00FF00FF00FF00FF00FF00E2B48E00C972
-            2900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF0059595900A5A5
-            A500FF00FF00FF00FF00FF00FF009E9E9E0059595900FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00ECCDB200C66A1E00E5BB9900F6E7DB00E3B6
-            9100C3631400ECCDB200FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00BCBCBC0052525200A6A6A600DEDEDE00A0A0A0004C4C4C00BCBCBC00FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00EBCCB100C870
-            2600C05C0800C8702700EBCCB100FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00BBBBBB00575757004747470058585800BABA
-            BA00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
-            FF00}
-          TabOrder = 4
-          OnBtnClick = TxtDbDestBtnClick
         end
         object TxtHostDest: TEdit
           Left = 3
           Top = 35
           Width = 102
           Height = 21
+          Enabled = False
           TabOrder = 0
           Text = 'localhost'
         end
@@ -3731,6 +3718,7 @@ object WindowMain: TWindowMain
           Top = 35
           Width = 82
           Height = 21
+          Enabled = False
           NumbersOnly = True
           TabOrder = 1
           Text = '3050'
@@ -3740,6 +3728,7 @@ object WindowMain: TWindowMain
           Top = 35
           Width = 98
           Height = 21
+          Enabled = False
           TabOrder = 2
           Text = 'SYSDBA'
         end
@@ -3748,16 +3737,101 @@ object WindowMain: TWindowMain
           Top = 35
           Width = 106
           Height = 21
+          Enabled = False
           PasswordChar = '*'
           TabOrder = 3
           Text = 'masterkey'
         end
+        object ComboBox1: TComboBox
+          Left = 3
+          Top = 35
+          Width = 190
+          Height = 26
+          Style = csDropDownList
+          Anchors = [akLeft, akTop, akRight]
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ItemIndex = 0
+          ParentFont = False
+          TabOrder = 5
+          Text = 'Firebird 2.1.7.18553'
+          Items.Strings = (
+            'Firebird 2.1.7.18553'
+            'Firebird 2.5.8.27089'
+            'Firebird 3.0.4.33054'
+            'Firebird 4.0.0.19630')
+        end
+        object TxtDbDest: TNsEditBtn
+          Left = 199
+          Top = 35
+          Width = 632
+          Height = 26
+          Anchors = [akLeft, akTop, akRight]
+          AutoSize = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          Glyph.Data = {
+            7E050000424D7E0500000000000036000000280000001A0000000D0000000100
+            2000000000004805000000000000000000000000000000000000FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00E8C2A300D8996400FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00AEAE
+            AE0080808000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00E8C2A300C05B0700C05B0700E8C2A300FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00AEAEAE004646460047474700AEAEAE00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00E8C2A300C05B0700C05B0700D899
+            6400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00AEAEAE0046464600474747007F7F7F00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00ECCDB200C8702700C05C0900C8702700CE7F3D00C05B
+            0700D8996400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00BCBC
+            BC0057575700474747005757570065656500474747007F7F7F00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00ECCDB300C2600F00DEA97D00F3E0D000E0AD
+            8300C4651600D99C6900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00BCBCBC004B4B4B0091919100D5D5D500959595004F4F4F0082828200FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00C9712800E5BC9A00FF00
+            FF00FF00FF00FF00FF00E0AE8400C9722900FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF0058585800A7A7A700FF00FF00FF00FF00FF00FF009696
+            960059595900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00C15D
+            0A00F6E7DA00FF00FF00FF00FF00FF00FF00FF00FF00C15D0A00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF0048484800DDDDDD00FF00FF00FF00
+            FF00FF00FF00D1D1D10048484800FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00C9722900E4BA9600FF00FF00FF00FF00FF00FF00E2B48E00C972
+            2900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF0059595900A5A5
+            A500FF00FF00FF00FF00FF00FF009E9E9E0059595900FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00ECCDB200C66A1E00E5BB9900F6E7DB00E3B6
+            9100C3631400ECCDB200FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00BCBCBC0052525200A6A6A600DEDEDE00A0A0A0004C4C4C00BCBCBC00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00EBCCB100C870
+            2600C05C0800C8702700EBCCB100FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00BBBBBB00575757004747470058585800BABA
+            BA00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+            FF00}
+          ParentFont = False
+          TabOrder = 4
+          OnBtnClick = TxtDbDestBtnClick
+        end
       end
       object MemoErrors: TMemo
         Left = 452
-        Top = 183
+        Top = 186
         Width = 385
-        Height = 374
+        Height = 371
         Anchors = [akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
@@ -3765,9 +3839,9 @@ object WindowMain: TWindowMain
       end
       object MemoLog: TMemo
         Left = 3
-        Top = 183
+        Top = 186
         Width = 443
-        Height = 417
+        Height = 414
         Anchors = [akLeft, akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
@@ -3786,6 +3860,8 @@ object WindowMain: TWindowMain
     object TabAdmin: TTabSheet
       Caption = 'Admin'
       ImageIndex = 2
+      ExplicitLeft = 8
+      ExplicitTop = 28
       DesignSize = (
         845
         603)
@@ -3871,6 +3947,13 @@ object WindowMain: TWindowMain
         Anchors = [akTop, akRight]
         Caption = 'Op'#231#245'es'
       end
+      object LblDll: TLabel
+        Left = 3
+        Top = 307
+        Width = 11
+        Height = 13
+        Caption = 'Dll'
+      end
       object TxtDestFile: TNsEditBtn
         Left = 3
         Top = 22
@@ -3947,6 +4030,7 @@ object WindowMain: TWindowMain
         Top = 186
         Width = 390
         Height = 21
+        Enabled = False
         ItemIndex = 1
         TabOrder = 3
         Text = 'TCPIP'
@@ -3961,6 +4045,7 @@ object WindowMain: TWindowMain
         Top = 232
         Width = 390
         Height = 21
+        Enabled = False
         TabOrder = 4
         Text = 'localhost'
       end
@@ -3969,6 +4054,7 @@ object WindowMain: TWindowMain
         Top = 278
         Width = 390
         Height = 21
+        Enabled = False
         TabOrder = 5
         Text = '3050'
       end
@@ -4040,6 +4126,60 @@ object WindowMain: TWindowMain
         Caption = 'Iniciar'
         TabOrder = 10
         OnClick = BtnStartClick
+      end
+      object TxtDll: TNsEditBtn
+        Left = 3
+        Top = 326
+        Width = 390
+        Height = 21
+        Glyph.Data = {
+          7E050000424D7E0500000000000036000000280000001A0000000D0000000100
+          2000000000004805000000000000000000000000000000000000FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00E8C2A300D8996400FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00AEAE
+          AE0080808000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00E8C2A300C05B0700C05B0700E8C2A300FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00AEAEAE004646460047474700AEAEAE00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00E8C2A300C05B0700C05B0700D899
+          6400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00AEAEAE0046464600474747007F7F7F00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00ECCDB200C8702700C05C0900C8702700CE7F3D00C05B
+          0700D8996400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00BCBC
+          BC0057575700474747005757570065656500474747007F7F7F00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00ECCDB300C2600F00DEA97D00F3E0D000E0AD
+          8300C4651600D99C6900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00BCBCBC004B4B4B0091919100D5D5D500959595004F4F4F0082828200FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00C9712800E5BC9A00FF00
+          FF00FF00FF00FF00FF00E0AE8400C9722900FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF0058585800A7A7A700FF00FF00FF00FF00FF00FF009696
+          960059595900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00C15D
+          0A00F6E7DA00FF00FF00FF00FF00FF00FF00FF00FF00C15D0A00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF0048484800DDDDDD00FF00FF00FF00
+          FF00FF00FF00D1D1D10048484800FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00C9722900E4BA9600FF00FF00FF00FF00FF00FF00E2B48E00C972
+          2900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF0059595900A5A5
+          A500FF00FF00FF00FF00FF00FF009E9E9E0059595900FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00ECCDB200C66A1E00E5BB9900F6E7DB00E3B6
+          9100C3631400ECCDB200FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00BCBCBC0052525200A6A6A600DEDEDE00A0A0A0004C4C4C00BCBCBC00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00EBCCB100C870
+          2600C05C0800C8702700EBCCB100FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00BBBBBB00575757004747470058585800BABA
+          BA00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00}
+        TabOrder = 11
+        OnBtnClick = TxtDllBtnClick
       end
     end
   end

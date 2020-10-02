@@ -7,6 +7,7 @@ uses
   MyUtils;
 
 type
+  TVersion = (vrFb21 = 0, vrFb25 = 1, vrFb30 = 2, vrFb40 = 3);
 
   TMigrationConnection = class
   public
@@ -14,18 +15,21 @@ type
     Port: integer;
     User: string;
     Password: string;
+    Version: TVersion;
     Database: string;
   end;
 
   TMigrationConfig = class
   strict private
-    WorkFolder: string;
-    BackupFile: string;
+    PathTemp: string;
+    function GetPathDll(Version: TVersion): string;
   public
     Source: TMigrationConnection;
     Dest: TMigrationConnection;
-    function GetWorkFolder: string;
-    function GetBackupFile: string;
+    function GetPathTemp: string;
+    function GetPathBackupFile: string;
+    function GetPathSourceDll: string;
+    function GetPathDestDll: string;
 
     constructor Create;
     destructor Destroy;
@@ -51,8 +55,7 @@ constructor TMigrationConfig.Create;
 begin
   Source := TMigrationConnection.Create;
   Dest := TMigrationConnection.Create;
-  WorkFolder := TUtils.AppPath + 'Temp\';
-  BackupFile := GetWorkFolder + 'BackupFile.fbk';
+  PathTemp := TUtils.AppPath + 'Temp\';
 end;
 
 destructor TMigrationConfig.Destroy;
@@ -61,14 +64,38 @@ begin
   Dest.Free;
 end;
 
-function TMigrationConfig.GetWorkFolder: string;
+function TMigrationConfig.GetPathTemp: string;
 begin
-  Result := Self.WorkFolder;
+  Result := Self.PathTemp;
 end;
 
-function TMigrationConfig.GetBackupFile: string;
+function TMigrationConfig.GetPathBackupFile: string;
 begin
-  Result := Self.BackupFile;
+  Result := GetPathTemp + 'BackupFile.fbk';
+end;
+
+function TMigrationConfig.GetPathDll(Version: TVersion): string;
+begin
+  case Version of
+  vrFb21:
+    Result := GetPathTemp + 'Dlls\fbclient21.dll';
+  vrFb25:
+    Result := GetPathTemp + 'Dlls\fbclient25.dll';
+  vrFb30:
+    Result := GetPathTemp + 'Dlls\fbclient30.dll';
+  vrFb40:
+    Result := GetPathTemp + 'Dlls\fbclient40.dll';
+  end;
+end;
+
+function TMigrationConfig.GetPathSourceDll: string;
+begin
+  Result := GetPathDll(Source.Version);
+end;
+
+function TMigrationConfig.GetPathDestDll: string;
+begin
+  Result := GetPathDll(Dest.Version);
 end;
 
 { TMigration }
@@ -83,7 +110,7 @@ var
   Backup: TBackup;
   Restore: TRestore;
 begin
-  CreateDir(Config.GetWorkFolder);
+  CreateDir(Config.GetPathTemp);
 
   Backup := TBackup.Create(Config);
   Restore := TRestore.Create(Config);
@@ -93,8 +120,8 @@ begin
 
     Restore.Execute(Log, LogErrors);
 
-    Log.Lines.SaveToFile(Config.GetWorkFolder + 'Log.txt');
-    LogErrors.Lines.SaveToFile(Config.GetWorkFolder + 'Errors.txt');
+    Log.Lines.SaveToFile(Config.GetPathTemp + 'Log.txt');
+    LogErrors.Lines.SaveToFile(Config.GetPathTemp + 'Errors.txt');
   finally
     Backup.Free;
     Restore.Free;

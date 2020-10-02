@@ -39,18 +39,18 @@ begin
 
   Restore.Verbose := true;
 
-  with Config.Dest do
-  begin
-    Restore.Host := Host;
-    Restore.Port := Port;
-    Restore.UserName := User;
-    Restore.Password := Password;
-    Restore.Database := Database;
-  end;
+//  with Config.Dest do
+//  begin
+//    Restore.Host := Host;
+//    Restore.Port := Port;
+//    Restore.UserName := User;
+//    Restore.Password := Password;
+//    Restore.Database := Database;
+//  end;
 
   Restore.BackupFiles.Clear;
 
-  Restore.BackupFiles.Add(Config.GetBackupFile);
+  Restore.BackupFiles.Add(Config.GetPathBackupFile);
 
   Restore.OnProgress := RestoreProgress;
   Restore.OnError := RestoreError;
