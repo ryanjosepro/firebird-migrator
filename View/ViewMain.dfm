@@ -3435,6 +3435,10 @@ object WindowMain: TWindowMain
     000000000000000000000000000000000000000000000000000080010000}
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   DesignSize = (
     851
     634)
@@ -3514,11 +3518,18 @@ object WindowMain: TWindowMain
           Visible = False
         end
         object LblDbSource: TLabel
-          Left = 199
+          Left = 415
           Top = 16
           Width = 68
           Height = 13
           Caption = 'Arquivo Fonte'
+        end
+        object LblVersionSource: TLabel
+          Left = 3
+          Top = 16
+          Width = 33
+          Height = 13
+          Caption = 'Vers'#227'o'
         end
         object TxtHostSource: TEdit
           Left = 3
@@ -3543,8 +3554,14 @@ object WindowMain: TWindowMain
           Left = 199
           Top = 35
           Width = 98
-          Height = 21
-          Enabled = False
+          Height = 26
+          AutoSize = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 2
           Text = 'SYSDBA'
         end
@@ -3552,16 +3569,22 @@ object WindowMain: TWindowMain
           Left = 303
           Top = 35
           Width = 106
-          Height = 21
-          Enabled = False
+          Height = 26
+          AutoSize = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
           PasswordChar = '*'
           TabOrder = 3
           Text = 'masterkey'
         end
         object TxtDbSource: TNsEditBtn
-          Left = 199
+          Left = 415
           Top = 35
-          Width = 632
+          Width = 416
           Height = 26
           Anchors = [akLeft, akTop, akRight]
           AutoSize = False
@@ -3631,7 +3654,7 @@ object WindowMain: TWindowMain
           Visible = False
           OnClick = BtnTestSourceConnClick
         end
-        object BoxVersion: TComboBox
+        object BoxVersionSource: TComboBox
           Left = 3
           Top = 35
           Width = 190
@@ -3656,7 +3679,7 @@ object WindowMain: TWindowMain
       end
       object GroupBoxDest: TGroupBox
         Left = 3
-        Top = 99
+        Top = 96
         Width = 834
         Height = 69
         Anchors = [akLeft, akTop, akRight]
@@ -3698,11 +3721,18 @@ object WindowMain: TWindowMain
           Visible = False
         end
         object LblDbDest: TLabel
-          Left = 199
+          Left = 415
           Top = 16
-          Width = 90
+          Width = 76
           Height = 13
-          Caption = 'Arquivo de destino'
+          Caption = 'Arquivo Destino'
+        end
+        object LblVersionDest: TLabel
+          Left = 3
+          Top = 16
+          Width = 33
+          Height = 13
+          Caption = 'Vers'#227'o'
         end
         object TxtHostDest: TEdit
           Left = 3
@@ -3727,8 +3757,14 @@ object WindowMain: TWindowMain
           Left = 199
           Top = 35
           Width = 98
-          Height = 21
-          Enabled = False
+          Height = 26
+          AutoSize = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 2
           Text = 'SYSDBA'
         end
@@ -3736,13 +3772,19 @@ object WindowMain: TWindowMain
           Left = 303
           Top = 35
           Width = 106
-          Height = 21
-          Enabled = False
+          Height = 26
+          AutoSize = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
           PasswordChar = '*'
           TabOrder = 3
           Text = 'masterkey'
         end
-        object ComboBox1: TComboBox
+        object BoxVersionDest: TComboBox
           Left = 3
           Top = 35
           Width = 190
@@ -3765,9 +3807,9 @@ object WindowMain: TWindowMain
             'Firebird 4.0.0.19630')
         end
         object TxtDbDest: TNsEditBtn
-          Left = 199
+          Left = 415
           Top = 35
-          Width = 632
+          Width = 416
           Height = 26
           Anchors = [akLeft, akTop, akRight]
           AutoSize = False
@@ -3860,8 +3902,6 @@ object WindowMain: TWindowMain
     object TabAdmin: TTabSheet
       Caption = 'Admin'
       ImageIndex = 2
-      ExplicitLeft = 8
-      ExplicitTop = 28
       DesignSize = (
         845
         603)
@@ -4379,7 +4419,7 @@ object WindowMain: TWindowMain
     Top = 568
   end
   object SaveFile: TFileSaveDialog
-    DefaultExtension = '.fdb'
+    DefaultExtension = '.FDB'
     FavoriteLinks = <>
     FileTypes = <
       item
@@ -4391,6 +4431,10 @@ object WindowMain: TWindowMain
     Top = 568
   end
   object FBDriverLink: TFDPhysFBDriverLink
+    DriverID = 'FBDLL'
+    VendorLib = 
+      'C:\Users\Ryan\AppData\Local\Temp\FirebirdMigrator\Dlls\fbclient2' +
+      '1.dll'
     Left = 60
     Top = 436
   end
@@ -4405,12 +4449,11 @@ object WindowMain: TWindowMain
   end
   object ConnTest: TFDConnection
     Params.Strings = (
-      'Protocol=TCPIP'
-      'DriverID=FB'
-      'User_Name=sysdba'
-      'Password=masterkey')
-    Left = 268
-    Top = 568
+      'User_Name=SYSDBA'
+      'Password=masterkey'
+      'DriverID=FBDLL')
+    Left = 252
+    Top = 440
   end
   object FBBackup: TFDIBBackup
     OnError = FBError

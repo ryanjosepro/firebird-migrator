@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.Types, System.Variants, System.StrUtils,
-  ShellAPI, Vcl.Forms, Windows, IOUtils;
+  ShellAPI, Vcl.Forms, Windows, IOUtils, System.Zip;
 type
   TIntegerArray = array of integer;
   TStringArray = array of string;
@@ -47,6 +47,8 @@ type
     class procedure AddFirewallPort(RuleName, Port: string);
 
     class procedure DeleteFirewallPort(RuleName, Port: string);
+
+    class procedure ExtractResourceZip(ResourceName, Path: string); static;
   end;
 
 implementation
@@ -329,7 +331,7 @@ end;
 //Retorna o diretório temp
 class function TUtils.Temp: string;
 begin
-  Result := GetEnvironmentVariable('TEMP');
+  Result := GetEnvironmentVariable('TEMP') + '\';
 end;
 
 class procedure TUtils.AddFirewallPort(RuleName, Port: string);
@@ -341,6 +343,24 @@ end;
 class procedure TUtils.DeleteFirewallPort(RuleName, Port: string);
 begin
   ExecDos('netsh advfirewall firewall delete rule name="' + RuleName + '" protocol=TCP localport=' + Port);
+end;
+
+class procedure TUtils.ExtractResourceZip(ResourceName, Path: string);
+var
+  Stream: TResourceStream;
+  ZipFile: TZipFile;
+begin
+  Stream := TResourceStream.Create(HInstance, ResourceName, RT_RCDATA);
+  ZipFile := TZipFile.Create;
+
+  try
+    ZipFile.Open(Stream, zmRead);
+
+    ZipFile.ExtractAll(Path);
+  finally
+    FreeAndNil(Stream);
+    FreeAndNil(ZipFile);
+  end;
 end;
 
 end.

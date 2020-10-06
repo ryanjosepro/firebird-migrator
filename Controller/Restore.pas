@@ -29,24 +29,27 @@ implementation
 constructor TRestore.Create(Config: TMigrationConfig);
 begin
   FBDriverLink := TFDPhysFBDriverLink.Create(nil);
+  FBDriverLink.VendorLib := Config.GetDestPathDll;
 
   Restore := TFDIBRestore.Create(nil);
   Restore.DriverLink := FBDriverLink;
 
-  Restore.Protocol := ipTCPIP;
+//  Restore.Protocol := ipTCPIP;
+
+  Restore.Options := [roReplace];
 
   Restore.Statistics := [bsTime, bsDelta, bsReads, bsWrites];
 
   Restore.Verbose := true;
 
-//  with Config.Dest do
-//  begin
+  with Config.Dest do
+  begin
 //    Restore.Host := Host;
 //    Restore.Port := Port;
-//    Restore.UserName := User;
-//    Restore.Password := Password;
-//    Restore.Database := Database;
-//  end;
+    Restore.UserName := User;
+    Restore.Password := Password;
+    Restore.Database := Database;
+  end;
 
   Restore.BackupFiles.Clear;
 
@@ -79,9 +82,12 @@ begin
 
   if Self.Log <> nil then
   begin
-    Self.Log.Lines.Add('');
-    Self.Log.Lines.Add('************* RESTORE *************');
-    Self.Log.Lines.Add('');
+    with Self.Log.Lines do
+    begin
+      Add('');
+      Add('************* RESTORE *************');
+      Add('');
+    end;
   end;
 
   Restore.Restore;

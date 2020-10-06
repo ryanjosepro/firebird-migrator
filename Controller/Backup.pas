@@ -26,30 +26,28 @@ type
 
 implementation
 
-{ TBackup }
-
 constructor TBackup.Create(Config: TMigrationConfig);
 begin
   FBDriverLink := TFDPhysFBDriverLink.Create(nil);
-  FBDriverLink.VendorLib := Config.GetPathSourceDll;
+  FBDriverLink.VendorLib := Config.GetSourcePathDll;
 
   Backup := TFDIBBackup.Create(nil);
   Backup.DriverLink := FBDriverLink;
 
-  //Backup.Protocol := ipTCPIP;
+//  Backup.Protocol := ipTCPIP;
 
   Backup.Statistics := [bsTime, bsDelta, bsReads, bsWrites];
 
   Backup.Verbose := true;
 
-  //with Config.Source do
-  //begin
-  //  Backup.Host := Host;
-  //  Backup.Port := Port;
-  //  Backup.UserName := User;
-  //  Backup.Password := Password;
-  //    Backup.Database := Database;
-  //end;
+  with Config.Source do
+  begin
+//    Backup.Host := Host;
+//    Backup.Port := Port;
+    Backup.UserName := User;
+    Backup.Password := Password;
+    Backup.Database := Database;
+  end;
 
   Backup.BackupFiles.Clear;
 
@@ -82,9 +80,12 @@ begin
 
   if Self.Log <> nil then
   begin
-    Self.Log.Lines.Add('');
-    Self.Log.Lines.Add('************* BACKUP *************');
-    Self.Log.Lines.Add('');
+    with Self.Log.Lines do
+    begin
+      Add('');
+      Add('************* BACKUP **************');
+      Add('');
+    end;
   end;
 
   Backup.Backup;

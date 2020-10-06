@@ -9,7 +9,8 @@ uses
   FireDAC.Stan.Intf, FireDAC.Phys, FireDAC.Phys.IBBase, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.CheckLst,
   ACBrBase, FireDAC.Phys.FBDef, FireDAC.Phys.FB, NsEditBtn, FireDAC.Stan.Option,
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Pool,
-  FireDAC.Stan.Async, Data.DB, FireDAC.Comp.Client;
+  FireDAC.Stan.Async, Data.DB, FireDAC.Comp.Client,
+  Migration, Config;
 
 type
   TWindowMain = class(TForm)
@@ -82,8 +83,10 @@ type
     BtnStart: TButton;
     LblDll: TLabel;
     TxtDll: TNsEditBtn;
-    BoxVersion: TComboBox;
-    ComboBox1: TComboBox;
+    BoxVersionSource: TComboBox;
+    BoxVersionDest: TComboBox;
+    LblVersionSource: TLabel;
+    LblVersionDest: TLabel;
     procedure ActEscExecute(Sender: TObject);
     procedure ActAddBackupExecute(Sender: TObject);
     procedure ActRmvBackupExecute(Sender: TObject);
@@ -99,6 +102,10 @@ type
     procedure TxtDbDestBtnClick(Sender: TObject);
     procedure RadioGroupMethodClick(Sender: TObject);
     procedure TxtDllBtnClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
 
   private
     procedure CarregarArquivo(Sender: TObject; DisplayName, FileMask: string);
@@ -108,32 +115,63 @@ type
 
     procedure LoadConfigs;
     procedure SaveConfigs;
-
   end;
 
 var
   WindowMain: TWindowMain;
+  MigrationConfig: TMigrationConfig;
 
 implementation
 
-uses
-  Migration, Config;
-
 {$R *.dfm}
 
-procedure TWindowMain.LoadConfigs;
+procedure TWindowMain.FormCreate(Sender: TObject);
 begin
-  TxtHostSource.Text := TConfig.GetConfig('SOURCE', 'Host', 'localhost');
-  TxtPortSource.Text := TConfig.GetConfig('SOURCE', 'Port', '3050');
-  TxtUserSource.Text := TConfig.GetConfig('SOURCE', 'User', 'SYSDBA');
-  TxtPassword.Text := TConfig.GetConfig('SOURCE', 'Password', 'masterkey');
-  TxtDbSource.Text := TConfig.GetConfig('SOURCE', 'Database', '');
+  MigrationConfig := TMigrationConfig.Create;
+end;
 
-  TxtHostDest.Text := TConfig.GetConfig('DEST', 'Host', 'localhost');
-  TxtPortDest.Text := TConfig.GetConfig('DEST', 'Port', '3050');
-  TxtUserDest.Text := TConfig.GetConfig('DEST', 'User', 'SYSDBA');
-  TxtPasswordDest.Text := TConfig.GetConfig('DEST', 'Password', 'masterkey');
-  TxtDbDest.Text := TConfig.GetConfig('DEST', 'Database', '');
+procedure TWindowMain.FormDestroy(Sender: TObject);
+begin
+  MigrationConfig.Free;
+end;
+
+procedure TWindowMain.FormActivate(Sender: TObject);
+begin
+  LoadConfigs;
+end;
+
+procedure TWindowMain.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveConfigs;
+end;
+
+procedure TWindowMain.LoadConfigs;
+var
+  Config: TMigrationConfig;
+begin
+  Config := TMigrationConfig.Create;
+
+  TConfig.GetGeral(Config);
+
+  with Config.Source do
+  begin
+    TxtHostSource.Text := Host;
+    TxtPortSource.Text := Port.ToString;
+    TxtUserSource.Text := User;
+    TxtPasswordSource.Text := Password;
+    TxtDbSource.Text := Database;
+    BoxVersionSource.ItemIndex := Integer(Version);
+  end;
+
+  with Config.Dest do
+  begin
+    TxtHostDest.Text := Host;
+    TxtPortDest.Text := Port.ToString;
+    TxtUserDest.Text := User;
+    TxtPasswordDest.Text := Password;
+    TxtDbDest.Text := Database;
+    BoxVersionDest.ItemIndex := Integer(Version);
+  end;
 end;
 
 procedure TWindowMain.SaveConfigs;
@@ -149,6 +187,7 @@ begin
     User := TxtUserSource.Text;
     Password := TxtPasswordSource.Text;
     Database := TxtDbSource.Text;
+    Version := TVersion(BoxVersionSource.ItemIndex);
   end;
 
   with Config.Dest do
@@ -158,6 +197,7 @@ begin
     User := TxtUserDest.Text;
     Password := TxtPasswordDest.Text;
     Database := TxtDbDest.Text;
+    Version := TVersion(BoxVersionDest.ItemIndex);
   end;
 
   TConfig.SetGeral(Config);
@@ -167,10 +207,9 @@ end;
 
 procedure TWindowMain.ActMigrateExecute(Sender: TObject);
 var
-  MigrationConfig: TMigrationConfig;
   Migration: TMigration;
 begin
-  MigrationConfig := TMigrationConfig.Create;
+  SaveConfigs;
 
   try
     with MigrationConfig.Source do
@@ -179,6 +218,7 @@ begin
       Port := StrToInt(TxtPortSource.Text);
       User := TxtUserSource.Text;
       Password := TxtPasswordSource.Text;
+      Version := TVersion(BoxVersionSource.ItemIndex);
       Database := TxtDbSource.Text;
     end;
 
@@ -188,6 +228,7 @@ begin
       Port := StrToInt(TxtPortDest.Text);
       User := TxtUserDest.Text;
       Password := TxtPasswordDest.Text;
+      Version := TVersion(BoxVersionDest.ItemIndex);
       Database := TxtDbDest.Text;
     end;
 
@@ -195,7 +236,6 @@ begin
 
     Migration.Migrate(MemoLog, MemoErrors);
   finally
-    MigrationConfig.Free;
     Migration.Free;
   end;
 end;
@@ -331,7 +371,7 @@ var
   DisplayName, FileMask: string;
 begin
   DisplayName := 'Firebird Database (*.FDB)';
-  FileMask := '*.fdb';
+  FileMask := '*.FDB';
 
   SalvarArquivo(sender, DisplayName, FileMask);
 end;
