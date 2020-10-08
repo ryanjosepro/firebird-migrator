@@ -9,8 +9,8 @@ uses
   FireDAC.Stan.Intf, FireDAC.Phys, FireDAC.Phys.IBBase, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.CheckLst,
   ACBrBase, FireDAC.Phys.FBDef, FireDAC.Phys.FB, NsEditBtn, FireDAC.Stan.Option,
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Pool,
-  FireDAC.Stan.Async, Data.DB, FireDAC.Comp.Client,
-  Migration, Config;
+  FireDAC.Stan.Async, Data.DB, FireDAC.Comp.Client, System.IniFiles,
+  Migration, Config, MyUtils;
 
 type
   TWindowMain = class(TForm)
@@ -30,24 +30,18 @@ type
     ActMigrate: TAction;
     GroupBoxSource: TGroupBox;
     GroupBoxDest: TGroupBox;
-    TxtHostSource: TEdit;
-    LblHostSource: TLabel;
-    LblPortSource: TLabel;
-    TxtPortSource: TEdit;
     LblUserSource: TLabel;
     TxtUserSource: TEdit;
     LblPasswordSource: TLabel;
     TxtPasswordSource: TEdit;
     LblDbSource: TLabel;
-    LblHostDest: TLabel;
-    LblPortDest: TLabel;
     LblUserDest: TLabel;
     LblPasswordDest: TLabel;
     LblDbDest: TLabel;
     TxtDbDest: TNsEditBtn;
     TabAdmin: TTabSheet;
-    TxtDestFile: TNsEditBtn;
-    LblDestFile: TLabel;
+    TxtDb: TNsEditBtn;
+    LblDb: TLabel;
     LblUser: TLabel;
     TxtUser: TEdit;
     LblPassword: TLabel;
@@ -63,8 +57,6 @@ type
     ListBackupFiles: TListBox;
     BtnAdd: TSpeedButton;
     BtnRemove: TSpeedButton;
-    TxtHostDest: TEdit;
-    TxtPortDest: TEdit;
     TxtUserDest: TEdit;
     TxtPasswordDest: TEdit;
     TxtDbSource: TNsEditBtn;
@@ -87,6 +79,7 @@ type
     BoxVersionDest: TComboBox;
     LblVersionSource: TLabel;
     LblVersionDest: TLabel;
+    RadioGroupConnMethod: TRadioGroup;
     procedure ActEscExecute(Sender: TObject);
     procedure ActAddBackupExecute(Sender: TObject);
     procedure ActRmvBackupExecute(Sender: TObject);
@@ -97,7 +90,7 @@ type
     procedure BtnTestSourceConnClick(Sender: TObject);
     procedure ActBackupExecute(Sender: TObject);
     procedure BtnStartClick(Sender: TObject);
-    procedure TxtDestFileBtnClick(Sender: TObject);
+    procedure TxtDbBtnClick(Sender: TObject);
     procedure TxtDbSourceBtnClick(Sender: TObject);
     procedure TxtDbDestBtnClick(Sender: TObject);
     procedure RadioGroupMethodClick(Sender: TObject);
@@ -106,6 +99,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure RadioGroupConnMethodClick(Sender: TObject);
 
   private
     procedure CarregarArquivo(Sender: TObject; DisplayName, FileMask: string);
@@ -115,6 +109,9 @@ type
 
     procedure LoadConfigs;
     procedure SaveConfigs;
+
+    procedure LoadAdminConfigs;
+    procedure SaveAdminConfigs;
   end;
 
 var
@@ -138,11 +135,14 @@ end;
 procedure TWindowMain.FormActivate(Sender: TObject);
 begin
   LoadConfigs;
+  LoadAdminConfigs;
+  RadioGroupConnMethodClick(self);
 end;
 
 procedure TWindowMain.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   SaveConfigs;
+  SaveAdminConfigs;
 end;
 
 procedure TWindowMain.LoadConfigs;
@@ -205,11 +205,34 @@ begin
   Config.Free;
 end;
 
+procedure TWindowMain.TxtDbSourceBtnClick(Sender: TObject);
+var
+  DisplayName, FileMask: string;
+begin
+  DisplayName := 'Firebird Database (*.FDB)';
+  FileMask := '*.fdb';
+
+  CarregarArquivo(sender, DisplayName, FileMask);
+end;
+
+procedure TWindowMain.TxtDbDestBtnClick(Sender: TObject);
+var
+  DisplayName, FileMask: string;
+begin
+  DisplayName := 'Firebird Database (*.FDB)';
+  FileMask := '*.FDB';
+
+  SalvarArquivo(sender, DisplayName, FileMask);
+end;
+
 procedure TWindowMain.ActMigrateExecute(Sender: TObject);
 var
   Migration: TMigration;
 begin
   SaveConfigs;
+
+  MemoLog.Clear;
+  MemoErrors.Clear;
 
   try
     with MigrationConfig.Source do
@@ -314,6 +337,7 @@ begin
 
   OpenFile.FileTypes[0].DisplayName := DisplayName;
   OpenFile.FileTypes[0].FileMask := FileMask;
+  OpenFile.FileName := '';
 
   if OpenFile.Execute then
   begin
@@ -327,6 +351,7 @@ begin
 
   SaveFile.FileTypes[0].DisplayName := DisplayName;
   SaveFile.FileTypes[0].FileMask := FileMask;
+  SaveFile.FileName := '';
 
   if SaveFile.Execute then
   begin
@@ -356,27 +381,71 @@ end;
 
 //TEMP//
 
-procedure TWindowMain.TxtDbSourceBtnClick(Sender: TObject);
+procedure TWindowMain.LoadAdminConfigs;
 var
-  DisplayName, FileMask: string;
+  Arq: TIniFile;
 begin
-  DisplayName := 'Firebird Database (*.FDB)';
-  FileMask := '*.fdb';
+  Arq := TIniFile.Create(TUtils.AppPath + 'Config.ini');
 
-  CarregarArquivo(sender, DisplayName, FileMask);
+  try
+    TxtDb.Text := Arq.ReadString('GENERAL', 'Database', '');
+    TxtUser.Text := Arq.ReadString('GENERAL', 'User', 'SYSDBA');
+    TxtPassword.Text := Arq.ReadString('GENERAL', 'Password', 'masterkey');
+    RadioGroupConnMethod.ItemIndex := Arq.ReadString('GENERAL', 'ConnMethod', '0').ToInteger;
+    BoxProtocol.ItemIndex := Arq.ReadString('GENERAL', 'Protocol', '1').ToInteger;
+    TxtHost.Text := Arq.ReadString('GENERAL', 'Host', 'localhost');
+    TxtPort.Text := Arq.ReadString('GENERAL', 'Port', '3050');
+    TxtDll.Text := Arq.ReadString('GENERAL', 'Dll', '');
+    ListBackupFiles.Items.Text := Arq.ReadString('GENERAL', 'BackupFiles', '');
+  finally
+    Arq.Free;
+  end;
 end;
 
-procedure TWindowMain.TxtDbDestBtnClick(Sender: TObject);
+procedure TWindowMain.SaveAdminConfigs;
 var
-  DisplayName, FileMask: string;
+  Arq: TIniFile;
 begin
-  DisplayName := 'Firebird Database (*.FDB)';
-  FileMask := '*.FDB';
+  Arq := TIniFile.Create(TUtils.AppPath + 'Config.ini');
 
-  SalvarArquivo(sender, DisplayName, FileMask);
+  try
+    Arq.WriteString('GENERAL', 'Database', TxtDb.Text);
+    Arq.WriteString('GENERAL', 'User', TxtUser.Text);
+    Arq.WriteString('GENERAL', 'Password', TxtPassword.Text);
+    Arq.WriteString('GENERAL', 'ConnMethod', RadioGroupConnMethod.ItemIndex.ToString);
+    Arq.WriteString('GENERAL', 'Protocol', BoxProtocol.ItemIndex.ToString);
+    Arq.WriteString('GENERAL', 'Host', TxtHost.Text);
+    Arq.WriteString('GENERAL', 'Port', TxtPort.Text);
+    Arq.WriteString('GENERAL', 'Dll', TxtDll.Text);
+    Arq.WriteString('GENERAL', 'BackupFiles', ListBackupFiles.Items.Text);
+  finally
+    Arq.Free;
+  end;
 end;
 
-procedure TWindowMain.TxtDestFileBtnClick(Sender: TObject);
+procedure TWindowMain.RadioGroupConnMethodClick(Sender: TObject);
+begin
+  case RadioGroupConnMethod.ItemIndex of
+  0:
+  begin
+    BoxProtocol.Enabled := true;
+    TxtHost.Enabled := true;
+    TxtPort.Enabled := true;
+    TxtDll.Enabled := false;
+  end;
+
+  1:
+  begin
+    BoxProtocol.Enabled := false;
+    TxtHost.Enabled := false;
+    TxtPort.Enabled := false;
+    TxtDll.Enabled := true;
+  end;
+
+  end;
+end;
+
+procedure TWindowMain.TxtDbBtnClick(Sender: TObject);
 var
   DisplayName, FileMask: string;
 begin
@@ -461,7 +530,6 @@ begin
   end;
 end;
 
-
 procedure TWindowMain.ActBackupExecute(Sender: TObject);
 var
   I: integer;
@@ -478,7 +546,7 @@ begin
   try
     FBDriverLink.VendorLib := TxtDll.Text;
 
-    FBBackup.Database := TxtDestFile.Text;
+    FBBackup.Database := TxtDb.Text;
     FBBackup.UserName := TxtUser.Text;
     FBBackup.Password := TxtPassword.Text;
 
@@ -529,7 +597,7 @@ begin
   try
     FBDriverLink.VendorLib := TxtDll.Text;
 
-    FBRestore.Database := TxtDestFile.Text;
+    FBRestore.Database := TxtDb.Text;
     FBRestore.UserName := TxtUser.Text;
     FBRestore.Password := TxtPassword.Text;
 

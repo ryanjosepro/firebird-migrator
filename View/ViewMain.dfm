@@ -4,7 +4,7 @@ object WindowMain: TWindowMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Firebird Migrator'
-  ClientHeight = 634
+  ClientHeight = 652
   ClientWidth = 851
   Color = clBtnFace
   Constraints.MinHeight = 272
@@ -3441,14 +3441,14 @@ object WindowMain: TWindowMain
   OnDestroy = FormDestroy
   DesignSize = (
     851
-    634)
+    652)
   PixelsPerInch = 96
   TextHeight = 13
   object Page: TPageControl
     Left = 0
     Top = 0
     Width = 853
-    Height = 631
+    Height = 649
     ActivePage = TabMigration
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
@@ -3456,9 +3456,10 @@ object WindowMain: TWindowMain
     object TabMigration: TTabSheet
       Caption = 'Migra'#231#227'o'
       ImageIndex = 1
+      ExplicitHeight = 603
       DesignSize = (
         845
-        603)
+        621)
       object LblErrors: TLabel
         Left = 452
         Top = 167
@@ -3485,22 +3486,6 @@ object WindowMain: TWindowMain
         DesignSize = (
           834
           91)
-        object LblHostSource: TLabel
-          Left = 3
-          Top = 16
-          Width = 22
-          Height = 13
-          Caption = 'Host'
-          Visible = False
-        end
-        object LblPortSource: TLabel
-          Left = 111
-          Top = 16
-          Width = 26
-          Height = 13
-          Caption = 'Porta'
-          Visible = False
-        end
         object LblUserSource: TLabel
           Left = 199
           Top = 16
@@ -3531,25 +3516,6 @@ object WindowMain: TWindowMain
           Height = 13
           Caption = 'Vers'#227'o'
         end
-        object TxtHostSource: TEdit
-          Left = 3
-          Top = 35
-          Width = 102
-          Height = 21
-          Enabled = False
-          TabOrder = 0
-          Text = 'localhost'
-        end
-        object TxtPortSource: TEdit
-          Left = 111
-          Top = 35
-          Width = 82
-          Height = 21
-          Enabled = False
-          NumbersOnly = True
-          TabOrder = 1
-          Text = '3050'
-        end
         object TxtUserSource: TEdit
           Left = 199
           Top = 35
@@ -3562,7 +3528,7 @@ object WindowMain: TWindowMain
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          TabOrder = 2
+          TabOrder = 1
           Text = 'SYSDBA'
         end
         object TxtPasswordSource: TEdit
@@ -3578,7 +3544,7 @@ object WindowMain: TWindowMain
           Font.Style = []
           ParentFont = False
           PasswordChar = '*'
-          TabOrder = 3
+          TabOrder = 2
           Text = 'masterkey'
         end
         object TxtDbSource: TNsEditBtn
@@ -3640,7 +3606,7 @@ object WindowMain: TWindowMain
             FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
             FF00}
           ParentFont = False
-          TabOrder = 4
+          TabOrder = 3
           OnBtnClick = TxtDbSourceBtnClick
         end
         object BtnTestSourceConn: TButton
@@ -3650,7 +3616,7 @@ object WindowMain: TWindowMain
           Height = 25
           Anchors = [akTop, akRight]
           Caption = 'Testar Conex'#227'o'
-          TabOrder = 5
+          TabOrder = 4
           Visible = False
           OnClick = BtnTestSourceConnClick
         end
@@ -3668,7 +3634,7 @@ object WindowMain: TWindowMain
           Font.Style = []
           ItemIndex = 0
           ParentFont = False
-          TabOrder = 6
+          TabOrder = 0
           Text = 'Firebird 2.1.7.18553'
           Items.Strings = (
             'Firebird 2.1.7.18553'
@@ -3688,22 +3654,6 @@ object WindowMain: TWindowMain
         DesignSize = (
           834
           69)
-        object LblHostDest: TLabel
-          Left = 3
-          Top = 16
-          Width = 22
-          Height = 13
-          Caption = 'Host'
-          Visible = False
-        end
-        object LblPortDest: TLabel
-          Left = 111
-          Top = 16
-          Width = 26
-          Height = 13
-          Caption = 'Porta'
-          Visible = False
-        end
         object LblUserDest: TLabel
           Left = 199
           Top = 16
@@ -3734,25 +3684,6 @@ object WindowMain: TWindowMain
           Height = 13
           Caption = 'Vers'#227'o'
         end
-        object TxtHostDest: TEdit
-          Left = 3
-          Top = 35
-          Width = 102
-          Height = 21
-          Enabled = False
-          TabOrder = 0
-          Text = 'localhost'
-        end
-        object TxtPortDest: TEdit
-          Left = 111
-          Top = 35
-          Width = 82
-          Height = 21
-          Enabled = False
-          NumbersOnly = True
-          TabOrder = 1
-          Text = '3050'
-        end
         object TxtUserDest: TEdit
           Left = 199
           Top = 35
@@ -3765,7 +3696,7 @@ object WindowMain: TWindowMain
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          TabOrder = 2
+          TabOrder = 1
           Text = 'SYSDBA'
         end
         object TxtPasswordDest: TEdit
@@ -3781,7 +3712,7 @@ object WindowMain: TWindowMain
           Font.Style = []
           ParentFont = False
           PasswordChar = '*'
-          TabOrder = 3
+          TabOrder = 2
           Text = 'masterkey'
         end
         object BoxVersionDest: TComboBox
@@ -3798,7 +3729,7 @@ object WindowMain: TWindowMain
           Font.Style = []
           ItemIndex = 0
           ParentFont = False
-          TabOrder = 5
+          TabOrder = 0
           Text = 'Firebird 2.1.7.18553'
           Items.Strings = (
             'Firebird 2.1.7.18553'
@@ -3865,7 +3796,7 @@ object WindowMain: TWindowMain
             FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
             FF00}
           ParentFont = False
-          TabOrder = 4
+          TabOrder = 3
           OnBtnClick = TxtDbDestBtnClick
         end
       end
@@ -3873,44 +3804,51 @@ object WindowMain: TWindowMain
         Left = 452
         Top = 186
         Width = 385
-        Height = 371
+        Height = 389
         Anchors = [akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
         TabOrder = 3
+        ExplicitHeight = 371
       end
       object MemoLog: TMemo
         Left = 3
         Top = 186
         Width = 443
-        Height = 414
+        Height = 432
         Anchors = [akLeft, akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
         TabOrder = 2
+        ExplicitHeight = 414
       end
       object BtnMigrate: TButton
         Left = 452
-        Top = 563
+        Top = 581
         Width = 385
         Height = 37
         Action = ActMigrate
         Anchors = [akRight, akBottom]
         TabOrder = 4
+        ExplicitTop = 563
       end
     end
     object TabAdmin: TTabSheet
       Caption = 'Admin'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       DesignSize = (
         845
-        603)
-      object LblDestFile: TLabel
+        621)
+      object LblDb: TLabel
         Left = 0
         Top = 3
-        Width = 90
+        Width = 46
         Height = 13
-        Caption = 'Arquivo de destino'
+        Caption = 'Database'
       end
       object LblUser: TLabel
         Left = 3
@@ -3928,21 +3866,21 @@ object WindowMain: TWindowMain
       end
       object LblProtocol: TLabel
         Left = 3
-        Top = 167
+        Top = 212
         Width = 45
         Height = 13
         Caption = 'Protocolo'
       end
       object LblHost: TLabel
         Left = 3
-        Top = 213
+        Top = 258
         Width = 22
         Height = 13
         Caption = 'Host'
       end
       object LblPort: TLabel
         Left = 3
-        Top = 259
+        Top = 304
         Width = 26
         Height = 13
         Caption = 'Porta'
@@ -3989,12 +3927,12 @@ object WindowMain: TWindowMain
       end
       object LblDll: TLabel
         Left = 3
-        Top = 307
+        Top = 352
         Width = 11
         Height = 13
         Caption = 'Dll'
       end
-      object TxtDestFile: TNsEditBtn
+      object TxtDb: TNsEditBtn
         Left = 3
         Top = 22
         Width = 390
@@ -4046,7 +3984,7 @@ object WindowMain: TWindowMain
           FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
           FF00}
         TabOrder = 0
-        OnBtnClick = TxtDestFileBtnClick
+        OnBtnClick = TxtDbBtnClick
       end
       object TxtUser: TEdit
         Left = 3
@@ -4067,13 +4005,13 @@ object WindowMain: TWindowMain
       end
       object BoxProtocol: TComboBox
         Left = 3
-        Top = 186
+        Top = 231
         Width = 390
         Height = 21
         Enabled = False
-        ItemIndex = 1
-        TabOrder = 3
-        Text = 'TCPIP'
+        ItemIndex = 0
+        TabOrder = 4
+        Text = 'Local'
         Items.Strings = (
           'Local'
           'TCPIP'
@@ -4082,31 +4020,31 @@ object WindowMain: TWindowMain
       end
       object TxtHost: TEdit
         Left = 3
-        Top = 232
-        Width = 390
-        Height = 21
-        Enabled = False
-        TabOrder = 4
-        Text = 'localhost'
-      end
-      object TxtPort: TEdit
-        Left = 3
-        Top = 278
+        Top = 277
         Width = 390
         Height = 21
         Enabled = False
         TabOrder = 5
+        Text = 'localhost'
+      end
+      object TxtPort: TEdit
+        Left = 3
+        Top = 323
+        Width = 390
+        Height = 21
+        Enabled = False
+        TabOrder = 6
         Text = '3050'
       end
       object CheckVerbose: TCheckBox
         Left = 3
-        Top = 360
+        Top = 405
         Width = 62
         Height = 17
         Caption = 'Verbose'
         Checked = True
         State = cbChecked
-        TabOrder = 6
+        TabOrder = 8
       end
       object ListBackupFiles: TListBox
         Left = 430
@@ -4115,13 +4053,13 @@ object WindowMain: TWindowMain
         Height = 117
         Anchors = [akTop, akRight]
         ItemHeight = 13
-        TabOrder = 7
+        TabOrder = 9
       end
       object RadioGroupMethod: TRadioGroup
         Left = 430
-        Top = 305
+        Top = 323
         Width = 379
-        Height = 105
+        Height = 69
         Anchors = [akTop, akRight]
         Caption = 'M'#233'todo'
         Columns = 2
@@ -4129,7 +4067,7 @@ object WindowMain: TWindowMain
         Items.Strings = (
           'Backup'
           'Restore')
-        TabOrder = 9
+        TabOrder = 11
         OnClick = RadioGroupMethodClick
       end
       object CheckListOptions: TCheckListBox
@@ -4155,21 +4093,22 @@ object WindowMain: TWindowMain
           'Convert'
           'Expand')
         ParentFont = False
-        TabOrder = 8
+        TabOrder = 10
       end
       object BtnStart: TButton
         Left = 430
-        Top = 528
+        Top = 546
         Width = 379
         Height = 72
         Anchors = [akRight, akBottom]
         Caption = 'Iniciar'
-        TabOrder = 10
+        TabOrder = 12
         OnClick = BtnStartClick
+        ExplicitTop = 528
       end
       object TxtDll: TNsEditBtn
         Left = 3
-        Top = 326
+        Top = 371
         Width = 390
         Height = 21
         Glyph.Data = {
@@ -4218,16 +4157,31 @@ object WindowMain: TWindowMain
           FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
           FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
           FF00}
-        TabOrder = 11
+        TabOrder = 7
         OnBtnClick = TxtDllBtnClick
+      end
+      object RadioGroupConnMethod: TRadioGroup
+        Left = 3
+        Top = 143
+        Width = 390
+        Height = 63
+        Anchors = [akTop, akRight]
+        Caption = 'M'#233'todo de Conex'#227'o'
+        Columns = 2
+        ItemIndex = 0
+        Items.Strings = (
+          'Rede'
+          'Dll')
+        TabOrder = 3
+        OnClick = RadioGroupConnMethodClick
       end
     end
   end
   object Images: TImageList
     BlendColor = clWhite
     BkColor = clWhite
-    Left = 16
-    Top = 568
+    Left = 60
+    Top = 496
     Bitmap = {
       494C010103005005040010001000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
@@ -4370,8 +4324,8 @@ object WindowMain: TWindowMain
   end
   object Actions: TActionList
     Images = Images
-    Left = 72
-    Top = 568
+    Left = 128
+    Top = 496
     object ActMigrate: TAction
       Caption = 'Migrate'
       OnExecute = ActMigrateExecute
@@ -4415,8 +4369,8 @@ object WindowMain: TWindowMain
         FileMask = '*'
       end>
     Options = []
-    Left = 128
-    Top = 568
+    Left = 184
+    Top = 496
   end
   object SaveFile: TFileSaveDialog
     DefaultExtension = '.FDB'
@@ -4427,14 +4381,11 @@ object WindowMain: TWindowMain
         FileMask = '.fdb'
       end>
     Options = []
-    Left = 201
-    Top = 568
+    Left = 253
+    Top = 496
   end
   object FBDriverLink: TFDPhysFBDriverLink
     DriverID = 'FBDLL'
-    VendorLib = 
-      'C:\Users\Ryan\AppData\Local\Temp\FirebirdMigrator\Dlls\fbclient2' +
-      '1.dll'
     Left = 60
     Top = 436
   end
