@@ -60,7 +60,6 @@ type
     TxtUserDest: TEdit;
     TxtPasswordDest: TEdit;
     TxtDbSource: TNsEditBtn;
-    BtnTestSourceConn: TButton;
     ConnTest: TFDConnection;
     FBBackup: TFDIBBackup;
     ActBackup: TAction;
@@ -155,8 +154,6 @@ begin
 
   with Config.Source do
   begin
-    TxtHostSource.Text := Host;
-    TxtPortSource.Text := Port.ToString;
     TxtUserSource.Text := User;
     TxtPasswordSource.Text := Password;
     TxtDbSource.Text := Database;
@@ -165,8 +162,6 @@ begin
 
   with Config.Dest do
   begin
-    TxtHostDest.Text := Host;
-    TxtPortDest.Text := Port.ToString;
     TxtUserDest.Text := User;
     TxtPasswordDest.Text := Password;
     TxtDbDest.Text := Database;
@@ -182,8 +177,6 @@ begin
 
   with Config.Source do
   begin
-    Host := TxtHostSource.Text;
-    Port := StrToInt(TxtPortSource.Text);
     User := TxtUserSource.Text;
     Password := TxtPasswordSource.Text;
     Database := TxtDbSource.Text;
@@ -192,8 +185,6 @@ begin
 
   with Config.Dest do
   begin
-    Host := TxtHostDest.Text;
-    Port := StrToInt(TxtPortDest.Text);
     User := TxtUserDest.Text;
     Password := TxtPasswordDest.Text;
     Database := TxtDbDest.Text;
@@ -237,8 +228,6 @@ begin
   try
     with MigrationConfig.Source do
     begin
-      Host := TxtHostSource.Text;
-      Port := StrToInt(TxtPortSource.Text);
       User := TxtUserSource.Text;
       Password := TxtPasswordSource.Text;
       Version := TVersion(BoxVersionSource.ItemIndex);
@@ -247,8 +236,6 @@ begin
 
     with MigrationConfig.Dest do
     begin
-      Host := TxtHostDest.Text;
-      Port := StrToInt(TxtPortDest.Text);
       User := TxtUserDest.Text;
       Password := TxtPasswordDest.Text;
       Version := TVersion(BoxVersionDest.ItemIndex);
@@ -266,9 +253,6 @@ end;
 procedure TWindowMain.BtnTestSourceConnClick(Sender: TObject);
 begin
   ConnTest.Close;
-
-  TFDPhysFBConnectionDefParams(ConnTest.Params).Server := TxtHostSource.Text;
-  TFDPhysFBConnectionDefParams(ConnTest.Params).Port := StrToInt(TxtPortSource.Text);
 
   with ConnTest.Params do
   begin

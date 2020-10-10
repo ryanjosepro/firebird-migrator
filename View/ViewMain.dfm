@@ -3456,13 +3456,12 @@ object WindowMain: TWindowMain
     object TabMigration: TTabSheet
       Caption = 'Migra'#231#227'o'
       ImageIndex = 1
-      ExplicitHeight = 603
       DesignSize = (
         845
         621)
       object LblErrors: TLabel
         Left = 452
-        Top = 167
+        Top = 154
         Width = 25
         Height = 13
         Anchors = [akTop, akRight]
@@ -3470,7 +3469,7 @@ object WindowMain: TWindowMain
       end
       object LblLog: TLabel
         Left = 3
-        Top = 167
+        Top = 154
         Width = 17
         Height = 13
         Caption = 'Log'
@@ -3479,13 +3478,13 @@ object WindowMain: TWindowMain
         Left = 3
         Top = 2
         Width = 834
-        Height = 91
+        Height = 71
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Fonte'
         TabOrder = 0
         DesignSize = (
           834
-          91)
+          71)
         object LblUserSource: TLabel
           Left = 199
           Top = 16
@@ -3609,17 +3608,6 @@ object WindowMain: TWindowMain
           TabOrder = 3
           OnBtnClick = TxtDbSourceBtnClick
         end
-        object BtnTestSourceConn: TButton
-          Left = 726
-          Top = 63
-          Width = 105
-          Height = 25
-          Anchors = [akTop, akRight]
-          Caption = 'Testar Conex'#227'o'
-          TabOrder = 4
-          Visible = False
-          OnClick = BtnTestSourceConnClick
-        end
         object BoxVersionSource: TComboBox
           Left = 3
           Top = 35
@@ -3645,7 +3633,7 @@ object WindowMain: TWindowMain
       end
       object GroupBoxDest: TGroupBox
         Left = 3
-        Top = 96
+        Top = 79
         Width = 834
         Height = 69
         Anchors = [akLeft, akTop, akRight]
@@ -3802,25 +3790,23 @@ object WindowMain: TWindowMain
       end
       object MemoErrors: TMemo
         Left = 452
-        Top = 186
+        Top = 173
         Width = 385
-        Height = 389
+        Height = 402
         Anchors = [akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
         TabOrder = 3
-        ExplicitHeight = 371
       end
       object MemoLog: TMemo
         Left = 3
-        Top = 186
+        Top = 173
         Width = 443
-        Height = 432
+        Height = 445
         Anchors = [akLeft, akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
         TabOrder = 2
-        ExplicitHeight = 414
       end
       object BtnMigrate: TButton
         Left = 452
@@ -3830,16 +3816,11 @@ object WindowMain: TWindowMain
         Action = ActMigrate
         Anchors = [akRight, akBottom]
         TabOrder = 4
-        ExplicitTop = 563
       end
     end
     object TabAdmin: TTabSheet
       Caption = 'Admin'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       DesignSize = (
         845
         621)
@@ -4104,7 +4085,6 @@ object WindowMain: TWindowMain
         Caption = 'Iniciar'
         TabOrder = 12
         OnClick = BtnStartClick
-        ExplicitTop = 528
       end
       object TxtDll: TNsEditBtn
         Left = 3
