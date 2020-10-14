@@ -35,8 +35,6 @@ type
     LblPasswordSource: TLabel;
     TxtPasswordSource: TEdit;
     LblDbSource: TLabel;
-    LblUserDest: TLabel;
-    LblPasswordDest: TLabel;
     LblDbDest: TLabel;
     TxtDbDest: TNsEditBtn;
     TabAdmin: TTabSheet;
@@ -57,8 +55,6 @@ type
     ListBackupFiles: TListBox;
     BtnAdd: TSpeedButton;
     BtnRemove: TSpeedButton;
-    TxtUserDest: TEdit;
-    TxtPasswordDest: TEdit;
     TxtDbSource: TNsEditBtn;
     ConnTest: TFDConnection;
     FBBackup: TFDIBBackup;
@@ -111,6 +107,8 @@ type
 
     procedure LoadAdminConfigs;
     procedure SaveAdminConfigs;
+
+    procedure CopyFirebirdMsg;
   end;
 
 var
@@ -162,8 +160,6 @@ begin
 
   with Config.Dest do
   begin
-    TxtUserDest.Text := User;
-    TxtPasswordDest.Text := Password;
     TxtDbDest.Text := Database;
     BoxVersionDest.ItemIndex := Integer(Version);
   end;
@@ -185,8 +181,6 @@ begin
 
   with Config.Dest do
   begin
-    User := TxtUserDest.Text;
-    Password := TxtPasswordDest.Text;
     Database := TxtDbDest.Text;
     Version := TVersion(BoxVersionDest.ItemIndex);
   end;
@@ -236,8 +230,6 @@ begin
 
     with MigrationConfig.Dest do
     begin
-      User := TxtUserDest.Text;
-      Password := TxtPasswordDest.Text;
       Version := TVersion(BoxVersionDest.ItemIndex);
       Database := TxtDbDest.Text;
     end;
@@ -407,6 +399,18 @@ begin
   end;
 end;
 
+procedure TWindowMain.CopyFirebirdMsg;
+var
+  Arq: string;
+begin
+  Arq := ExtractFilePath(TxtDll.Text) + 'Firebird.msg';
+
+  if FileExists(Arq) then
+  begin
+    CopyFile(PWideChar(Arq), PWideChar(ExtractFilePath(Application.ExeName) + 'Firebird.msg'), false);
+  end;
+end;
+
 procedure TWindowMain.RadioGroupConnMethodClick(Sender: TObject);
 begin
   case RadioGroupConnMethod.ItemIndex of
@@ -494,6 +498,7 @@ var
 begin
   Index := ListBackupFiles.ItemIndex;
   ListBackupFiles.DeleteSelected;
+
   if Index = 0 then
   begin
     ListBackupFiles.ItemIndex := 0;
@@ -528,17 +533,36 @@ begin
   Application.ProcessMessages;
 
   try
-    FBDriverLink.VendorLib := TxtDll.Text;
-
     FBBackup.Database := TxtDb.Text;
     FBBackup.UserName := TxtUser.Text;
     FBBackup.Password := TxtPassword.Text;
 
     FBBackup.BackupFiles.Clear;
     FBBackup.BackupFiles := ListBackupFiles.Items;
-    //FBBackup.Protocol := TIBProtocol(BoxProtocol.ItemIndex);
-    //FBBackup.Host := TxtHost.Text;
-    //FBBackup.Port := StrToInt(TxtPort.Text);
+
+    case RadioGroupConnMethod.ItemIndex of
+    0:
+    begin
+      FBDriverLink.Embedded := false;
+
+      FBBackup.Protocol := TIBProtocol(BoxProtocol.ItemIndex);
+      FBBackup.Host := TxtHost.Text;
+      FBBackup.Port := StrToInt(TxtPort.Text);
+    end;
+
+    1:
+    begin
+      FBDriverLink.Embedded := true;
+
+      FBDriverLink.VendorLib := TxtDll.Text;
+
+      FBBackup.Protocol := ipLocal;
+
+      CopyFirebirdMsg;
+    end;
+
+    end;
+
     FBBackup.Verbose := CheckVerbose.Checked;
     FBBackup.Options := [];
 
@@ -587,9 +611,30 @@ begin
 
     FBRestore.BackupFiles.Clear;
     FBRestore.BackupFiles := ListBackupFiles.Items;
-    //FBRestore.Protocol := TIBProtocol(BoxProtocol.ItemIndex);
-    //FBRestore.Host := TxtHost.Text;
-    //FBRestore.Port := StrToInt(TxtPort.Text);
+
+    case RadioGroupConnMethod.ItemIndex of
+    0:
+    begin
+      FBDriverLink.Embedded := false;
+
+      FBRestore.Protocol := TIBProtocol(BoxProtocol.ItemIndex);
+      FBRestore.Host := TxtHost.Text;
+      FBRestore.Port := StrToInt(TxtPort.Text);
+    end;
+
+    1:
+    begin
+      FBDriverLink.Embedded := true;
+
+      FBDriverLink.VendorLib := TxtDll.Text;
+
+      FBRestore.Protocol := ipLocal;
+
+      CopyFirebirdMsg;
+    end;
+
+    end;
+
     FBRestore.Verbose := CheckVerbose.Checked;
     FBRestore.Options := [];
 

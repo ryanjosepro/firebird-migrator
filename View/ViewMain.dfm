@@ -3642,24 +3642,8 @@ object WindowMain: TWindowMain
         DesignSize = (
           834
           69)
-        object LblUserDest: TLabel
-          Left = 199
-          Top = 16
-          Width = 36
-          Height = 13
-          Caption = 'Usu'#225'rio'
-          Visible = False
-        end
-        object LblPasswordDest: TLabel
-          Left = 303
-          Top = 16
-          Width = 30
-          Height = 13
-          Caption = 'Senha'
-          Visible = False
-        end
         object LblDbDest: TLabel
-          Left = 415
+          Left = 199
           Top = 16
           Width = 76
           Height = 13
@@ -3671,37 +3655,6 @@ object WindowMain: TWindowMain
           Width = 33
           Height = 13
           Caption = 'Vers'#227'o'
-        end
-        object TxtUserDest: TEdit
-          Left = 199
-          Top = 35
-          Width = 98
-          Height = 26
-          AutoSize = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -15
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 1
-          Text = 'SYSDBA'
-        end
-        object TxtPasswordDest: TEdit
-          Left = 303
-          Top = 35
-          Width = 106
-          Height = 26
-          AutoSize = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -15
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-          PasswordChar = '*'
-          TabOrder = 2
-          Text = 'masterkey'
         end
         object BoxVersionDest: TComboBox
           Left = 3
@@ -3726,9 +3679,9 @@ object WindowMain: TWindowMain
             'Firebird 4.0.0.19630')
         end
         object TxtDbDest: TNsEditBtn
-          Left = 415
+          Left = 199
           Top = 35
-          Width = 416
+          Width = 632
           Height = 26
           Anchors = [akLeft, akTop, akRight]
           AutoSize = False
@@ -3784,7 +3737,7 @@ object WindowMain: TWindowMain
             FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
             FF00}
           ParentFont = False
-          TabOrder = 3
+          TabOrder = 1
           OnBtnClick = TxtDbDestBtnClick
         end
       end
@@ -3847,21 +3800,21 @@ object WindowMain: TWindowMain
       end
       object LblProtocol: TLabel
         Left = 3
-        Top = 212
+        Top = 260
         Width = 45
         Height = 13
         Caption = 'Protocolo'
       end
       object LblHost: TLabel
         Left = 3
-        Top = 258
+        Top = 306
         Width = 22
         Height = 13
         Caption = 'Host'
       end
       object LblPort: TLabel
         Left = 3
-        Top = 304
+        Top = 352
         Width = 26
         Height = 13
         Caption = 'Porta'
@@ -3908,7 +3861,7 @@ object WindowMain: TWindowMain
       end
       object LblDll: TLabel
         Left = 3
-        Top = 352
+        Top = 400
         Width = 11
         Height = 13
         Caption = 'Dll'
@@ -3986,7 +3939,7 @@ object WindowMain: TWindowMain
       end
       object BoxProtocol: TComboBox
         Left = 3
-        Top = 231
+        Top = 279
         Width = 390
         Height = 21
         Enabled = False
@@ -4001,7 +3954,7 @@ object WindowMain: TWindowMain
       end
       object TxtHost: TEdit
         Left = 3
-        Top = 277
+        Top = 325
         Width = 390
         Height = 21
         Enabled = False
@@ -4010,7 +3963,7 @@ object WindowMain: TWindowMain
       end
       object TxtPort: TEdit
         Left = 3
-        Top = 323
+        Top = 371
         Width = 390
         Height = 21
         Enabled = False
@@ -4019,7 +3972,7 @@ object WindowMain: TWindowMain
       end
       object CheckVerbose: TCheckBox
         Left = 3
-        Top = 405
+        Top = 446
         Width = 62
         Height = 17
         Caption = 'Verbose'
@@ -4088,8 +4041,8 @@ object WindowMain: TWindowMain
       end
       object TxtDll: TNsEditBtn
         Left = 3
-        Top = 371
-        Width = 390
+        Top = 419
+        Width = 806
         Height = 21
         Glyph.Data = {
           7E050000424D7E0500000000000036000000280000001A0000000D0000000100
@@ -4141,8 +4094,8 @@ object WindowMain: TWindowMain
         OnBtnClick = TxtDllBtnClick
       end
       object RadioGroupConnMethod: TRadioGroup
-        Left = 3
-        Top = 143
+        Left = -4
+        Top = 186
         Width = 390
         Height = 63
         Anchors = [akTop, akRight]
@@ -4366,6 +4319,10 @@ object WindowMain: TWindowMain
   end
   object FBDriverLink: TFDPhysFBDriverLink
     DriverID = 'FBDLL'
+    VendorLib = 
+      'C:\Users\Ryan\Desktop\Programs\Coding\Firebird\Embedded\Firebird' +
+      '-2.1.7.18553-0_Win32_embed\fbembed.dll'
+    Embedded = True
     Left = 60
     Top = 436
   end
@@ -4382,6 +4339,7 @@ object WindowMain: TWindowMain
     Params.Strings = (
       'User_Name=SYSDBA'
       'Password=masterkey'
+      'Database=C:\NETSide_Teste2.1\db\NSC.FDB'
       'DriverID=FBDLL')
     Left = 252
     Top = 440

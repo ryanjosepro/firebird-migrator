@@ -11,8 +11,6 @@ type
 
   TMigrationConnection = class
   public
-    Host: string;
-    Port: integer;
     User: string;
     Password: string;
     Version: TVersion;
@@ -139,6 +137,9 @@ var
   Backup: TBackup;
   Restore: TRestore;
 begin
+  Config.Dest.User := Config.Source.User;
+  Config.Dest.Password := Config.Source.Password;
+
   CreateDir(Config.GetPathTemp);
 
   Backup := TBackup.Create(Config);
@@ -149,7 +150,7 @@ begin
     begin
       with Log.Lines do
       begin
-        Add('************* MIGRAÇÂO ************');
+        Add('************* MIGRAÇÃO ************');
         Add(DateTimeToStr(now));
         Add('*Fonte*');
         Add('Path: ' + Config.Source.Database);
@@ -172,7 +173,7 @@ begin
       with Log.Lines do
       begin
         Add('');
-        Add('******** MIGRAÇÂO FINALIZADA ******');
+        Add('******** MIGRAÇÃO FINALIZADA ******');
         Add(DateTimeToStr(now));
         Add('');
       end;
