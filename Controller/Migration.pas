@@ -3,7 +3,7 @@ unit Migration;
 interface
 
 uses
-  System.SysUtils, System.Variants, System.Classes, Vcl.StdCtrls,
+  System.SysUtils, System.Variants, System.Classes, Vcl.StdCtrls, Winapi.Windows, Vcl.Forms,
   MyUtils;
 
 type
@@ -19,8 +19,9 @@ type
 
   TMigrationConfig = class
   strict private
-    function GetPathDll(Version: TVersion): string;
     function GetVersionName(Version: TVersion): string;
+    function GetResourceName(Version: TVersion): string;
+    function GetPathDll(Version: TVersion): string;
   public
     Source: TMigrationConnection;
     Dest: TMigrationConnection;
@@ -63,27 +64,61 @@ begin
   Dest.Free;
 end;
 
+function TMigrationConfig.GetVersionName(Version: TVersion): string;
+begin
+  case Version of
+  vrFb21:
+    Result := 'Firebird 2.1.7.18553';
+  vrFb25:
+    Result := 'Firebird 2.5.8.27089';
+  vrFb30:
+    Result := 'Firebird 3.0.4.33054';
+  vrFb40:
+    Result := 'Firebird 4.0.0.19630';
+  end;
+end;
+
+function TMigrationConfig.GetResourceName(Version: TVersion): string;
+begin
+  case Version of
+  vrFb21:
+    Result := 'Firebird_2_1';
+  vrFb25:
+    Result := 'Firebird_2_5';
+  vrFb30:
+    Result := 'Firebird_3_0';
+  vrFb40:
+    Result := 'Firebird_4_0';
+  end;
+end;
+
 function TMigrationConfig.GetPathTemp: string;
 begin
   Result := TUtils.Temp + 'FirebirdMigrator\';
 end;
 
 function TMigrationConfig.GetPathDll(Version: TVersion): string;
+var
+  Folder: string;
 begin
-  TUtils.DeleteIfExistsDir(GetPathTemp + '\Dlls');
+  //Pasta destino
+  Folder := GetPathTemp + GetResourceName(Version) + '\';
 
-  TUtils.ExtractResourceZip('DataDlls', GetPathTemp);
+  TUtils.DeleteIfExistsDir(Folder);
 
-  case Version of
-  vrFb21:
-    Result := GetPathTemp + 'Dlls\fbclient21.dll';
-  vrFb25:
-    Result := GetPathTemp + 'Dlls\fbclient25.dll';
-  vrFb30:
-    Result := GetPathTemp + 'Dlls\fbclient30.dll';
-  vrFb40:
-    Result := GetPathTemp + 'Dlls\fbclient40.dll';
-  end;
+  Application.ProcessMessages;
+
+  //Extrai resource para a pasta temp
+  TUtils.ExtractResourceZip(GetResourceName(Version), GetPathTemp);
+
+  Application.ProcessMessages;
+
+  //Copia o firebird.msg para a pasta do executável
+  CopyFile(PWideChar(Folder + 'Firebird.msg'), PWideChar(TUtils.AppPath + 'Firebird.msg'), false);
+
+  Application.ProcessMessages;
+
+  Result := Folder + 'fbclient.dll';
 end;
 
 function TMigrationConfig.GetSourcePathDll: string;
@@ -99,20 +134,6 @@ end;
 function TMigrationConfig.GetPathBackupFile: string;
 begin
   Result := GetPathTemp + 'BackupFile.fbk';
-end;
-
-function TMigrationConfig.GetVersionName(Version: TVersion): string;
-begin
-  case Version of
-  vrFb21:
-    Result := 'Firebird 2.1.7.18553';
-  vrFb25:
-    Result := 'Firebird 2.5.8.27089';
-  vrFb30:
-    Result := 'Firebird 3.0.4.33054';
-  vrFb40:
-    Result := 'Firebird 4.0.0.19630';
-  end;
 end;
 
 function TMigrationConfig.GetSourceVersionName: string;

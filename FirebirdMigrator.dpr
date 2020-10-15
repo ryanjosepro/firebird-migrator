@@ -1,5 +1,9 @@
 program FirebirdMigrator;
 
+
+
+
+
 {$R *.dres}
 
 uses

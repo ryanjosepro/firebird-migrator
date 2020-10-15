@@ -25,7 +25,6 @@ type
     OpenFile: TFileOpenDialog;
     ActRestore: TAction;
     SaveFile: TFileSaveDialog;
-    FBDriverLink: TFDPhysFBDriverLink;
     FBRestore: TFDIBRestore;
     ActMigrate: TAction;
     GroupBoxSource: TGroupBox;
@@ -56,7 +55,6 @@ type
     BtnAdd: TSpeedButton;
     BtnRemove: TSpeedButton;
     TxtDbSource: TNsEditBtn;
-    ConnTest: TFDConnection;
     FBBackup: TFDIBBackup;
     ActBackup: TAction;
     LblOptions: TLabel;
@@ -75,6 +73,7 @@ type
     LblVersionSource: TLabel;
     LblVersionDest: TLabel;
     RadioGroupConnMethod: TRadioGroup;
+    BtnTestConn: TButton;
     procedure ActEscExecute(Sender: TObject);
     procedure ActAddBackupExecute(Sender: TObject);
     procedure ActRmvBackupExecute(Sender: TObject);
@@ -82,7 +81,7 @@ type
     procedure FBError(ASender, AInitiator: TObject; var AException: Exception);
     procedure FBProgress(ASender: TFDPhysDriverService; const AMessage: string);
     procedure ActMigrateExecute(Sender: TObject);
-    procedure BtnTestSourceConnClick(Sender: TObject);
+    procedure BtnTestConnClick(Sender: TObject);
     procedure ActBackupExecute(Sender: TObject);
     procedure BtnStartClick(Sender: TObject);
     procedure TxtDbBtnClick(Sender: TObject);
@@ -210,6 +209,52 @@ begin
   SalvarArquivo(sender, DisplayName, FileMask);
 end;
 
+procedure TWindowMain.BtnTestConnClick(Sender: TObject);
+var
+  FBDriverLink: TFDPhysFBDriverLink;
+  ConnTest: TFDConnection;
+begin
+  with MigrationConfig.Source do
+  begin
+    User := TxtUserSource.Text;
+    Password := TxtPasswordSource.Text;
+    Version := TVersion(BoxVersionSource.ItemIndex);
+    Database := TxtDbSource.Text;
+  end;
+
+  FBDriverLink := TFDPhysFBDriverLink.Create(self);
+
+  ConnTest := TFDConnection.Create(self);
+
+  try
+    FBDriverLink.Embedded := true;
+    FBDriverLink.VendorLib := MigrationConfig.GetSourcePathDll;
+    FBDriverLink.DriverID := 'FB';
+
+    ConnTest.DriverName := 'FB';
+
+    with TFDPhysFBConnectionDefParams(ConnTest.Params) do
+    begin
+      UserName := TxtUserSource.Text;
+      Password := TxtPasswordSource.Text;
+      Database := TxtDbSource.Text;
+      Protocol := ipLocal;
+    end;
+
+    try
+      ConnTest.Open;
+
+      ShowMessage('Conexão Ok!');
+    Except on E: Exception do
+      ShowMessage('Erro: ' + E.Message);
+    end;
+  finally
+    ConnTest.Close;
+    ConnTest.Free;
+    FBDriverLink.Free;
+  end;
+end;
+
 procedure TWindowMain.ActMigrateExecute(Sender: TObject);
 var
   Migration: TMigration;
@@ -239,30 +284,6 @@ begin
     Migration.Migrate(MemoLog, MemoErrors);
   finally
     Migration.Free;
-  end;
-end;
-
-procedure TWindowMain.BtnTestSourceConnClick(Sender: TObject);
-begin
-  ConnTest.Close;
-
-  with ConnTest.Params do
-  begin
-    UserName := TxtUserSource.Text;
-    Password := TxtPasswordSource.Text;
-    Database := TxtDbSource.Text;
-  end;
-
-  try
-    try
-      ConnTest.Open;
-
-      ShowMessage('Conexão Ok!');
-    Except on E: Exception do
-      ShowMessage('Erro: ' + E.Message);
-    end;
-  finally
-    ConnTest.Close;
   end;
 end;
 
@@ -522,6 +543,7 @@ end;
 procedure TWindowMain.ActBackupExecute(Sender: TObject);
 var
   I: integer;
+  FBDriverLink: TFDPhysFBDriverLink;
 begin
   Page.ActivePageIndex := 0;
 
@@ -531,6 +553,8 @@ begin
   MemoErrors.Clear;
 
   Application.ProcessMessages;
+
+  FBDriverLink := TFDPhysFBDriverLink.Create(nil);
 
   try
     FBBackup.Database := TxtDb.Text;
@@ -586,12 +610,14 @@ begin
     FBBackup.Backup;
   finally
     TabAdmin.Enabled := true;
+    FBDriverLink.Free;
   end;
 end;
 
 procedure TWindowMain.ActRestoreExecute(Sender: TObject);
 var
   I: integer;
+  FBDriverLink: TFDPhysFBDriverLink;
 begin
   Page.ActivePageIndex := 0;
 
@@ -602,9 +628,9 @@ begin
 
   Application.ProcessMessages;
 
-  try
-    FBDriverLink.VendorLib := TxtDll.Text;
+  FBDriverLink := TFDPhysFBDriverLink.Create(nil);
 
+  try
     FBRestore.Database := TxtDb.Text;
     FBRestore.UserName := TxtUser.Text;
     FBRestore.Password := TxtPassword.Text;

@@ -4,7 +4,7 @@ object WindowMain: TWindowMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Firebird Migrator'
-  ClientHeight = 652
+  ClientHeight = 680
   ClientWidth = 851
   Color = clBtnFace
   Constraints.MinHeight = 272
@@ -3441,14 +3441,14 @@ object WindowMain: TWindowMain
   OnDestroy = FormDestroy
   DesignSize = (
     851
-    652)
+    680)
   PixelsPerInch = 96
   TextHeight = 13
   object Page: TPageControl
     Left = 0
     Top = 0
     Width = 853
-    Height = 649
+    Height = 677
     ActivePage = TabMigration
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
@@ -3458,10 +3458,10 @@ object WindowMain: TWindowMain
       ImageIndex = 1
       DesignSize = (
         845
-        621)
+        649)
       object LblErrors: TLabel
         Left = 452
-        Top = 154
+        Top = 173
         Width = 25
         Height = 13
         Anchors = [akTop, akRight]
@@ -3469,7 +3469,7 @@ object WindowMain: TWindowMain
       end
       object LblLog: TLabel
         Left = 3
-        Top = 154
+        Top = 173
         Width = 17
         Height = 13
         Caption = 'Log'
@@ -3478,13 +3478,13 @@ object WindowMain: TWindowMain
         Left = 3
         Top = 2
         Width = 834
-        Height = 71
+        Height = 95
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Fonte'
         TabOrder = 0
         DesignSize = (
           834
-          71)
+          95)
         object LblUserSource: TLabel
           Left = 199
           Top = 16
@@ -3630,10 +3630,20 @@ object WindowMain: TWindowMain
             'Firebird 3.0.4.33054'
             'Firebird 4.0.0.19630')
         end
+        object BtnTestConn: TButton
+          Left = 688
+          Top = 67
+          Width = 143
+          Height = 25
+          Anchors = [akTop, akRight]
+          Caption = 'Testar Conex'#227'o'
+          TabOrder = 4
+          OnClick = BtnTestConnClick
+        end
       end
       object GroupBoxDest: TGroupBox
         Left = 3
-        Top = 79
+        Top = 98
         Width = 834
         Height = 69
         Anchors = [akLeft, akTop, akRight]
@@ -3743,9 +3753,9 @@ object WindowMain: TWindowMain
       end
       object MemoErrors: TMemo
         Left = 452
-        Top = 173
+        Top = 192
         Width = 385
-        Height = 402
+        Height = 411
         Anchors = [akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
@@ -3753,9 +3763,9 @@ object WindowMain: TWindowMain
       end
       object MemoLog: TMemo
         Left = 3
-        Top = 173
+        Top = 192
         Width = 443
-        Height = 445
+        Height = 454
         Anchors = [akLeft, akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
@@ -3763,7 +3773,7 @@ object WindowMain: TWindowMain
       end
       object BtnMigrate: TButton
         Left = 452
-        Top = 581
+        Top = 609
         Width = 385
         Height = 37
         Action = ActMigrate
@@ -3776,7 +3786,7 @@ object WindowMain: TWindowMain
       ImageIndex = 2
       DesignSize = (
         845
-        621)
+        649)
       object LblDb: TLabel
         Left = 0
         Top = 3
@@ -4031,7 +4041,7 @@ object WindowMain: TWindowMain
       end
       object BtnStart: TButton
         Left = 430
-        Top = 546
+        Top = 574
         Width = 379
         Height = 72
         Anchors = [akRight, akBottom]
@@ -4317,36 +4327,16 @@ object WindowMain: TWindowMain
     Left = 253
     Top = 496
   end
-  object FBDriverLink: TFDPhysFBDriverLink
-    DriverID = 'FBDLL'
-    VendorLib = 
-      'C:\Users\Ryan\Desktop\Programs\Coding\Firebird\Embedded\Firebird' +
-      '-2.1.7.18553-0_Win32_embed\fbembed.dll'
-    Embedded = True
-    Left = 60
-    Top = 436
-  end
   object FBRestore: TFDIBRestore
     OnError = FBError
-    DriverLink = FBDriverLink
     OnProgress = FBProgress
     Verbose = True
     Statistics = [bsTime, bsDelta, bsReads, bsWrites]
     Left = 185
     Top = 438
   end
-  object ConnTest: TFDConnection
-    Params.Strings = (
-      'User_Name=SYSDBA'
-      'Password=masterkey'
-      'Database=C:\NETSide_Teste2.1\db\NSC.FDB'
-      'DriverID=FBDLL')
-    Left = 252
-    Top = 440
-  end
   object FBBackup: TFDIBBackup
     OnError = FBError
-    DriverLink = FBDriverLink
     OnProgress = FBProgress
     Verbose = True
     Statistics = [bsTime, bsDelta, bsReads, bsWrites]
