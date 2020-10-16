@@ -250,8 +250,8 @@ begin
     end;
   finally
     ConnTest.Close;
-    ConnTest.Free;
-    FBDriverLink.Free;
+    FreeAndNil(ConnTest);
+    FreeAndNil(FBDriverLink);
   end;
 end;
 
