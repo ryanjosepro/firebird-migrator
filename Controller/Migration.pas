@@ -118,7 +118,7 @@ begin
 
   Application.ProcessMessages;
 
-  Result := Folder + 'fbclient.dll';
+  Result := Folder + 'fbembed.dll';
 end;
 
 function TMigrationConfig.GetSourcePathDll: string;

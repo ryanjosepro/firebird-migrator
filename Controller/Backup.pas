@@ -29,6 +29,7 @@ implementation
 constructor TBackup.Create(Config: TMigrationConfig);
 begin
   FBDriverLink := TFDPhysFBDriverLink.Create(nil);
+  FBDriverLink.Release;
   FBDriverLink.Embedded := true;
   FBDriverLink.VendorLib := Config.GetSourcePathDll;
 

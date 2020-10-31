@@ -214,6 +214,8 @@ var
   FBDriverLink: TFDPhysFBDriverLink;
   ConnTest: TFDConnection;
 begin
+  BtnTestConn.Enabled := false;
+
   with MigrationConfig.Source do
   begin
     User := TxtUserSource.Text;
@@ -227,6 +229,7 @@ begin
   ConnTest := TFDConnection.Create(self);
 
   try
+    FBDriverLink.Release;
     FBDriverLink.Embedded := true;
     FBDriverLink.VendorLib := MigrationConfig.GetSourcePathDll;
     FBDriverLink.DriverID := 'FB';
@@ -252,6 +255,7 @@ begin
     ConnTest.Close;
     FreeAndNil(ConnTest);
     FreeAndNil(FBDriverLink);
+    BtnTestConn.Enabled := true;
   end;
 end;
 

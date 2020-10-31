@@ -29,6 +29,7 @@ implementation
 constructor TRestore.Create(Config: TMigrationConfig);
 begin
   FBDriverLink := TFDPhysFBDriverLink.Create(nil);
+  FBDriverLink.Release;
   FBDriverLink.Embedded := true;
   FBDriverLink.VendorLib := Config.GetDestPathDll;
 
