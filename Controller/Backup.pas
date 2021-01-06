@@ -31,7 +31,7 @@ begin
   FBDriverLink := TFDPhysFBDriverLink.Create(nil);
   FBDriverLink.Release;
   FBDriverLink.Embedded := true;
-  FBDriverLink.VendorLib := Config.GetSourcePathDll;
+  FBDriverLink.VendorLib := Config.GetPathSourceDll;
 
   Backup := TFDIBBackup.Create(nil);
   Backup.DriverLink := FBDriverLink;

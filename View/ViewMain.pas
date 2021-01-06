@@ -50,10 +50,7 @@ type
     LblPort: TLabel;
     TxtPort: TEdit;
     CheckVerbose: TCheckBox;
-    LblBackupFiles: TLabel;
-    ListBackupFiles: TListBox;
-    BtnAdd: TSpeedButton;
-    BtnRemove: TSpeedButton;
+    LblBackupFile: TLabel;
     TxtDbSource: TNsEditBtn;
     FBBackup: TFDIBBackup;
     ActBackup: TAction;
@@ -74,9 +71,8 @@ type
     LblVersionDest: TLabel;
     RadioGroupConnMethod: TRadioGroup;
     BtnTestConn: TButton;
+    TxtBackupFile: TNsEditBtn;
     procedure ActEscExecute(Sender: TObject);
-    procedure ActAddBackupExecute(Sender: TObject);
-    procedure ActRmvBackupExecute(Sender: TObject);
     procedure ActRestoreExecute(Sender: TObject);
     procedure FBError(ASender, AInitiator: TObject; var AException: Exception);
     procedure FBProgress(ASender: TFDPhysDriverService; const AMessage: string);
@@ -94,6 +90,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure RadioGroupConnMethodClick(Sender: TObject);
+    procedure TxtBackupFileBtnClick(Sender: TObject);
 
   private
     procedure CarregarArquivo(Sender: TObject; DisplayName, FileMask: string);
@@ -229,9 +226,8 @@ begin
   ConnTest := TFDConnection.Create(self);
 
   try
-    FBDriverLink.Release;
     FBDriverLink.Embedded := true;
-    FBDriverLink.VendorLib := MigrationConfig.GetSourcePathDll;
+    FBDriverLink.VendorLib := MigrationConfig.GetPathSourceDll;
     FBDriverLink.DriverID := 'FB';
 
     ConnTest.DriverName := 'FB';
@@ -249,11 +245,14 @@ begin
 
       ShowMessage('Conexão Ok!');
     Except on E: Exception do
+    begin
       ShowMessage('Erro: ' + E.Message);
+    end;
     end;
   finally
     ConnTest.Close;
     FreeAndNil(ConnTest);
+    FBDriverLink.Release;
     FreeAndNil(FBDriverLink);
     BtnTestConn.Enabled := true;
   end;
@@ -397,7 +396,7 @@ begin
     TxtHost.Text := Arq.ReadString('GENERAL', 'Host', 'localhost');
     TxtPort.Text := Arq.ReadString('GENERAL', 'Port', '3050');
     TxtDll.Text := Arq.ReadString('GENERAL', 'Dll', '');
-    ListBackupFiles.Items.Text := Arq.ReadString('GENERAL', 'BackupFiles', '');
+    TxtBackupFile.Text := Arq.ReadString('GENERAL', 'BackupFile', '');
   finally
     Arq.Free;
   end;
@@ -418,7 +417,7 @@ begin
     Arq.WriteString('GENERAL', 'Host', TxtHost.Text);
     Arq.WriteString('GENERAL', 'Port', TxtPort.Text);
     Arq.WriteString('GENERAL', 'Dll', TxtDll.Text);
-    Arq.WriteString('GENERAL', 'BackupFiles', ListBackupFiles.Items.Text);
+    Arq.WriteString('GENERAL', 'BackupFile', TxtBackupFile.Text);
   finally
     Arq.Free;
   end;
@@ -473,6 +472,21 @@ begin
   end;
 end;
 
+procedure TWindowMain.TxtBackupFileBtnClick(Sender: TObject);
+var
+  DisplayName, FileMask: string;
+begin
+  DisplayName := 'Firebird Backup (*.FBK)';
+  FileMask := '*.fbk';
+
+  case RadioGroupMethod.ItemIndex of
+  0:
+    CarregarArquivo(Sender, DisplayName, FileMask);
+  1:
+    SalvarArquivo(Sender, DisplayName, FileMask);
+  end;
+end;
+
 procedure TWindowMain.TxtDllBtnClick(Sender: TObject);
 var
   DisplayName, FileMask: string;
@@ -481,57 +495,6 @@ begin
   FileMask := '*.dll';
 
   CarregarArquivo(Sender, DisplayName, FileMask);
-end;
-
-procedure TWindowMain.ActAddBackupExecute(Sender: TObject);
-var
-  DisplayName, FileMask: string;
-begin
-  DisplayName := 'Firebird Backup (*.FBK)';
-  FileMask := '*.fbk';
-
-  case RadioGroupMethod.ItemIndex of
-
-  0:
-  begin
-    SaveFile.FileTypes[0].DisplayName := DisplayName;
-    SaveFile.FileTypes[0].FileMask := FileMask;
-
-    if SaveFile.Execute then
-    begin
-      ListBackupFiles.Items.Add(SaveFile.FileName);
-    end;
-  end;
-
-  1:
-  begin
-    OpenFile.FileTypes[0].DisplayName := DisplayName;
-    OpenFile.FileTypes[0].FileMask := FileMask;
-
-    if OpenFile.Execute then
-    begin
-      ListBackupFiles.Items.Add(OpenFile.FileName);
-    end;
-  end;
-
-  end;
-end;
-
-procedure TWindowMain.ActRmvBackupExecute(Sender: TObject);
-var
-  Index: integer;
-begin
-  Index := ListBackupFiles.ItemIndex;
-  ListBackupFiles.DeleteSelected;
-
-  if Index = 0 then
-  begin
-    ListBackupFiles.ItemIndex := 0;
-  end
-  else
-  begin
-    ListBackupFiles.ItemIndex := Index - 1;
-  end;
 end;
 
 procedure TWindowMain.BtnStartClick(Sender: TObject);
@@ -566,8 +529,9 @@ begin
     FBBackup.Password := TxtPassword.Text;
 
     FBBackup.BackupFiles.Clear;
-    FBBackup.BackupFiles := ListBackupFiles.Items;
+    FBBackup.BackupFiles.Text := TxtBackupFile.Text;
 
+    //By TCPIP
     case RadioGroupConnMethod.ItemIndex of
     0:
     begin
@@ -577,7 +541,7 @@ begin
       FBBackup.Host := TxtHost.Text;
       FBBackup.Port := StrToInt(TxtPort.Text);
     end;
-
+    //By DLL
     1:
     begin
       FBDriverLink.Embedded := true;
@@ -590,6 +554,8 @@ begin
     end;
 
     end;
+
+    FBBackup.DriverLink := FBDriverLink;
 
     FBBackup.Verbose := CheckVerbose.Checked;
     FBBackup.Options := [];
@@ -640,7 +606,7 @@ begin
     FBRestore.Password := TxtPassword.Text;
 
     FBRestore.BackupFiles.Clear;
-    FBRestore.BackupFiles := ListBackupFiles.Items;
+    FBRestore.BackupFiles.Text := TxtBackupFile.Text;
 
     case RadioGroupConnMethod.ItemIndex of
     0:
@@ -664,6 +630,8 @@ begin
     end;
 
     end;
+
+    FBRestore.DriverLink := FBDriverLink;
 
     FBRestore.Verbose := CheckVerbose.Checked;
     FBRestore.Options := [];
@@ -690,6 +658,7 @@ begin
     FBRestore.Restore;
   finally
     TabAdmin.Enabled := true;
+    FBDriverLink.Free;
   end;
 end;
 

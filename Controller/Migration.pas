@@ -25,9 +25,9 @@ type
   public
     Source: TMigrationConnection;
     Dest: TMigrationConnection;
-    function GetPathTemp: string;
-    function GetSourcePathDll: string;
-    function GetDestPathDll: string;
+    function GetPathTempFolder: string;
+    function GetPathSourceDll: string;
+    function GetPathDestDll: string;
     function GetPathBackupFile: string;
     function GetSourceVersionName: string;
     function GetDestVersionName: string;
@@ -64,19 +64,6 @@ begin
   Dest.Free;
 end;
 
-function TMigrationConfig.GetVersionName(Version: TVersion): string;
-begin
-  case Version of
-  vrFb21:
-    Result := 'Firebird 2.1.7.18553';
-  vrFb25:
-    Result := 'Firebird 2.5.8.27089';
-  vrFb30:
-    Result := 'Firebird 3.0.4.33054';
-  vrFb40:
-    Result := 'Firebird 4.0.0.19630';
-  end;
-end;
 
 function TMigrationConfig.GetResourceName(Version: TVersion): string;
 begin
@@ -92,24 +79,32 @@ begin
   end;
 end;
 
-function TMigrationConfig.GetPathTemp: string;
+//Temp folder to work with files
+function TMigrationConfig.GetPathTempFolder: string;
 begin
   Result := TUtils.Temp + 'FirebirdMigrator\';
 end;
 
+function TMigrationConfig.GetPathBackupFile: string;
+begin
+  Result := GetPathTempFolder + 'BackupFile.fbk';
+end;
+
+
+//Extracts firebird folder to temp folder by version, and returns it's path
 function TMigrationConfig.GetPathDll(Version: TVersion): string;
 var
   Folder: string;
 begin
   //Pasta destino
-  Folder := GetPathTemp + GetResourceName(Version) + '\';
+  Folder := GetPathTempFolder + GetResourceName(Version) + '\';
 
   TUtils.DeleteIfExistsDir(Folder);
 
   Application.ProcessMessages;
 
   //Extrai resource para a pasta temp
-  TUtils.ExtractResourceZip(GetResourceName(Version), GetPathTemp);
+  TUtils.ExtractResourceZip(GetResourceName(Version), GetPathTempFolder);
 
   Application.ProcessMessages;
 
@@ -121,19 +116,30 @@ begin
   Result := Folder + 'fbembed.dll';
 end;
 
-function TMigrationConfig.GetSourcePathDll: string;
+function TMigrationConfig.GetPathSourceDll: string;
 begin
   Result := GetPathDll(Source.Version);
 end;
 
-function TMigrationConfig.GetDestPathDll: string;
+function TMigrationConfig.GetPathDestDll: string;
 begin
   Result := GetPathDll(Dest.Version);
 end;
 
-function TMigrationConfig.GetPathBackupFile: string;
+
+//Version string description
+function TMigrationConfig.GetVersionName(Version: TVersion): string;
 begin
-  Result := GetPathTemp + 'BackupFile.fbk';
+  case Version of
+  vrFb21:
+    Result := 'Firebird 2.1.7.18553';
+  vrFb25:
+    Result := 'Firebird 2.5.8.27089';
+  vrFb30:
+    Result := 'Firebird 3.0.4.33054';
+  vrFb40:
+    Result := 'Firebird 4.0.0.19630';
+  end;
 end;
 
 function TMigrationConfig.GetSourceVersionName: string;
@@ -161,7 +167,7 @@ begin
   Config.Dest.User := Config.Source.User;
   Config.Dest.Password := Config.Source.Password;
 
-  CreateDir(Config.GetPathTemp);
+  CreateDir(Config.GetPathTempFolder);
 
   Backup := TBackup.Create(Config);
   Restore := TRestore.Create(Config);
@@ -200,8 +206,8 @@ begin
       end;
     end;
 
-    Log.Lines.SaveToFile(Config.GetPathTemp + 'Log.txt');
-    LogErrors.Lines.SaveToFile(Config.GetPathTemp + 'Errors.txt');
+    Log.Lines.SaveToFile(Config.GetPathTempFolder + 'Log.txt');
+    LogErrors.Lines.SaveToFile(Config.GetPathTempFolder + 'Errors.txt');
   finally
     Backup.Free;
     Restore.Free;

@@ -4,11 +4,11 @@ object WindowMain: TWindowMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Firebird Migrator'
-  ClientHeight = 680
-  ClientWidth = 851
+  ClientHeight = 591
+  ClientWidth = 849
   Color = clBtnFace
-  Constraints.MinHeight = 272
-  Constraints.MinWidth = 774
+  Constraints.MinHeight = 620
+  Constraints.MinWidth = 850
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -3440,32 +3440,38 @@ object WindowMain: TWindowMain
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   DesignSize = (
-    851
-    680)
+    849
+    591)
   PixelsPerInch = 96
   TextHeight = 13
   object Page: TPageControl
     Left = 0
     Top = 0
-    Width = 853
-    Height = 677
+    Width = 851
+    Height = 588
     ActivePage = TabMigration
     Anchors = [akLeft, akTop, akRight, akBottom]
+    TabHeight = 30
     TabOrder = 0
     TabWidth = 100
+    ExplicitWidth = 846
     object TabMigration: TTabSheet
       Caption = 'Migra'#231#227'o'
       ImageIndex = 1
+      ExplicitTop = 24
+      ExplicitWidth = 845
+      ExplicitHeight = 571
       DesignSize = (
-        845
-        649)
+        843
+        548)
       object LblErrors: TLabel
-        Left = 452
+        Left = 450
         Top = 173
         Width = 25
         Height = 13
         Anchors = [akTop, akRight]
         Caption = 'Erros'
+        ExplicitLeft = 452
       end
       object LblLog: TLabel
         Left = 3
@@ -3477,13 +3483,14 @@ object WindowMain: TWindowMain
       object GroupBoxSource: TGroupBox
         Left = 3
         Top = 2
-        Width = 834
+        Width = 832
         Height = 95
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Fonte'
         TabOrder = 0
+        ExplicitWidth = 834
         DesignSize = (
-          834
+          832
           95)
         object LblUserSource: TLabel
           Left = 199
@@ -3549,7 +3556,7 @@ object WindowMain: TWindowMain
         object TxtDbSource: TNsEditBtn
           Left = 415
           Top = 35
-          Width = 416
+          Width = 414
           Height = 26
           Anchors = [akLeft, akTop, akRight]
           AutoSize = False
@@ -3607,11 +3614,12 @@ object WindowMain: TWindowMain
           ParentFont = False
           TabOrder = 3
           OnBtnClick = TxtDbSourceBtnClick
+          ExplicitWidth = 416
         end
         object BoxVersionSource: TComboBox
           Left = 3
           Top = 35
-          Width = 190
+          Width = 188
           Height = 26
           Style = csDropDownList
           Anchors = [akLeft, akTop, akRight]
@@ -3629,9 +3637,10 @@ object WindowMain: TWindowMain
             'Firebird 2.5.8.27089'
             'Firebird 3.0.4.33054'
             'Firebird 4.0.0.19630')
+          ExplicitWidth = 183
         end
         object BtnTestConn: TButton
-          Left = 688
+          Left = 686
           Top = 67
           Width = 143
           Height = 25
@@ -3639,18 +3648,20 @@ object WindowMain: TWindowMain
           Caption = 'Testar Conex'#227'o'
           TabOrder = 4
           OnClick = BtnTestConnClick
+          ExplicitLeft = 688
         end
       end
       object GroupBoxDest: TGroupBox
         Left = 3
         Top = 98
-        Width = 834
+        Width = 832
         Height = 69
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Destino'
         TabOrder = 1
+        ExplicitWidth = 827
         DesignSize = (
-          834
+          832
           69)
         object LblDbDest: TLabel
           Left = 199
@@ -3669,7 +3680,7 @@ object WindowMain: TWindowMain
         object BoxVersionDest: TComboBox
           Left = 3
           Top = 35
-          Width = 190
+          Width = 188
           Height = 26
           Style = csDropDownList
           Anchors = [akLeft, akTop, akRight]
@@ -3687,11 +3698,12 @@ object WindowMain: TWindowMain
             'Firebird 2.5.8.27089'
             'Firebird 3.0.4.33054'
             'Firebird 4.0.0.19630')
+          ExplicitWidth = 183
         end
         object TxtDbDest: TNsEditBtn
           Left = 199
           Top = 35
-          Width = 632
+          Width = 630
           Height = 26
           Anchors = [akLeft, akTop, akRight]
           AutoSize = False
@@ -3749,44 +3761,55 @@ object WindowMain: TWindowMain
           ParentFont = False
           TabOrder = 1
           OnBtnClick = TxtDbDestBtnClick
+          ExplicitWidth = 632
         end
       end
       object MemoErrors: TMemo
-        Left = 452
+        Left = 450
         Top = 192
         Width = 385
-        Height = 411
+        Height = 310
         Anchors = [akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
         TabOrder = 3
+        ExplicitLeft = 452
+        ExplicitHeight = 333
       end
       object MemoLog: TMemo
         Left = 3
         Top = 192
-        Width = 443
-        Height = 454
+        Width = 441
+        Height = 353
         Anchors = [akLeft, akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
         TabOrder = 2
+        ExplicitWidth = 443
+        ExplicitHeight = 376
       end
       object BtnMigrate: TButton
-        Left = 452
-        Top = 609
+        Left = 450
+        Top = 508
         Width = 385
         Height = 37
         Action = ActMigrate
         Anchors = [akRight, akBottom]
+        Caption = 'Migrar'
         TabOrder = 4
+        ExplicitLeft = 452
+        ExplicitTop = 531
       end
     end
     object TabAdmin: TTabSheet
       Caption = 'Admin'
       ImageIndex = 2
+      ExplicitTop = 24
+      ExplicitWidth = 845
+      ExplicitHeight = 571
       DesignSize = (
-        845
-        649)
+        843
+        548)
       object LblDb: TLabel
         Left = 0
         Top = 3
@@ -3829,45 +3852,23 @@ object WindowMain: TWindowMain
         Height = 13
         Caption = 'Porta'
       end
-      object LblBackupFiles: TLabel
-        Left = 430
+      object LblBackupFile: TLabel
+        Left = 428
         Top = 1
-        Width = 94
+        Width = 89
         Height = 13
         Anchors = [akTop, akRight]
-        Caption = 'Arquivos de backup'
-      end
-      object BtnAdd: TSpeedButton
-        Left = 815
-        Top = 19
-        Width = 27
-        Height = 24
-        Cursor = crHandPoint
-        Action = ActAddBackup
-        Anchors = [akTop, akRight]
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 828
-      end
-      object BtnRemove: TSpeedButton
-        Left = 815
-        Top = 49
-        Width = 27
-        Height = 24
-        Cursor = crHandPoint
-        Action = ActRmvBackup
-        Anchors = [akTop, akRight]
-        ParentShowHint = False
-        ShowHint = True
-        ExplicitLeft = 828
+        Caption = 'Arquivo de backup'
+        ExplicitLeft = 430
       end
       object LblOptions: TLabel
-        Left = 430
-        Top = 167
+        Left = 428
+        Top = 190
         Width = 36
         Height = 13
         Anchors = [akTop, akRight]
         Caption = 'Op'#231#245'es'
+        ExplicitLeft = 430
       end
       object LblDll: TLabel
         Left = 3
@@ -3990,21 +3991,12 @@ object WindowMain: TWindowMain
         State = cbChecked
         TabOrder = 8
       end
-      object ListBackupFiles: TListBox
-        Left = 430
-        Top = 20
-        Width = 379
-        Height = 117
-        Anchors = [akTop, akRight]
-        ItemHeight = 13
-        TabOrder = 9
-      end
       object RadioGroupMethod: TRadioGroup
-        Left = 430
-        Top = 323
-        Width = 379
-        Height = 69
-        Anchors = [akTop, akRight]
+        Left = 3
+        Top = 473
+        Width = 657
+        Height = 72
+        Anchors = [akLeft, akBottom]
         Caption = 'M'#233'todo'
         Columns = 2
         ItemIndex = 0
@@ -4015,10 +4007,10 @@ object WindowMain: TWindowMain
         OnClick = RadioGroupMethodClick
       end
       object CheckListOptions: TCheckListBox
-        Left = 430
-        Top = 186
-        Width = 379
-        Height = 113
+        Left = 428
+        Top = 209
+        Width = 412
+        Height = 183
         Anchors = [akTop, akRight]
         Columns = 2
         Font.Charset = DEFAULT_CHARSET
@@ -4038,12 +4030,13 @@ object WindowMain: TWindowMain
           'Expand')
         ParentFont = False
         TabOrder = 10
+        ExplicitLeft = 430
       end
       object BtnStart: TButton
-        Left = 430
-        Top = 574
-        Width = 379
-        Height = 72
+        Left = 671
+        Top = 479
+        Width = 169
+        Height = 66
         Anchors = [akRight, akBottom]
         Caption = 'Iniciar'
         TabOrder = 12
@@ -4052,8 +4045,9 @@ object WindowMain: TWindowMain
       object TxtDll: TNsEditBtn
         Left = 3
         Top = 419
-        Width = 806
+        Width = 837
         Height = 21
+        Anchors = [akLeft, akTop, akRight]
         Glyph.Data = {
           7E050000424D7E0500000000000036000000280000001A0000000D0000000100
           2000000000004805000000000000000000000000000000000000FF00FF00FF00
@@ -4102,13 +4096,13 @@ object WindowMain: TWindowMain
           FF00}
         TabOrder = 7
         OnBtnClick = TxtDllBtnClick
+        ExplicitWidth = 839
       end
       object RadioGroupConnMethod: TRadioGroup
-        Left = -4
-        Top = 186
+        Left = 3
+        Top = 191
         Width = 390
         Height = 63
-        Anchors = [akTop, akRight]
         Caption = 'M'#233'todo de Conex'#227'o'
         Columns = 2
         ItemIndex = 0
@@ -4117,6 +4111,62 @@ object WindowMain: TWindowMain
           'Dll')
         TabOrder = 3
         OnClick = RadioGroupConnMethodClick
+      end
+      object TxtBackupFile: TNsEditBtn
+        Left = 428
+        Top = 20
+        Width = 412
+        Height = 21
+        Anchors = [akTop, akRight]
+        Glyph.Data = {
+          7E050000424D7E0500000000000036000000280000001A0000000D0000000100
+          2000000000004805000000000000000000000000000000000000FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00E8C2A300D8996400FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00AEAE
+          AE0080808000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00E8C2A300C05B0700C05B0700E8C2A300FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00AEAEAE004646460047474700AEAEAE00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00E8C2A300C05B0700C05B0700D899
+          6400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00AEAEAE0046464600474747007F7F7F00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00ECCDB200C8702700C05C0900C8702700CE7F3D00C05B
+          0700D8996400FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00BCBC
+          BC0057575700474747005757570065656500474747007F7F7F00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00ECCDB300C2600F00DEA97D00F3E0D000E0AD
+          8300C4651600D99C6900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00BCBCBC004B4B4B0091919100D5D5D500959595004F4F4F0082828200FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00C9712800E5BC9A00FF00
+          FF00FF00FF00FF00FF00E0AE8400C9722900FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF0058585800A7A7A700FF00FF00FF00FF00FF00FF009696
+          960059595900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00C15D
+          0A00F6E7DA00FF00FF00FF00FF00FF00FF00FF00FF00C15D0A00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF0048484800DDDDDD00FF00FF00FF00
+          FF00FF00FF00D1D1D10048484800FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00C9722900E4BA9600FF00FF00FF00FF00FF00FF00E2B48E00C972
+          2900FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF0059595900A5A5
+          A500FF00FF00FF00FF00FF00FF009E9E9E0059595900FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00ECCDB200C66A1E00E5BB9900F6E7DB00E3B6
+          9100C3631400ECCDB200FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00BCBCBC0052525200A6A6A600DEDEDE00A0A0A0004C4C4C00BCBCBC00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00EBCCB100C870
+          2600C05C0800C8702700EBCCB100FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00BBBBBB00575757004747470058585800BABA
+          BA00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00}
+        TabOrder = 9
+        OnBtnClick = TxtBackupFileBtnClick
+        ExplicitLeft = 430
       end
     end
   end
@@ -4287,12 +4337,10 @@ object WindowMain: TWindowMain
     object ActAddBackup: TAction
       Hint = 'Adicionar arquivo de backup'
       ImageIndex = 1
-      OnExecute = ActAddBackupExecute
     end
     object ActRmvBackup: TAction
       Hint = 'Remover arquivo selecionado'
       ImageIndex = 2
-      OnExecute = ActRmvBackupExecute
     end
     object ActEsc: TAction
       ShortCut = 27

@@ -31,7 +31,7 @@ begin
   FBDriverLink := TFDPhysFBDriverLink.Create(nil);
   FBDriverLink.Release;
   FBDriverLink.Embedded := true;
-  FBDriverLink.VendorLib := Config.GetDestPathDll;
+  FBDriverLink.VendorLib := Config.GetPathDestDll;
 
   Restore := TFDIBRestore.Create(nil);
   Restore.DriverLink := FBDriverLink;
