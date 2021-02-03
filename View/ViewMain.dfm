@@ -3449,18 +3449,14 @@ object WindowMain: TWindowMain
     Top = 0
     Width = 851
     Height = 588
-    ActivePage = TabMigration
+    ActivePage = TabAdmin
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabHeight = 30
     TabOrder = 0
     TabWidth = 100
-    ExplicitWidth = 846
     object TabMigration: TTabSheet
       Caption = 'Migra'#231#227'o'
       ImageIndex = 1
-      ExplicitTop = 24
-      ExplicitWidth = 845
-      ExplicitHeight = 571
       DesignSize = (
         843
         548)
@@ -3488,7 +3484,6 @@ object WindowMain: TWindowMain
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Fonte'
         TabOrder = 0
-        ExplicitWidth = 834
         DesignSize = (
           832
           95)
@@ -3613,8 +3608,6 @@ object WindowMain: TWindowMain
             FF00}
           ParentFont = False
           TabOrder = 3
-          OnBtnClick = TxtDbSourceBtnClick
-          ExplicitWidth = 416
         end
         object BoxVersionSource: TComboBox
           Left = 3
@@ -3637,7 +3630,6 @@ object WindowMain: TWindowMain
             'Firebird 2.5.8.27089'
             'Firebird 3.0.4.33054'
             'Firebird 4.0.0.19630')
-          ExplicitWidth = 183
         end
         object BtnTestConn: TButton
           Left = 686
@@ -3648,7 +3640,6 @@ object WindowMain: TWindowMain
           Caption = 'Testar Conex'#227'o'
           TabOrder = 4
           OnClick = BtnTestConnClick
-          ExplicitLeft = 688
         end
       end
       object GroupBoxDest: TGroupBox
@@ -3659,7 +3650,6 @@ object WindowMain: TWindowMain
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Destino'
         TabOrder = 1
-        ExplicitWidth = 827
         DesignSize = (
           832
           69)
@@ -3698,7 +3688,6 @@ object WindowMain: TWindowMain
             'Firebird 2.5.8.27089'
             'Firebird 3.0.4.33054'
             'Firebird 4.0.0.19630')
-          ExplicitWidth = 183
         end
         object TxtDbDest: TNsEditBtn
           Left = 199
@@ -3760,8 +3749,6 @@ object WindowMain: TWindowMain
             FF00}
           ParentFont = False
           TabOrder = 1
-          OnBtnClick = TxtDbDestBtnClick
-          ExplicitWidth = 632
         end
       end
       object MemoErrors: TMemo
@@ -3773,8 +3760,6 @@ object WindowMain: TWindowMain
         ReadOnly = True
         ScrollBars = ssVertical
         TabOrder = 3
-        ExplicitLeft = 452
-        ExplicitHeight = 333
       end
       object MemoLog: TMemo
         Left = 3
@@ -3785,8 +3770,6 @@ object WindowMain: TWindowMain
         ReadOnly = True
         ScrollBars = ssVertical
         TabOrder = 2
-        ExplicitWidth = 443
-        ExplicitHeight = 376
       end
       object BtnMigrate: TButton
         Left = 450
@@ -3797,21 +3780,16 @@ object WindowMain: TWindowMain
         Anchors = [akRight, akBottom]
         Caption = 'Migrar'
         TabOrder = 4
-        ExplicitLeft = 452
-        ExplicitTop = 531
       end
     end
     object TabAdmin: TTabSheet
       Caption = 'Admin'
       ImageIndex = 2
-      ExplicitTop = 24
-      ExplicitWidth = 845
-      ExplicitHeight = 571
       DesignSize = (
         843
         548)
       object LblDb: TLabel
-        Left = 0
+        Left = 3
         Top = 3
         Width = 46
         Height = 13
@@ -3854,12 +3832,11 @@ object WindowMain: TWindowMain
       end
       object LblBackupFile: TLabel
         Left = 428
-        Top = 1
+        Top = 3
         Width = 89
         Height = 13
         Anchors = [akTop, akRight]
         Caption = 'Arquivo de backup'
-        ExplicitLeft = 430
       end
       object LblOptions: TLabel
         Left = 428
@@ -4004,7 +3981,6 @@ object WindowMain: TWindowMain
           'Backup'
           'Restore')
         TabOrder = 11
-        OnClick = RadioGroupMethodClick
       end
       object CheckListOptions: TCheckListBox
         Left = 428
@@ -4030,7 +4006,6 @@ object WindowMain: TWindowMain
           'Expand')
         ParentFont = False
         TabOrder = 10
-        ExplicitLeft = 430
       end
       object BtnStart: TButton
         Left = 671
@@ -4096,7 +4071,6 @@ object WindowMain: TWindowMain
           FF00}
         TabOrder = 7
         OnBtnClick = TxtDllBtnClick
-        ExplicitWidth = 839
       end
       object RadioGroupConnMethod: TRadioGroup
         Left = 3
@@ -4108,13 +4082,13 @@ object WindowMain: TWindowMain
         ItemIndex = 0
         Items.Strings = (
           'Rede'
-          'Dll')
+          'Embedded')
         TabOrder = 3
         OnClick = RadioGroupConnMethodClick
       end
       object TxtBackupFile: TNsEditBtn
         Left = 428
-        Top = 20
+        Top = 22
         Width = 412
         Height = 21
         Anchors = [akTop, akRight]
@@ -4166,7 +4140,6 @@ object WindowMain: TWindowMain
           FF00}
         TabOrder = 9
         OnBtnClick = TxtBackupFileBtnClick
-        ExplicitLeft = 430
       end
     end
   end
@@ -4346,34 +4319,6 @@ object WindowMain: TWindowMain
       ShortCut = 27
       OnExecute = ActEscExecute
     end
-  end
-  object OpenFile: TFileOpenDialog
-    DefaultExtension = '.fdb'
-    FavoriteLinks = <>
-    FileTypes = <
-      item
-        DisplayName = 'Firebird Database (*.FDB)'
-        FileMask = '*.fdb'
-      end
-      item
-        DisplayName = 'Todos os Arquivos (*.*)'
-        FileMask = '*'
-      end>
-    Options = []
-    Left = 184
-    Top = 496
-  end
-  object SaveFile: TFileSaveDialog
-    DefaultExtension = '.FDB'
-    FavoriteLinks = <>
-    FileTypes = <
-      item
-        DisplayName = 'Firebird Database (*.FDB)'
-        FileMask = '.fdb'
-      end>
-    Options = []
-    Left = 253
-    Top = 496
   end
   object FBRestore: TFDIBRestore
     OnError = FBError

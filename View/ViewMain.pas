@@ -22,9 +22,7 @@ type
     ActRmvBackup: TAction;
     ActEsc: TAction;
     ActDbFile: TAction;
-    OpenFile: TFileOpenDialog;
     ActRestore: TAction;
-    SaveFile: TFileSaveDialog;
     FBRestore: TFDIBRestore;
     ActMigrate: TAction;
     GroupBoxSource: TGroupBox;
@@ -81,9 +79,6 @@ type
     procedure ActBackupExecute(Sender: TObject);
     procedure BtnStartClick(Sender: TObject);
     procedure TxtDbBtnClick(Sender: TObject);
-    procedure TxtDbSourceBtnClick(Sender: TObject);
-    procedure TxtDbDestBtnClick(Sender: TObject);
-    procedure RadioGroupMethodClick(Sender: TObject);
     procedure TxtDllBtnClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -92,12 +87,15 @@ type
     procedure RadioGroupConnMethodClick(Sender: TObject);
     procedure TxtBackupFileBtnClick(Sender: TObject);
 
-  private
-    procedure CarregarArquivo(Sender: TObject; DisplayName, FileMask: string);
-    procedure SalvarArquivo(Sender: TObject; DisplayName, FileMask: string);
-    procedure CarregarPasta(Sender: TObject);
-    procedure SalvarPasta(Sender: TObject);
+    procedure OpenFileAll(Sender: TObject);
+    procedure OpenFileFB(Sender: TObject);
+    procedure OpenFileFBK(Sender: TObject);
+    procedure OpenFolder(Sender: TObject);
 
+    procedure SaveFileFB(Sender: TObject);
+    procedure SaveFileFBK(Sender: TObject);
+    procedure SaveFolder(Sender: TObject);
+  private
     procedure LoadConfigs;
     procedure SaveConfigs;
 
@@ -105,6 +103,10 @@ type
     procedure SaveAdminConfigs;
 
     procedure CopyFirebirdMsg;
+    procedure OpenFileDLL(Sender: TObject);
+
+    procedure OpenFile(Sender: TObject; DisplayName, FileMask: string; IncludeAllFiles: boolean);
+    procedure SaveFile(Sender: TObject; DisplayName, FileMask: string; IncludeAllFiles: boolean);
   end;
 
 var
@@ -114,6 +116,8 @@ var
 implementation
 
 {$R *.dfm}
+
+//INIT
 
 procedure TWindowMain.FormCreate(Sender: TObject);
 begin
@@ -137,6 +141,10 @@ begin
   SaveConfigs;
   SaveAdminConfigs;
 end;
+
+/////////////
+//MIGRATION//
+/////////////
 
 procedure TWindowMain.LoadConfigs;
 var
@@ -186,25 +194,6 @@ begin
   Config.Free;
 end;
 
-procedure TWindowMain.TxtDbSourceBtnClick(Sender: TObject);
-var
-  DisplayName, FileMask: string;
-begin
-  DisplayName := 'Firebird Database (*.FDB)';
-  FileMask := '*.fdb';
-
-  CarregarArquivo(sender, DisplayName, FileMask);
-end;
-
-procedure TWindowMain.TxtDbDestBtnClick(Sender: TObject);
-var
-  DisplayName, FileMask: string;
-begin
-  DisplayName := 'Firebird Database (*.FDB)';
-  FileMask := '*.FDB';
-
-  SalvarArquivo(sender, DisplayName, FileMask);
-end;
 
 procedure TWindowMain.BtnTestConnClick(Sender: TObject);
 var
@@ -290,96 +279,9 @@ begin
   end;
 end;
 
-procedure TWindowMain.ActEscExecute(Sender: TObject);
-begin
-  Close;
-end;
-
-procedure TWindowMain.RadioGroupMethodClick(Sender: TObject);
-begin
-  CheckListOptions.Items.Clear;
-
-  case RadioGroupMethod.ItemIndex of
-  0:
-  begin
-    CheckListOptions.Items.Add('IgnoreChecksum');
-    CheckListOptions.Items.Add('IgnoreLim');
-    CheckListOptions.Items.Add('MetadataOnly');
-    CheckListOptions.Items.Add('NoGarbageCollect');
-    CheckListOptions.Items.Add('OldDescriptions');
-    CheckListOptions.Items.Add('NonTransportable');
-    CheckListOptions.Items.Add('Convert');
-    CheckListOptions.Items.Add('Expand');
-  end;
-
-  1:
-  begin
-    CheckListOptions.Items.Add('DeactivateIdx');
-    CheckListOptions.Items.Add('NoShadow');
-    CheckListOptions.Items.Add('NoValidity');
-    CheckListOptions.Items.Add('OneAtATime');
-    CheckListOptions.Items.Add('Replace');
-    CheckListOptions.Items.Add('UseAllSpace');
-    CheckListOptions.Items.Add('Validate');
-    CheckListOptions.Items.Add('FixFSSData');
-    CheckListOptions.Items.Add('FixFSSMetaData');
-    CheckListOptions.Items.Add('MetaDataOnly');
-  end;
-
-  end;
-end;
-
-//FILES AND FOLDERS
-
-procedure TWindowMain.CarregarArquivo(Sender: TObject; DisplayName, FileMask: string);
-begin
-  OpenFile.Options := OpenFile.Options - [fdoPickFolders];
-
-  OpenFile.FileTypes[0].DisplayName := DisplayName;
-  OpenFile.FileTypes[0].FileMask := FileMask;
-  OpenFile.FileName := '';
-
-  if OpenFile.Execute then
-  begin
-    (Sender as TNsEditBtn).Text := OpenFile.FileName;
-  end;
-end;
-
-procedure TWindowMain.SalvarArquivo(Sender: TObject; DisplayName, FileMask: string);
-begin
-  SaveFile.Options := SaveFile.Options - [fdoPickFolders];
-
-  SaveFile.FileTypes[0].DisplayName := DisplayName;
-  SaveFile.FileTypes[0].FileMask := FileMask;
-  SaveFile.FileName := '';
-
-  if SaveFile.Execute then
-  begin
-    (Sender as TNsEditBtn).Text := SaveFile.FileName;
-  end;
-end;
-
-procedure TWindowMain.CarregarPasta(Sender: TObject);
-begin
-  OpenFile.Options := OpenFile.Options + [fdoPickFolders];
-
-  if OpenFile.Execute then
-  begin
-    (Sender as TNsEditBtn).Text := OpenFile.FileName;
-  end;
-end;
-
-procedure TWindowMain.SalvarPasta(Sender: TObject);
-begin
-  SaveFile.Options := SaveFile.Options + [fdoPickFolders];
-
-  if SaveFile.Execute then
-  begin
-    (Sender as TNsEditBtn).Text := SaveFile.FileName;
-  end;
-end;
-
-//TEMP//
+/////////////
+//ADMIN//////
+/////////////
 
 procedure TWindowMain.LoadAdminConfigs;
 var
@@ -443,7 +345,7 @@ begin
     BoxProtocol.Enabled := true;
     TxtHost.Enabled := true;
     TxtPort.Enabled := true;
-    TxtDll.Enabled := false;
+//    TxtDll.Enabled := false;
   end;
 
   1:
@@ -458,43 +360,28 @@ begin
 end;
 
 procedure TWindowMain.TxtDbBtnClick(Sender: TObject);
-var
-  DisplayName, FileMask: string;
 begin
-  DisplayName := 'Firebird Database (*.FDB)';
-  FileMask := '*.fdb';
-
   case RadioGroupMethod.ItemIndex of
   0:
-    CarregarArquivo(Sender, DisplayName, FileMask);
+    OpenFileFB(Sender);
   1:
-    SalvarArquivo(Sender, DisplayName, FileMask);
+    SaveFileFB(Sender);
   end;
 end;
 
 procedure TWindowMain.TxtBackupFileBtnClick(Sender: TObject);
-var
-  DisplayName, FileMask: string;
 begin
-  DisplayName := 'Firebird Backup (*.FBK)';
-  FileMask := '*.fbk';
-
   case RadioGroupMethod.ItemIndex of
   0:
-    CarregarArquivo(Sender, DisplayName, FileMask);
+    SaveFileFBK(Sender);
   1:
-    SalvarArquivo(Sender, DisplayName, FileMask);
+    OpenFileFBK(Sender);
   end;
 end;
 
 procedure TWindowMain.TxtDllBtnClick(Sender: TObject);
-var
-  DisplayName, FileMask: string;
 begin
-  DisplayName := 'Dinamic Link Library (*.DLL)';
-  FileMask := '*.dll';
-
-  CarregarArquivo(Sender, DisplayName, FileMask);
+  OpenFileDLL(Sender);
 end;
 
 procedure TWindowMain.BtnStartClick(Sender: TObject);
@@ -531,17 +418,19 @@ begin
     FBBackup.BackupFiles.Clear;
     FBBackup.BackupFiles.Text := TxtBackupFile.Text;
 
-    //By TCPIP
+    //TCPIP
     case RadioGroupConnMethod.ItemIndex of
     0:
     begin
       FBDriverLink.Embedded := false;
 
+      FBDriverLink.VendorLib := TxtDll.Text;
+
       FBBackup.Protocol := TIBProtocol(BoxProtocol.ItemIndex);
       FBBackup.Host := TxtHost.Text;
       FBBackup.Port := StrToInt(TxtPort.Text);
     end;
-    //By DLL
+    //EMBEDDED
     1:
     begin
       FBDriverLink.Embedded := true;
@@ -670,6 +559,80 @@ end;
 procedure TWindowMain.FBError(ASender, AInitiator: TObject; var AException: Exception);
 begin
   WindowMain.MemoErrors.Lines.Add(AException.Message);
+end;
+
+//OTHERS
+
+//Load
+procedure TWindowMain.OpenFileAll(Sender: TObject);
+var
+  FileName: string;
+begin
+  if TUTils.OpenFileAll(FileName) then
+    (Sender as TNsEditBtn).Text := FileName;
+end;
+
+procedure TWindowMain.OpenFile(Sender: TObject; DisplayName, FileMask: string; IncludeAllFiles: boolean);
+var
+  FileName: string;
+begin
+  if TUTils.OpenFile(DisplayName, FileMask, IncludeAllFiles, FileName) then
+    (Sender as TNsEditBtn).Text := FileName;
+end;
+
+procedure TWindowMain.OpenFileFB(Sender: TObject);
+begin
+  OpenFile(Sender, 'Firebird Database (*.FDB)', '*.FDB', true);
+end;
+
+procedure TWindowMain.OpenFileFBK(Sender: TObject);
+begin
+  OpenFile(Sender, 'Firebird Backup (*.FBK)', '*.FBK', true);
+end;
+
+procedure TWindowMain.OpenFileDLL(Sender: TObject);
+begin
+  OpenFile(Sender, 'Dynamic Link Library (*.DLL)', '*.DLL', true);
+end;
+
+procedure TWindowMain.OpenFolder(Sender: TObject);
+var
+  FileName: string;
+begin
+  if TUTils.OpenFolder(FileName) then
+    (Sender as TNsEditBtn).Text := FileName;
+end;
+
+//Save
+procedure TWindowMain.SaveFile(Sender: TObject; DisplayName, FileMask: string; IncludeAllFiles: boolean);
+var
+  FileName: string;
+begin
+  if TUTils.SaveFile(DisplayName, FileMask, IncludeAllFiles, FileName) then
+    (Sender as TNsEditBtn).Text := FileName;
+end;
+
+procedure TWindowMain.SaveFileFB(Sender: TObject);
+begin
+  SaveFile(Sender, 'Firebird Database (*.FDB)', '*.FDB', false);
+end;
+
+procedure TWindowMain.SaveFileFBK(Sender: TObject);
+begin
+  SaveFile(Sender, 'Firebird Backup (*.FBK)', '*.FBK', true);
+end;
+
+procedure TWindowMain.SaveFolder(Sender: TObject);
+var
+  FileName: string;
+begin
+  if TUTils.SaveFolder(FileName) then
+    (Sender as TNsEditBtn).Text := FileName;
+end;
+
+procedure TWindowMain.ActEscExecute(Sender: TObject);
+begin
+  Close;
 end;
 
 end.
