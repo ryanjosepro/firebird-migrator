@@ -3457,6 +3457,10 @@ object WindowMain: TWindowMain
     object TabMigration: TTabSheet
       Caption = 'Migra'#231#227'o'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       DesignSize = (
         843
         548)
@@ -3608,6 +3612,7 @@ object WindowMain: TWindowMain
             FF00}
           ParentFont = False
           TabOrder = 3
+          OnBtnClick = OpenFileFB
         end
         object BoxVersionSource: TComboBox
           Left = 3
@@ -3749,6 +3754,7 @@ object WindowMain: TWindowMain
             FF00}
           ParentFont = False
           TabOrder = 1
+          OnBtnClick = SaveFileFB
         end
       end
       object MemoErrors: TMemo
@@ -3981,6 +3987,7 @@ object WindowMain: TWindowMain
           'Backup'
           'Restore')
         TabOrder = 11
+        OnClick = RadioGroupMethodClick
       end
       object CheckListOptions: TCheckListBox
         Left = 428
@@ -4146,7 +4153,7 @@ object WindowMain: TWindowMain
   object Images: TImageList
     BlendColor = clWhite
     BkColor = clWhite
-    Left = 60
+    Left = 76
     Top = 496
     Bitmap = {
       494C010103005005040010001000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
@@ -4324,6 +4331,7 @@ object WindowMain: TWindowMain
     OnError = FBError
     OnProgress = FBProgress
     Verbose = True
+    Options = [roDeactivateIdx, roNoShadow, roNoValidity, roOneAtATime, roReplace, roUseAllSpace, roValidate, roFixFSSData, roFixFSSMetaData, roMetaDataOnly]
     Statistics = [bsTime, bsDelta, bsReads, bsWrites]
     Left = 185
     Top = 438
@@ -4332,6 +4340,7 @@ object WindowMain: TWindowMain
     OnError = FBError
     OnProgress = FBProgress
     Verbose = True
+    Options = [boIgnoreChecksum, boIgnoreLimbo, boMetadataOnly, boNoGarbageCollect, boOldDescriptions, boNonTransportable, boConvert, boExpand]
     Statistics = [bsTime, bsDelta, bsReads, bsWrites]
     Left = 128
     Top = 436

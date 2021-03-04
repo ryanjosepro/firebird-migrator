@@ -95,6 +95,7 @@ type
     procedure SaveFileFB(Sender: TObject);
     procedure SaveFileFBK(Sender: TObject);
     procedure SaveFolder(Sender: TObject);
+    procedure RadioGroupMethodClick(Sender: TObject);
   private
     procedure LoadConfigs;
     procedure SaveConfigs;
@@ -133,7 +134,8 @@ procedure TWindowMain.FormActivate(Sender: TObject);
 begin
   LoadConfigs;
   LoadAdminConfigs;
-  RadioGroupConnMethodClick(self);
+  RadioGroupMethodClick(Self);
+  RadioGroupConnMethodClick(Self);
 end;
 
 procedure TWindowMain.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -354,6 +356,42 @@ begin
     TxtHost.Enabled := false;
     TxtPort.Enabled := false;
     TxtDll.Enabled := true;
+  end;
+
+  end;
+end;
+
+procedure TWindowMain.RadioGroupMethodClick(Sender: TObject);
+begin
+  case RadioGroupMethod.ItemIndex of
+  0:
+  begin
+    CheckListOptions.Clear;
+
+    CheckListOptions.Items.Add('boIgnoreChecksum');
+    CheckListOptions.Items.Add('boIgnoreLimbo');
+    CheckListOptions.Items.Add('boMetadataOnly');
+    CheckListOptions.Items.Add('boNoGarbageCollect');
+    CheckListOptions.Items.Add('boOldDescriptions');
+    CheckListOptions.Items.Add('boNonTransportable');
+    CheckListOptions.Items.Add('boConvert');
+    CheckListOptions.Items.Add('boExpand');
+  end;
+
+  1:
+  begin
+    CheckListOptions.Clear;
+
+    CheckListOptions.Items.Add('roDeactivateIdx');
+    CheckListOptions.Items.Add('roNoShadow');
+    CheckListOptions.Items.Add('roNoValidity');
+    CheckListOptions.Items.Add('roOneAtATime');
+    CheckListOptions.Items.Add('roReplace');
+    CheckListOptions.Items.Add('roUseAllSpace');
+    CheckListOptions.Items.Add('roValidate');
+    CheckListOptions.Items.Add('roFixFSSData');
+    CheckListOptions.Items.Add('roFixFSSMetaData');
+    CheckListOptions.Items.Add('roMetaDataOnly');
   end;
 
   end;
