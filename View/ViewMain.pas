@@ -70,6 +70,8 @@ type
     RadioGroupConnMethod: TRadioGroup;
     BtnTestConn: TButton;
     TxtBackupFile: TNsEditBtn;
+    MemoLogAdmin: TMemo;
+    LblLogAdmin: TLabel;
     procedure ActEscExecute(Sender: TObject);
     procedure ActRestoreExecute(Sender: TObject);
     procedure FBError(ASender, AInitiator: TObject; var AException: Exception);
@@ -149,10 +151,8 @@ end;
 /////////////
 
 procedure TWindowMain.LoadConfigs;
-var
-  Config: TMigrationConfig;
 begin
-  Config := TMigrationConfig.Create;
+  var Config := TMigrationConfig.Create;
 
   TConfig.GetGeral(Config);
 
@@ -172,10 +172,8 @@ begin
 end;
 
 procedure TWindowMain.SaveConfigs;
-var
-  Config: TMigrationConfig;
 begin
-  Config := TMigrationConfig.Create;
+  var Config := TMigrationConfig.Create;
 
   with Config.Source do
   begin
@@ -366,32 +364,38 @@ begin
   case RadioGroupMethod.ItemIndex of
   0:
   begin
-    CheckListOptions.Clear;
+    with CheckListOptions.Items do
+    begin
+      Clear;
 
-    CheckListOptions.Items.Add('boIgnoreChecksum');
-    CheckListOptions.Items.Add('boIgnoreLimbo');
-    CheckListOptions.Items.Add('boMetadataOnly');
-    CheckListOptions.Items.Add('boNoGarbageCollect');
-    CheckListOptions.Items.Add('boOldDescriptions');
-    CheckListOptions.Items.Add('boNonTransportable');
-    CheckListOptions.Items.Add('boConvert');
-    CheckListOptions.Items.Add('boExpand');
+      Add('boIgnoreChecksum');
+      Add('boIgnoreLimbo');
+      Add('boMetadataOnly');
+      Add('boNoGarbageCollect');
+      Add('boOldDescriptions');
+      Add('boNonTransportable');
+      Add('boConvert');
+      Add('boExpand');
+    end;
   end;
 
   1:
   begin
-    CheckListOptions.Clear;
+    with CheckListOptions.Items do
+    begin
+      Clear;
 
-    CheckListOptions.Items.Add('roDeactivateIdx');
-    CheckListOptions.Items.Add('roNoShadow');
-    CheckListOptions.Items.Add('roNoValidity');
-    CheckListOptions.Items.Add('roOneAtATime');
-    CheckListOptions.Items.Add('roReplace');
-    CheckListOptions.Items.Add('roUseAllSpace');
-    CheckListOptions.Items.Add('roValidate');
-    CheckListOptions.Items.Add('roFixFSSData');
-    CheckListOptions.Items.Add('roFixFSSMetaData');
-    CheckListOptions.Items.Add('roMetaDataOnly');
+      Add('roDeactivateIdx');
+      Add('roNoShadow');
+      Add('roNoValidity');
+      Add('roOneAtATime');
+      Add('roReplace');
+      Add('roUseAllSpace');
+      Add('roValidate');
+      Add('roFixFSSData');
+      Add('roFixFSSMetaData');
+      Add('roMetaDataOnly');
+    end;
   end;
 
   end;
@@ -441,8 +445,7 @@ begin
 
   TabAdmin.Enabled := false;
 
-  MemoLog.Clear;
-  MemoErrors.Clear;
+  MemoLogAdmin.Clear;
 
   Application.ProcessMessages;
 
@@ -477,7 +480,7 @@ begin
 
       FBBackup.Protocol := ipLocal;
 
-      CopyFirebirdMsg;
+//      CopyFirebirdMsg;
     end;
 
     end;
@@ -520,8 +523,7 @@ begin
 
   TabAdmin.Enabled := false;
 
-  MemoLog.Clear;
-  MemoErrors.Clear;
+  MemoLogAdmin.Clear;
 
   Application.ProcessMessages;
 
@@ -553,7 +555,7 @@ begin
 
       FBRestore.Protocol := ipLocal;
 
-      CopyFirebirdMsg;
+//      CopyFirebirdMsg;
     end;
 
     end;
@@ -591,12 +593,12 @@ end;
 
 procedure TWindowMain.FBProgress(ASender: TFDPhysDriverService; const AMessage: string);
 begin
-  WindowMain.MemoLog.Lines.Add(AMessage);
+  WindowMain.MemoLogAdmin.Lines.Add(AMessage);
 end;
 
 procedure TWindowMain.FBError(ASender, AInitiator: TObject; var AException: Exception);
 begin
-  WindowMain.MemoErrors.Lines.Add(AException.Message);
+  WindowMain.MemoLogAdmin.Lines.Add(AException.Message);
 end;
 
 //OTHERS
