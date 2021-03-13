@@ -184,7 +184,7 @@
                 <Platform value="Win64">False</Platform>
             </Platforms>
             <Deployment Version="3">
-                <DeployFile LocalName="Data\Firebird_2_1.zip" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="Data\Firebird_3_0.zip" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
@@ -215,7 +215,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Data\Firebird_3_0.zip" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="Data\Firebird_2_1.zip" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>

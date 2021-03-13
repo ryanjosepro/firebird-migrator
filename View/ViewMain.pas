@@ -72,6 +72,8 @@ type
     TxtBackupFile: TNsEditBtn;
     MemoLogAdmin: TMemo;
     LblLogAdmin: TLabel;
+    ComboBox1: TComboBox;
+    Label1: TLabel;
     procedure ActEscExecute(Sender: TObject);
     procedure ActRestoreExecute(Sender: TObject);
     procedure FBError(ASender, AInitiator: TObject; var AException: Exception);
@@ -98,6 +100,7 @@ type
     procedure SaveFileFBK(Sender: TObject);
     procedure SaveFolder(Sender: TObject);
     procedure RadioGroupMethodClick(Sender: TObject);
+    procedure PageChange(Sender: TObject);
   private
     procedure LoadConfigs;
     procedure SaveConfigs;
@@ -480,7 +483,7 @@ begin
 
       FBBackup.Protocol := ipLocal;
 
-//      CopyFirebirdMsg;
+      CopyFirebirdMsg;
     end;
 
     end;
@@ -641,6 +644,11 @@ var
 begin
   if TUTils.OpenFolder(FileName) then
     (Sender as TNsEditBtn).Text := FileName;
+end;
+
+procedure TWindowMain.PageChange(Sender: TObject);
+begin
+
 end;
 
 //Save

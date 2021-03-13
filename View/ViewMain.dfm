@@ -3460,6 +3460,7 @@ object WindowMain: TWindowMain
     TabHeight = 30
     TabOrder = 0
     TabWidth = 100
+    OnChange = PageChange
     object TabMigration: TTabSheet
       Caption = 'Migra'#231#227'o'
       ImageIndex = 1
@@ -3489,7 +3490,6 @@ object WindowMain: TWindowMain
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Fonte'
         TabOrder = 0
-        ExplicitWidth = 827
         DesignSize = (
           946
           95)
@@ -3596,7 +3596,6 @@ object WindowMain: TWindowMain
           ParentFont = False
           TabOrder = 3
           OnBtnClick = OpenFileFB
-          ExplicitWidth = 411
         end
         object BoxVersionSource: TComboBox
           Left = 3
@@ -3627,7 +3626,6 @@ object WindowMain: TWindowMain
           Caption = 'Testar Conex'#227'o'
           TabOrder = 4
           OnClick = BtnTestConnClick
-          ExplicitLeft = 681
         end
       end
       object GroupBoxDest: TGroupBox
@@ -3638,7 +3636,6 @@ object WindowMain: TWindowMain
         Anchors = [akLeft, akTop, akRight]
         Caption = 'Destino'
         TabOrder = 1
-        ExplicitWidth = 827
         DesignSize = (
           946
           69)
@@ -3718,7 +3715,6 @@ object WindowMain: TWindowMain
           ParentFont = False
           TabOrder = 1
           OnBtnClick = SaveFileFB
-          ExplicitWidth = 627
         end
       end
       object MemoErrors: TMemo
@@ -3730,7 +3726,6 @@ object WindowMain: TWindowMain
         ReadOnly = True
         ScrollBars = ssVertical
         TabOrder = 3
-        ExplicitLeft = 445
       end
       object MemoLog: TMemo
         Left = 3
@@ -3741,7 +3736,6 @@ object WindowMain: TWindowMain
         ReadOnly = True
         ScrollBars = ssVertical
         TabOrder = 2
-        ExplicitWidth = 436
       end
       object BtnMigrate: TButton
         Left = 564
@@ -3752,7 +3746,6 @@ object WindowMain: TWindowMain
         Anchors = [akRight, akBottom]
         Caption = 'Migrar'
         TabOrder = 4
-        ExplicitLeft = 445
       end
     end
     object TabAdmin: TTabSheet
@@ -3763,42 +3756,42 @@ object WindowMain: TWindowMain
         548)
       object LblDb: TLabel
         Left = 3
-        Top = 3
+        Top = 56
         Width = 46
         Height = 13
         Caption = 'Database'
       end
       object LblUser: TLabel
         Left = 3
-        Top = 49
+        Top = 102
         Width = 36
         Height = 13
         Caption = 'Usu'#225'rio'
       end
       object LblPassword: TLabel
         Left = 3
-        Top = 97
+        Top = 150
         Width = 30
         Height = 13
         Caption = 'Senha'
       end
       object LblProtocol: TLabel
         Left = 3
-        Top = 212
+        Top = 265
         Width = 45
         Height = 13
         Caption = 'Protocolo'
       end
       object LblHost: TLabel
         Left = 3
-        Top = 258
+        Top = 311
         Width = 22
         Height = 13
         Caption = 'Host'
       end
       object LblPort: TLabel
         Left = 3
-        Top = 304
+        Top = 357
         Width = 26
         Height = 13
         Caption = 'Porta'
@@ -3821,7 +3814,7 @@ object WindowMain: TWindowMain
       end
       object LblDll: TLabel
         Left = 3
-        Top = 352
+        Top = 406
         Width = 11
         Height = 13
         Caption = 'Dll'
@@ -3833,9 +3826,16 @@ object WindowMain: TWindowMain
         Height = 13
         Caption = 'Log'
       end
+      object Label1: TLabel
+        Left = 3
+        Top = 5
+        Width = 33
+        Height = 13
+        Caption = 'Vers'#227'o'
+      end
       object TxtDb: TNsEditBtn
         Left = 3
-        Top = 22
+        Top = 75
         Width = 390
         Height = 21
         Glyph.Data = {
@@ -3870,7 +3870,7 @@ object WindowMain: TWindowMain
       end
       object TxtUser: TEdit
         Left = 3
-        Top = 68
+        Top = 121
         Width = 390
         Height = 21
         TabOrder = 1
@@ -3878,7 +3878,7 @@ object WindowMain: TWindowMain
       end
       object TxtPassword: TEdit
         Left = 3
-        Top = 116
+        Top = 169
         Width = 390
         Height = 21
         PasswordChar = '*'
@@ -3887,7 +3887,7 @@ object WindowMain: TWindowMain
       end
       object BoxProtocol: TComboBox
         Left = 3
-        Top = 231
+        Top = 284
         Width = 390
         Height = 21
         Enabled = False
@@ -3902,7 +3902,7 @@ object WindowMain: TWindowMain
       end
       object TxtHost: TEdit
         Left = 3
-        Top = 277
+        Top = 330
         Width = 390
         Height = 21
         Enabled = False
@@ -3911,7 +3911,7 @@ object WindowMain: TWindowMain
       end
       object TxtPort: TEdit
         Left = 3
-        Top = 323
+        Top = 376
         Width = 390
         Height = 21
         Enabled = False
@@ -3938,7 +3938,7 @@ object WindowMain: TWindowMain
         Columns = 2
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -16
+        Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
         ItemIndex = 0
@@ -3948,7 +3948,6 @@ object WindowMain: TWindowMain
         ParentFont = False
         TabOrder = 11
         OnClick = RadioGroupMethodClick
-        ExplicitWidth = 657
       end
       object CheckListOptions: TCheckListBox
         Left = 399
@@ -3974,7 +3973,6 @@ object WindowMain: TWindowMain
           'Expand')
         ParentFont = False
         TabOrder = 10
-        ExplicitWidth = 561
       end
       object BtnStart: TButton
         Left = 785
@@ -3991,11 +3989,10 @@ object WindowMain: TWindowMain
         ParentFont = False
         TabOrder = 12
         OnClick = BtnStartClick
-        ExplicitLeft = 666
       end
       object TxtDll: TNsEditBtn
         Left = 3
-        Top = 371
+        Top = 419
         Width = 390
         Height = 21
         Glyph.Data = {
@@ -4030,14 +4027,14 @@ object WindowMain: TWindowMain
       end
       object RadioGroupConnMethod: TRadioGroup
         Left = 3
-        Top = 143
+        Top = 196
         Width = 390
         Height = 63
         Caption = 'M'#233'todo de Conex'#227'o'
         Columns = 2
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -13
+        Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
         ItemIndex = 0
@@ -4093,6 +4090,26 @@ object WindowMain: TWindowMain
         ReadOnly = True
         ScrollBars = ssVertical
         TabOrder = 13
+      end
+      object ComboBox1: TComboBox
+        Left = 3
+        Top = 24
+        Width = 390
+        Height = 26
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ItemIndex = 0
+        ParentFont = False
+        TabOrder = 14
+        Text = 'Firebird 2.1.7.18553'
+        Items.Strings = (
+          'Firebird 2.1.7.18553'
+          'Firebird 2.5.8.27089'
+          'Firebird 3.0.4.33054'
+          'Firebird 4.0.0.19630')
       end
     end
   end
