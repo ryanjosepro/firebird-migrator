@@ -3449,7 +3449,7 @@ object WindowMain: TWindowMain
     Top = 0
     Width = 965
     Height = 588
-    ActivePage = TabAdmin
+    ActivePage = TabMigration
     Anchors = [akLeft, akTop, akRight, akBottom]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
