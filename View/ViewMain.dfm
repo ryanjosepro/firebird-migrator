@@ -4,11 +4,11 @@ object WindowMain: TWindowMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Firebird Migrator'
-  ClientHeight = 591
-  ClientWidth = 963
+  ClientHeight = 491
+  ClientWidth = 809
   Color = clBtnFace
-  Constraints.MinHeight = 620
-  Constraints.MinWidth = 850
+  Constraints.MinHeight = 520
+  Constraints.MinWidth = 815
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -3439,403 +3439,215 @@ object WindowMain: TWindowMain
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  DesignSize = (
-    963
-    591)
   PixelsPerInch = 96
   TextHeight = 13
   object Page: TPageControl
     Left = 0
     Top = 0
-    Width = 965
-    Height = 588
+    Width = 809
+    Height = 491
+    Margins.Left = 0
+    Margins.Top = 0
+    Margins.Right = 0
+    Margins.Bottom = 0
     ActivePage = TabMigration
-    Anchors = [akLeft, akTop, akRight, akBottom]
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabHeight = 30
+    TabHeight = 23
     TabOrder = 0
     TabWidth = 100
-    OnChange = PageChange
     object TabMigration: TTabSheet
       Caption = 'Migra'#231#227'o'
       ImageIndex = 1
-      DesignSize = (
-        957
-        548)
-      object LblErrors: TLabel
-        Left = 564
-        Top = 173
-        Width = 25
-        Height = 13
-        Anchors = [akTop, akRight]
-        Caption = 'Erros'
-      end
-      object LblLog: TLabel
-        Left = 3
-        Top = 173
-        Width = 17
-        Height = 13
-        Caption = 'Log'
-      end
-      object GroupBoxSource: TGroupBox
-        Left = 3
-        Top = 2
-        Width = 946
-        Height = 95
-        Anchors = [akLeft, akTop, akRight]
-        Caption = 'Fonte'
+      object PageMigration: TPageControl
+        Left = -4
+        Top = -21
+        Width = 810
+        Height = 483
+        ActivePage = TabStart
         TabOrder = 0
-        DesignSize = (
-          946
-          95)
-        object LblUserSource: TLabel
-          Left = 197
-          Top = 16
-          Width = 36
-          Height = 13
-          Caption = 'Usu'#225'rio'
-          Visible = False
+        object TabStart: TTabSheet
+          Caption = 'Start'
+          object BtnStart: TSpeedButton
+            AlignWithMargins = True
+            Left = 250
+            Top = 170
+            Width = 302
+            Height = 115
+            Margins.Left = 250
+            Margins.Top = 170
+            Margins.Right = 250
+            Margins.Bottom = 170
+            Action = ActStart
+            Align = alClient
+            Glyph.Data = {
+              F6060000424DF606000000000000360000002800000018000000180000000100
+              180000000000C006000000000000000000000000000000000000FFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD8C8BAC1A892FDFCFCFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD1BEAE8756
+              2C87552BAE8C70FDFCFCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              F0EAE487562C87552B87552B87552BAE8C6FFDFCFCFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFDFCFCA6816287552B87552B87552B87552BAE8C6FFDFCFB
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAF8F7A6816287552B87552B87
+              552B87552BAD8B6EFDFCFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAF8
+              F7A6816287552B87552B87552B87552BAD8A6EFDFCFBFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFAF8F7A6816287552B87552B87552B87552BAC8A6DFDFC
+              FBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB79A818E5F378E5F378E5F378E5F378E
+              5F378E5F378E5F378E5F378E5F378E5F378E5F378C5C3487552B87552B87552B
+              87552B87552BAC896CFCFBFAFFFFFFFFFFFFFFFFFFFFFFFF87552B87552B8755
+              2B87552B87552B87552B87552B87552B87552B87552B87552B87552B87552B87
+              552B87552B87552B87552B87552B87552BB5967CFFFFFFFFFFFFFFFFFFFFFFFF
+              87552B87552B87552B87552B87552B87552B87552B87552B87552B87552B8755
+              2B87552B87552B87552B87552B87552B87552B87552B87552BB5967CFFFFFFFF
+              FFFFFFFFFFFFFFFFB79A818E5F378E5F378E5F378E5F378E5F378E5F378E5F37
+              8E5F378E5F378E5F378E5F378C5C3487552B87552B87552B87552B87552BAC89
+              6CFCFBFAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAF8F7A6816287552B87552B87552B
+              87552BAC8A6DFDFCFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAF8F7A6816287552B87
+              552B87552B87552BAD8A6EFDFCFBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFAF8F7A681
+              6287552B87552B87552B87552BAD8B6EFDFCFBFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFA6816287552B87552B87552B87552BAE8C6FFDFCFBFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFF87562C87552B87552B87552BAE8C6FFDFCFCFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD1BEAE87562C87552BAE8C70FD
+              FCFCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD8C8
+              BAC1A892FDFCFCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+            ExplicitLeft = 298
+            ExplicitTop = 90
+          end
         end
-        object LblPasswordSource: TLabel
-          Left = 301
-          Top = 16
-          Width = 30
-          Height = 13
-          Caption = 'Senha'
-          Visible = False
+        object TabSheet2: TTabSheet
+          Caption = 'TabSheet2'
+          ImageIndex = 1
         end
-        object LblDbSource: TLabel
-          Left = 413
-          Top = 16
-          Width = 68
-          Height = 13
-          Caption = 'Arquivo Fonte'
+        object TabSheet3: TTabSheet
+          Caption = 'TabSheet3'
+          ImageIndex = 2
         end
-        object LblVersionSource: TLabel
-          Left = 3
-          Top = 16
-          Width = 33
-          Height = 13
-          Caption = 'Vers'#227'o'
+        object TabSheet4: TTabSheet
+          Caption = 'TabSheet4'
+          ImageIndex = 3
         end
-        object TxtUserSource: TEdit
-          Left = 197
-          Top = 35
-          Width = 98
-          Height = 26
-          AutoSize = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -15
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 1
-          Text = 'SYSDBA'
-        end
-        object TxtPasswordSource: TEdit
-          Left = 301
-          Top = 35
-          Width = 106
-          Height = 26
-          AutoSize = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -15
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-          PasswordChar = '*'
-          TabOrder = 2
-          Text = 'masterkey'
-        end
-        object TxtDbSource: TNsEditBtn
-          Left = 413
-          Top = 35
-          Width = 530
-          Height = 26
-          Anchors = [akLeft, akTop, akRight]
-          AutoSize = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -15
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          Glyph.Data = {
-            36030000424D3603000000000000360000002800000010000000100000000100
-            18000000000000030000232E0000232E00000000000000000001FFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF72A6C04287AA
-            4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287
-            AA72A6C0FFFFFFFFFFFF4F96B96AB7DA82CCED82CCED82CCED82CCED82CCED82
-            CCED82CCED82CCED82CCED82CCED83CDEE5DA5C8BFD6E2FFFFFF5DA4C856AACE
-            80CBEA7EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9
-            E970BBDC91BDD3FFFFFF62A9CC44A1CB8AD3EF83CDEB83CDEB83CDEB83CDEB83
-            CDEB83CDEB83CDEB83CDEB83CDEB83CDEB87CFEC6CACCDFEFEFE66ADD052B0D7
-            85D2ED89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2
-            EE90D8F16CB3D5E2EFF66AB1D474CAE875CAE890D8F28FD7F18FD7F18FD7F18F
-            D7F18FD7F18FD7F18FD7F18FD7F18FD7F191D8F279C3E2B9DCEC6DB4D78FDDF4
-            63C0E5A8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EE
-            FAA8EEFA96DDF18EC8E571B8DAA6ECFC64C2E94FB5E24DB4E24CB3E14BB2E049
-            B1DF48B0DF47AEDE45ADDD44ACDD46AEDF389FD27EC2E49ED1EB74BADDABF0FE
-            A4E9FCA2E7FB9FE5FA9CE3F89AE1F797DEF694DCF491D9F38ED7F18BD4F090D8
-            F374BADDFFFFFFFFFFFF77BDDFADF1FFA6EBFDA4E9FCA2E7FB9FE5FA9CE3F89A
-            E1F797DEF694DCF491D9F38ED7F193DAF477BDDFFFFFFFFFFFFF7ABFE1B0F4FF
-            ADF1FFABF0FEA9EEFDA7ECFCA5EAFBA2E8FAA0E6F99DE3F89AE1F798DFF699E0
-            F77ABFE1FFFFFFFFFFFF9DD1EA7CC1E37CC1E37CC1E37CC1E37CC1E37CC1E3FE
-            FEFDF5F5EEEBEBDDFEC941F4B62E7CC1E39DD1EAFFFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFD1E9F57EC3E57EC3E57EC3E57EC3E57EC3E5D1E9
-            F5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-          ParentFont = False
-          TabOrder = 3
-          OnBtnClick = OpenFileFB
-        end
-        object BoxVersionSource: TComboBox
-          Left = 3
-          Top = 35
-          Width = 188
-          Height = 26
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -15
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ItemIndex = 0
-          ParentFont = False
-          TabOrder = 0
-          Text = 'Firebird 2.1.7.18553'
-          Items.Strings = (
-            'Firebird 2.1.7.18553'
-            'Firebird 2.5.8.27089'
-            'Firebird 3.0.4.33054'
-            'Firebird 4.0.0.19630')
-        end
-        object BtnTestConn: TButton
-          Left = 800
-          Top = 67
-          Width = 143
-          Height = 25
-          Anchors = [akTop, akRight]
-          Caption = 'Testar Conex'#227'o'
-          TabOrder = 4
-          OnClick = BtnTestConnClick
-        end
-      end
-      object GroupBoxDest: TGroupBox
-        Left = 3
-        Top = 98
-        Width = 946
-        Height = 69
-        Anchors = [akLeft, akTop, akRight]
-        Caption = 'Destino'
-        TabOrder = 1
-        DesignSize = (
-          946
-          69)
-        object LblDbDest: TLabel
-          Left = 197
-          Top = 16
-          Width = 76
-          Height = 13
-          Caption = 'Arquivo Destino'
-        end
-        object LblVersionDest: TLabel
-          Left = 3
-          Top = 16
-          Width = 33
-          Height = 13
-          Caption = 'Vers'#227'o'
-        end
-        object BoxVersionDest: TComboBox
-          Left = 3
-          Top = 35
-          Width = 188
-          Height = 26
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -15
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ItemIndex = 0
-          ParentFont = False
-          TabOrder = 0
-          Text = 'Firebird 2.1.7.18553'
-          Items.Strings = (
-            'Firebird 2.1.7.18553'
-            'Firebird 2.5.8.27089'
-            'Firebird 3.0.4.33054'
-            'Firebird 4.0.0.19630')
-        end
-        object TxtDbDest: TNsEditBtn
-          Left = 197
-          Top = 35
-          Width = 746
-          Height = 26
-          Anchors = [akLeft, akTop, akRight]
-          AutoSize = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -15
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          Glyph.Data = {
-            36030000424D3603000000000000360000002800000010000000100000000100
-            18000000000000030000232E0000232E00000000000000000001FFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF72A6C04287AA
-            4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287
-            AA72A6C0FFFFFFFFFFFF4F96B96AB7DA82CCED82CCED82CCED82CCED82CCED82
-            CCED82CCED82CCED82CCED82CCED83CDEE5DA5C8BFD6E2FFFFFF5DA4C856AACE
-            80CBEA7EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9
-            E970BBDC91BDD3FFFFFF62A9CC44A1CB8AD3EF83CDEB83CDEB83CDEB83CDEB83
-            CDEB83CDEB83CDEB83CDEB83CDEB83CDEB87CFEC6CACCDFEFEFE66ADD052B0D7
-            85D2ED89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2
-            EE90D8F16CB3D5E2EFF66AB1D474CAE875CAE890D8F28FD7F18FD7F18FD7F18F
-            D7F18FD7F18FD7F18FD7F18FD7F18FD7F191D8F279C3E2B9DCEC6DB4D78FDDF4
-            63C0E5A8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EE
-            FAA8EEFA96DDF18EC8E571B8DAA6ECFC64C2E94FB5E24DB4E24CB3E14BB2E049
-            B1DF48B0DF47AEDE45ADDD44ACDD46AEDF389FD27EC2E49ED1EB74BADDABF0FE
-            A4E9FCA2E7FB9FE5FA9CE3F89AE1F797DEF694DCF491D9F38ED7F18BD4F090D8
-            F374BADDFFFFFFFFFFFF77BDDFADF1FFA6EBFDA4E9FCA2E7FB9FE5FA9CE3F89A
-            E1F797DEF694DCF491D9F38ED7F193DAF477BDDFFFFFFFFFFFFF7ABFE1B0F4FF
-            ADF1FFABF0FEA9EEFDA7ECFCA5EAFBA2E8FAA0E6F99DE3F89AE1F798DFF699E0
-            F77ABFE1FFFFFFFFFFFF9DD1EA7CC1E37CC1E37CC1E37CC1E37CC1E37CC1E3FE
-            FEFDF5F5EEEBEBDDFEC941F4B62E7CC1E39DD1EAFFFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFD1E9F57EC3E57EC3E57EC3E57EC3E57EC3E5D1E9
-            F5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-          ParentFont = False
-          TabOrder = 1
-          OnBtnClick = SaveFileFB
-        end
-      end
-      object MemoErrors: TMemo
-        Left = 564
-        Top = 192
-        Width = 385
-        Height = 310
-        Anchors = [akTop, akRight, akBottom]
-        ReadOnly = True
-        ScrollBars = ssVertical
-        TabOrder = 3
-      end
-      object MemoLog: TMemo
-        Left = 3
-        Top = 192
-        Width = 555
-        Height = 353
-        Anchors = [akLeft, akTop, akRight, akBottom]
-        ReadOnly = True
-        ScrollBars = ssVertical
-        TabOrder = 2
-      end
-      object BtnMigrate: TButton
-        Left = 564
-        Top = 508
-        Width = 385
-        Height = 37
-        Action = ActMigrate
-        Anchors = [akRight, akBottom]
-        Caption = 'Migrar'
-        TabOrder = 4
       end
     end
     object TabAdmin: TTabSheet
       Caption = 'Admin'
       ImageIndex = 2
       DesignSize = (
-        957
-        548)
-      object LblDb: TLabel
-        Left = 3
-        Top = 56
+        801
+        458)
+      object LblDbAdmin: TLabel
+        Left = 5
+        Top = 6
         Width = 46
         Height = 13
         Caption = 'Database'
       end
-      object LblUser: TLabel
+      object LblUserAdmin: TLabel
         Left = 3
         Top = 102
         Width = 36
         Height = 13
         Caption = 'Usu'#225'rio'
       end
-      object LblPassword: TLabel
+      object LblPasswordAdmin: TLabel
         Left = 3
         Top = 150
         Width = 30
         Height = 13
         Caption = 'Senha'
       end
-      object LblProtocol: TLabel
-        Left = 3
-        Top = 265
+      object LblProtocolAdmin: TLabel
+        Left = 583
+        Top = 56
         Width = 45
         Height = 13
+        Anchors = [akTop, akRight]
         Caption = 'Protocolo'
+        ExplicitLeft = 587
       end
-      object LblHost: TLabel
-        Left = 3
-        Top = 311
+      object LblHostAdmin: TLabel
+        Left = 395
+        Top = 102
         Width = 22
         Height = 13
+        Anchors = [akTop, akRight]
         Caption = 'Host'
+        ExplicitLeft = 399
       end
-      object LblPort: TLabel
-        Left = 3
-        Top = 357
+      object LblPortAdmin: TLabel
+        Left = 583
+        Top = 102
         Width = 26
         Height = 13
+        Anchors = [akTop, akRight]
         Caption = 'Porta'
+        ExplicitLeft = 587
       end
-      object LblBackupFile: TLabel
-        Left = 399
-        Top = 3
+      object LblBackupFileAdmin: TLabel
+        Left = 5
+        Top = 52
         Width = 89
         Height = 13
-        Anchors = [akTop, akRight]
         Caption = 'Arquivo de backup'
       end
-      object LblOptions: TLabel
-        Left = 399
-        Top = 49
-        Width = 36
-        Height = 13
-        Anchors = [akTop, akRight]
-        Caption = 'Op'#231#245'es'
-      end
-      object LblDll: TLabel
-        Left = 3
-        Top = 406
+      object LblDllAdmin: TLabel
+        Left = 395
+        Top = 150
         Width = 11
         Height = 13
+        Anchors = [akTop, akRight]
         Caption = 'Dll'
+        ExplicitLeft = 399
       end
       object LblLogAdmin: TLabel
-        Left = 399
-        Top = 212
+        Left = 3
+        Top = 247
         Width = 17
         Height = 13
         Caption = 'Log'
       end
-      object Label1: TLabel
-        Left = 3
-        Top = 5
+      object LblVersionAdmin: TLabel
+        Left = 395
+        Top = 4
         Width = 33
         Height = 13
+        Anchors = [akTop, akRight]
         Caption = 'Vers'#227'o'
+        ExplicitLeft = 397
       end
-      object TxtDb: TNsEditBtn
+      object TxtDbAdmin: TNsEditBtn
         Left = 3
-        Top = 75
+        Top = 25
         Width = 390
         Height = 21
         Glyph.Data = {
@@ -3865,31 +3677,32 @@ object WindowMain: TWindowMain
           FFFFFFFFFFFFFFFFFFFFFFFFD1E9F57EC3E57EC3E57EC3E57EC3E57EC3E5D1E9
           F5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-        TabOrder = 0
-        OnBtnClick = TxtDbBtnClick
+        TabOrder = 1
+        OnBtnClick = TxtDbAdminBtnClick
       end
-      object TxtUser: TEdit
+      object TxtUserAdmin: TEdit
         Left = 3
         Top = 121
         Width = 390
         Height = 21
-        TabOrder = 1
+        TabOrder = 5
         Text = 'SYSDBA'
       end
-      object TxtPassword: TEdit
+      object TxtPasswordAdmin: TEdit
         Left = 3
         Top = 169
         Width = 390
         Height = 21
         PasswordChar = '*'
-        TabOrder = 2
+        TabOrder = 8
         Text = 'masterkey'
       end
-      object BoxProtocol: TComboBox
-        Left = 3
-        Top = 284
-        Width = 390
+      object BoxProtocolAdmin: TComboBox
+        Left = 583
+        Top = 75
+        Width = 215
         Height = 21
+        Anchors = [akTop, akRight]
         Enabled = False
         ItemIndex = 0
         TabOrder = 4
@@ -3900,42 +3713,44 @@ object WindowMain: TWindowMain
           'NetBEUI'
           'SPX')
       end
-      object TxtHost: TEdit
-        Left = 3
-        Top = 330
-        Width = 390
+      object TxtHostAdmin: TEdit
+        Left = 395
+        Top = 121
+        Width = 182
         Height = 21
-        Enabled = False
-        TabOrder = 5
-        Text = 'localhost'
-      end
-      object TxtPort: TEdit
-        Left = 3
-        Top = 376
-        Width = 390
-        Height = 21
+        Anchors = [akTop, akRight]
         Enabled = False
         TabOrder = 6
+        Text = 'localhost'
+      end
+      object TxtPortAdmin: TEdit
+        Left = 583
+        Top = 121
+        Width = 215
+        Height = 21
+        Anchors = [akTop, akRight]
+        Enabled = False
+        TabOrder = 7
         Text = '3050'
       end
-      object CheckVerbose: TCheckBox
-        Left = 3
-        Top = 446
+      object CheckVerboseAdmin: TCheckBox
+        Left = 736
+        Top = 196
         Width = 62
         Height = 17
+        Anchors = [akTop, akRight]
         Caption = 'Verbose'
         Checked = True
         State = cbChecked
-        TabOrder = 8
+        TabOrder = 11
       end
-      object RadioGroupMethod: TRadioGroup
-        Left = 3
-        Top = 473
-        Width = 776
-        Height = 72
-        Anchors = [akLeft, akRight, akBottom]
+      object RadioGroupMethodAdmin: TRadioGroup
+        Left = 676
+        Top = 266
+        Width = 122
+        Height = 112
+        Anchors = [akTop, akRight, akBottom]
         Caption = 'M'#233'todo'
-        Columns = 2
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -3946,16 +3761,15 @@ object WindowMain: TWindowMain
           'Backup'
           'Restore')
         ParentFont = False
-        TabOrder = 11
-        OnClick = RadioGroupMethodClick
+        TabOrder = 13
+        OnClick = RadioGroupMethodAdminClick
       end
-      object CheckListOptions: TCheckListBox
-        Left = 399
-        Top = 68
-        Width = 555
-        Height = 138
-        Anchors = [akLeft, akTop, akRight]
-        Columns = 2
+      object CheckListOptionsAdmin: TCheckListBox
+        Left = 3
+        Top = 196
+        Width = 669
+        Height = 50
+        Columns = 4
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -15
@@ -3974,10 +3788,10 @@ object WindowMain: TWindowMain
         ParentFont = False
         TabOrder = 10
       end
-      object BtnStart: TButton
-        Left = 785
-        Top = 479
-        Width = 169
+      object BtnStartAdmin: TButton
+        Left = 676
+        Top = 384
+        Width = 122
         Height = 66
         Anchors = [akRight, akBottom]
         Caption = 'Iniciar'
@@ -3987,70 +3801,15 @@ object WindowMain: TWindowMain
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        TabOrder = 12
-        OnClick = BtnStartClick
+        TabOrder = 14
+        OnClick = BtnStartAdminClick
       end
-      object TxtDll: TNsEditBtn
-        Left = 3
-        Top = 419
-        Width = 390
+      object TxtDllAdmin: TNsEditBtn
+        Left = 395
+        Top = 169
+        Width = 403
         Height = 21
-        Glyph.Data = {
-          36030000424D3603000000000000360000002800000010000000100000000100
-          18000000000000030000232E0000232E00000000000000000001FFFFFFFFFFFF
-          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF72A6C04287AA
-          4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287
-          AA72A6C0FFFFFFFFFFFF4F96B96AB7DA82CCED82CCED82CCED82CCED82CCED82
-          CCED82CCED82CCED82CCED82CCED83CDEE5DA5C8BFD6E2FFFFFF5DA4C856AACE
-          80CBEA7EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9
-          E970BBDC91BDD3FFFFFF62A9CC44A1CB8AD3EF83CDEB83CDEB83CDEB83CDEB83
-          CDEB83CDEB83CDEB83CDEB83CDEB83CDEB87CFEC6CACCDFEFEFE66ADD052B0D7
-          85D2ED89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2
-          EE90D8F16CB3D5E2EFF66AB1D474CAE875CAE890D8F28FD7F18FD7F18FD7F18F
-          D7F18FD7F18FD7F18FD7F18FD7F18FD7F191D8F279C3E2B9DCEC6DB4D78FDDF4
-          63C0E5A8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EE
-          FAA8EEFA96DDF18EC8E571B8DAA6ECFC64C2E94FB5E24DB4E24CB3E14BB2E049
-          B1DF48B0DF47AEDE45ADDD44ACDD46AEDF389FD27EC2E49ED1EB74BADDABF0FE
-          A4E9FCA2E7FB9FE5FA9CE3F89AE1F797DEF694DCF491D9F38ED7F18BD4F090D8
-          F374BADDFFFFFFFFFFFF77BDDFADF1FFA6EBFDA4E9FCA2E7FB9FE5FA9CE3F89A
-          E1F797DEF694DCF491D9F38ED7F193DAF477BDDFFFFFFFFFFFFF7ABFE1B0F4FF
-          ADF1FFABF0FEA9EEFDA7ECFCA5EAFBA2E8FAA0E6F99DE3F89AE1F798DFF699E0
-          F77ABFE1FFFFFFFFFFFF9DD1EA7CC1E37CC1E37CC1E37CC1E37CC1E37CC1E3FE
-          FEFDF5F5EEEBEBDDFEC941F4B62E7CC1E39DD1EAFFFFFFFFFFFFFFFFFFFFFFFF
-          FFFFFFFFFFFFFFFFFFFFFFFFD1E9F57EC3E57EC3E57EC3E57EC3E57EC3E5D1E9
-          F5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-        TabOrder = 7
-        OnBtnClick = TxtDllBtnClick
-      end
-      object RadioGroupConnMethod: TRadioGroup
-        Left = 3
-        Top = 196
-        Width = 390
-        Height = 63
-        Caption = 'M'#233'todo de Conex'#227'o'
-        Columns = 2
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ItemIndex = 0
-        Items.Strings = (
-          'Rede'
-          'Embedded')
-        ParentFont = False
-        TabOrder = 3
-        OnClick = RadioGroupConnMethodClick
-      end
-      object TxtBackupFile: TNsEditBtn
-        Left = 399
-        Top = 22
-        Width = 555
-        Height = 21
-        Anchors = [akLeft, akTop, akRight]
+        Anchors = [akTop, akRight]
         Glyph.Data = {
           36030000424D3603000000000000360000002800000010000000100000000100
           18000000000000030000232E0000232E00000000000000000001FFFFFFFFFFFF
@@ -4079,23 +3838,79 @@ object WindowMain: TWindowMain
           F5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
           FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
         TabOrder = 9
-        OnBtnClick = TxtBackupFileBtnClick
+      end
+      object RadioGroupConnMethodAdmin: TRadioGroup
+        Left = 395
+        Top = 56
+        Width = 182
+        Height = 40
+        Anchors = [akTop, akRight]
+        Caption = 'M'#233'todo de Conex'#227'o'
+        Columns = 2
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ItemIndex = 0
+        Items.Strings = (
+          'Rede'
+          'Embedded')
+        ParentFont = False
+        TabOrder = 2
+        OnClick = RadioGroupConnMethodAdminClick
+      end
+      object TxtBackupFileAdmin: TNsEditBtn
+        Left = 3
+        Top = 71
+        Width = 390
+        Height = 21
+        Glyph.Data = {
+          36030000424D3603000000000000360000002800000010000000100000000100
+          18000000000000030000232E0000232E00000000000000000001FFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF72A6C04287AA
+          4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287AA4287
+          AA72A6C0FFFFFFFFFFFF4F96B96AB7DA82CCED82CCED82CCED82CCED82CCED82
+          CCED82CCED82CCED82CCED82CCED83CDEE5DA5C8BFD6E2FFFFFF5DA4C856AACE
+          80CBEA7EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9E97EC9
+          E970BBDC91BDD3FFFFFF62A9CC44A1CB8AD3EF83CDEB83CDEB83CDEB83CDEB83
+          CDEB83CDEB83CDEB83CDEB83CDEB83CDEB87CFEC6CACCDFEFEFE66ADD052B0D7
+          85D2ED89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2EE89D2
+          EE90D8F16CB3D5E2EFF66AB1D474CAE875CAE890D8F28FD7F18FD7F18FD7F18F
+          D7F18FD7F18FD7F18FD7F18FD7F18FD7F191D8F279C3E2B9DCEC6DB4D78FDDF4
+          63C0E5A8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EEFAA8EE
+          FAA8EEFA96DDF18EC8E571B8DAA6ECFC64C2E94FB5E24DB4E24CB3E14BB2E049
+          B1DF48B0DF47AEDE45ADDD44ACDD46AEDF389FD27EC2E49ED1EB74BADDABF0FE
+          A4E9FCA2E7FB9FE5FA9CE3F89AE1F797DEF694DCF491D9F38ED7F18BD4F090D8
+          F374BADDFFFFFFFFFFFF77BDDFADF1FFA6EBFDA4E9FCA2E7FB9FE5FA9CE3F89A
+          E1F797DEF694DCF491D9F38ED7F193DAF477BDDFFFFFFFFFFFFF7ABFE1B0F4FF
+          ADF1FFABF0FEA9EEFDA7ECFCA5EAFBA2E8FAA0E6F99DE3F89AE1F798DFF699E0
+          F77ABFE1FFFFFFFFFFFF9DD1EA7CC1E37CC1E37CC1E37CC1E37CC1E37CC1E3FE
+          FEFDF5F5EEEBEBDDFEC941F4B62E7CC1E39DD1EAFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFD1E9F57EC3E57EC3E57EC3E57EC3E57EC3E5D1E9
+          F5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+          FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+        TabOrder = 3
+        OnBtnClick = TxtBackupFileAdminBtnClick
       end
       object MemoLogAdmin: TMemo
-        Left = 399
-        Top = 231
-        Width = 555
-        Height = 242
+        Left = 3
+        Top = 266
+        Width = 667
+        Height = 184
         Anchors = [akLeft, akTop, akRight, akBottom]
         ReadOnly = True
         ScrollBars = ssVertical
-        TabOrder = 13
+        TabOrder = 12
       end
-      object ComboBox1: TComboBox
-        Left = 3
-        Top = 24
-        Width = 390
+      object BoxVersionAdmin: TComboBox
+        Left = 395
+        Top = 20
+        Width = 403
         Height = 26
+        Anchors = [akTop, akRight]
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -15
@@ -4103,7 +3918,7 @@ object WindowMain: TWindowMain
         Font.Style = []
         ItemIndex = 0
         ParentFont = False
-        TabOrder = 14
+        TabOrder = 0
         Text = 'Firebird 2.1.7.18553'
         Items.Strings = (
           'Firebird 2.1.7.18553'
@@ -4116,8 +3931,8 @@ object WindowMain: TWindowMain
   object Images: TImageList
     BlendColor = clWhite
     BkColor = clWhite
-    Left = 76
-    Top = 496
+    Left = 168
+    Top = 328
     Bitmap = {
       494C010103005005040010001000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
@@ -4260,8 +4075,13 @@ object WindowMain: TWindowMain
   end
   object Actions: TActionList
     Images = Images
-    Left = 128
-    Top = 496
+    Left = 241
+    Top = 327
+    object ActStart: TAction
+      Caption = 'Iniciar Migra'#231#227'o (F9)'
+      ShortCut = 120
+      OnExecute = ActStartExecute
+    end
     object ActMigrate: TAction
       Caption = 'Migrate'
       OnExecute = ActMigrateExecute
@@ -4274,17 +4094,6 @@ object WindowMain: TWindowMain
       Caption = 'Restore'
       OnExecute = ActRestoreExecute
     end
-    object ActDbFile: TAction
-      ImageIndex = 0
-    end
-    object ActAddBackup: TAction
-      Hint = 'Adicionar arquivo de backup'
-      ImageIndex = 1
-    end
-    object ActRmvBackup: TAction
-      Hint = 'Remover arquivo selecionado'
-      ImageIndex = 2
-    end
     object ActEsc: TAction
       ShortCut = 27
       OnExecute = ActEscExecute
@@ -4296,8 +4105,8 @@ object WindowMain: TWindowMain
     Verbose = True
     Options = [roDeactivateIdx, roNoShadow, roNoValidity, roOneAtATime, roReplace, roUseAllSpace, roValidate, roFixFSSData, roFixFSSMetaData, roMetaDataOnly]
     Statistics = [bsTime, bsDelta, bsReads, bsWrites]
-    Left = 185
-    Top = 438
+    Left = 241
+    Top = 390
   end
   object FBBackup: TFDIBBackup
     OnError = FBError
@@ -4305,7 +4114,7 @@ object WindowMain: TWindowMain
     Verbose = True
     Options = [boIgnoreChecksum, boIgnoreLimbo, boMetadataOnly, boNoGarbageCollect, boOldDescriptions, boNonTransportable, boConvert, boExpand]
     Statistics = [bsTime, bsDelta, bsReads, bsWrites]
-    Left = 128
-    Top = 436
+    Left = 168
+    Top = 389
   end
 end

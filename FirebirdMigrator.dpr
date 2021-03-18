@@ -14,7 +14,9 @@ uses
   Backup in 'Controller\Backup.pas',
   Restore in 'Controller\Restore.pas',
   Migration in 'Controller\Migration.pas',
-  Config in 'Controller\Config.pas';
+  Config in 'Controller\Config.pas',
+  AdminPage in 'View\AdminPage.pas' {Frame1: TFrame},
+  MyFileDialogs in 'Code\MyFileDialogs.pas';
 
 {$R *.res}
 

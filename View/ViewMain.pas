@@ -10,7 +10,7 @@ uses
   ACBrBase, FireDAC.Phys.FBDef, FireDAC.Phys.FB, NsEditBtn, FireDAC.Stan.Option,
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Pool,
   FireDAC.Stan.Async, Data.DB, FireDAC.Comp.Client, System.IniFiles,
-  Migration, Config, MyUtils;
+  Migration, Config, MyUtils, MyFileDialogs;
 
 type
   TWindowMain = class(TForm)
@@ -18,62 +18,45 @@ type
     TabMigration: TTabSheet;
     Images: TImageList;
     Actions: TActionList;
-    ActAddBackup: TAction;
-    ActRmvBackup: TAction;
     ActEsc: TAction;
-    ActDbFile: TAction;
     ActRestore: TAction;
     FBRestore: TFDIBRestore;
     ActMigrate: TAction;
-    GroupBoxSource: TGroupBox;
-    GroupBoxDest: TGroupBox;
-    LblUserSource: TLabel;
-    TxtUserSource: TEdit;
-    LblPasswordSource: TLabel;
-    TxtPasswordSource: TEdit;
-    LblDbSource: TLabel;
-    LblDbDest: TLabel;
-    TxtDbDest: TNsEditBtn;
     TabAdmin: TTabSheet;
-    TxtDb: TNsEditBtn;
-    LblDb: TLabel;
-    LblUser: TLabel;
-    TxtUser: TEdit;
-    LblPassword: TLabel;
-    TxtPassword: TEdit;
-    LblProtocol: TLabel;
-    BoxProtocol: TComboBox;
-    TxtHost: TEdit;
-    LblHost: TLabel;
-    LblPort: TLabel;
-    TxtPort: TEdit;
-    CheckVerbose: TCheckBox;
-    LblBackupFile: TLabel;
-    TxtDbSource: TNsEditBtn;
+    TxtDbAdmin: TNsEditBtn;
+    LblDbAdmin: TLabel;
+    LblUserAdmin: TLabel;
+    TxtUserAdmin: TEdit;
+    LblPasswordAdmin: TLabel;
+    TxtPasswordAdmin: TEdit;
+    LblProtocolAdmin: TLabel;
+    BoxProtocolAdmin: TComboBox;
+    TxtHostAdmin: TEdit;
+    LblHostAdmin: TLabel;
+    LblPortAdmin: TLabel;
+    TxtPortAdmin: TEdit;
+    CheckVerboseAdmin: TCheckBox;
+    LblBackupFileAdmin: TLabel;
     FBBackup: TFDIBBackup;
     ActBackup: TAction;
-    LblOptions: TLabel;
-    RadioGroupMethod: TRadioGroup;
-    MemoErrors: TMemo;
-    MemoLog: TMemo;
-    LblErrors: TLabel;
-    LblLog: TLabel;
-    CheckListOptions: TCheckListBox;
-    BtnMigrate: TButton;
-    BtnStart: TButton;
-    LblDll: TLabel;
-    TxtDll: TNsEditBtn;
-    BoxVersionSource: TComboBox;
-    BoxVersionDest: TComboBox;
-    LblVersionSource: TLabel;
-    LblVersionDest: TLabel;
-    RadioGroupConnMethod: TRadioGroup;
-    BtnTestConn: TButton;
-    TxtBackupFile: TNsEditBtn;
+    RadioGroupMethodAdmin: TRadioGroup;
+    CheckListOptionsAdmin: TCheckListBox;
+    BtnStartAdmin: TButton;
+    LblDllAdmin: TLabel;
+    TxtDllAdmin: TNsEditBtn;
+    RadioGroupConnMethodAdmin: TRadioGroup;
+    TxtBackupFileAdmin: TNsEditBtn;
     MemoLogAdmin: TMemo;
     LblLogAdmin: TLabel;
-    ComboBox1: TComboBox;
-    Label1: TLabel;
+    BoxVersionAdmin: TComboBox;
+    LblVersionAdmin: TLabel;
+    PageMigration: TPageControl;
+    TabStart: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    TabSheet4: TTabSheet;
+    BtnStart: TSpeedButton;
+    ActStart: TAction;
     procedure ActEscExecute(Sender: TObject);
     procedure ActRestoreExecute(Sender: TObject);
     procedure FBError(ASender, AInitiator: TObject; var AException: Exception);
@@ -81,26 +64,18 @@ type
     procedure ActMigrateExecute(Sender: TObject);
     procedure BtnTestConnClick(Sender: TObject);
     procedure ActBackupExecute(Sender: TObject);
-    procedure BtnStartClick(Sender: TObject);
-    procedure TxtDbBtnClick(Sender: TObject);
-    procedure TxtDllBtnClick(Sender: TObject);
+    procedure BtnStartAdminClick(Sender: TObject);
+    procedure TxtDbAdminBtnClick(Sender: TObject);
+    procedure Dll(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure RadioGroupConnMethodClick(Sender: TObject);
-    procedure TxtBackupFileBtnClick(Sender: TObject);
+    procedure RadioGroupConnMethodAdminClick(Sender: TObject);
+    procedure TxtBackupFileAdminBtnClick(Sender: TObject);
 
-    procedure OpenFileAll(Sender: TObject);
-    procedure OpenFileFB(Sender: TObject);
-    procedure OpenFileFBK(Sender: TObject);
-    procedure OpenFolder(Sender: TObject);
-
-    procedure SaveFileFB(Sender: TObject);
-    procedure SaveFileFBK(Sender: TObject);
-    procedure SaveFolder(Sender: TObject);
-    procedure RadioGroupMethodClick(Sender: TObject);
-    procedure PageChange(Sender: TObject);
+    procedure RadioGroupMethodAdminClick(Sender: TObject);
+    procedure ActStartExecute(Sender: TObject);
   private
     procedure LoadConfigs;
     procedure SaveConfigs;
@@ -109,10 +84,6 @@ type
     procedure SaveAdminConfigs;
 
     procedure CopyFirebirdMsg;
-    procedure OpenFileDLL(Sender: TObject);
-
-    procedure OpenFile(Sender: TObject; DisplayName, FileMask: string; IncludeAllFiles: boolean);
-    procedure SaveFile(Sender: TObject; DisplayName, FileMask: string; IncludeAllFiles: boolean);
   end;
 
 var
@@ -139,8 +110,8 @@ procedure TWindowMain.FormActivate(Sender: TObject);
 begin
   LoadConfigs;
   LoadAdminConfigs;
-  RadioGroupMethodClick(Self);
-  RadioGroupConnMethodClick(Self);
+  RadioGroupMethodAdminClick(Self);
+  RadioGroupConnMethodAdminClick(Self);
 end;
 
 procedure TWindowMain.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -155,135 +126,142 @@ end;
 
 procedure TWindowMain.LoadConfigs;
 begin
-  var Config := TMigrationConfig.Create;
-
-  TConfig.GetGeral(Config);
-
-  with Config.Source do
-  begin
-    TxtUserSource.Text := User;
-    TxtPasswordSource.Text := Password;
-    TxtDbSource.Text := Database;
-    BoxVersionSource.ItemIndex := Integer(Version);
-  end;
-
-  with Config.Dest do
-  begin
-    TxtDbDest.Text := Database;
-    BoxVersionDest.ItemIndex := Integer(Version);
-  end;
+//  var Config := TMigrationConfig.Create;
+//
+//  TConfig.GetGeral(Config);
+//
+//  with Config.Source do
+//  begin
+//    TxtUserSource.Text := User;
+//    TxtPasswordSource.Text := Password;
+//    TxtDbSource.Text := Database;
+//    BoxVersionSource.ItemIndex := Integer(Version);
+//  end;
+//
+//  with Config.Dest do
+//  begin
+//    TxtDbDest.Text := Database;
+//    BoxVersionDest.ItemIndex := Integer(Version);
+//  end;
 end;
 
 procedure TWindowMain.SaveConfigs;
 begin
-  var Config := TMigrationConfig.Create;
-
-  with Config.Source do
-  begin
-    User := TxtUserSource.Text;
-    Password := TxtPasswordSource.Text;
-    Database := TxtDbSource.Text;
-    Version := TVersion(BoxVersionSource.ItemIndex);
-  end;
-
-  with Config.Dest do
-  begin
-    Database := TxtDbDest.Text;
-    Version := TVersion(BoxVersionDest.ItemIndex);
-  end;
-
-  TConfig.SetGeral(Config);
-
-  Config.Free;
+//  var Config := TMigrationConfig.Create;
+//
+//  with Config.Source do
+//  begin
+//    User := TxtUserSource.Text;
+//    Password := TxtPasswordSource.Text;
+//    Database := TxtDbSource.Text;
+//    Version := TVersion(BoxVersionSource.ItemIndex);
+//  end;
+//
+//  with Config.Dest do
+//  begin
+//    Database := TxtDbDest.Text;
+//    Version := TVersion(BoxVersionDest.ItemIndex);
+//  end;
+//
+//  TConfig.SetGeral(Config);
+//
+//  Config.Free;
 end;
 
+procedure TWindowMain.ActStartExecute(Sender: TObject);
+begin
+  TabAdmin.TabVisible := false;
+
+  Page.Height := Page.Height + 27;
+  Page.Top := -27;
+end;
 
 procedure TWindowMain.BtnTestConnClick(Sender: TObject);
 var
   FBDriverLink: TFDPhysFBDriverLink;
   ConnTest: TFDConnection;
 begin
-  BtnTestConn.Enabled := false;
-
-  with MigrationConfig.Source do
-  begin
-    User := TxtUserSource.Text;
-    Password := TxtPasswordSource.Text;
-    Version := TVersion(BoxVersionSource.ItemIndex);
-    Database := TxtDbSource.Text;
-  end;
-
-  FBDriverLink := TFDPhysFBDriverLink.Create(self);
-
-  ConnTest := TFDConnection.Create(self);
-
-  try
-    FBDriverLink.Embedded := true;
-    FBDriverLink.VendorLib := MigrationConfig.GetPathSourceDll;
-    FBDriverLink.DriverID := 'FB';
-
-    ConnTest.DriverName := 'FB';
-
-    with TFDPhysFBConnectionDefParams(ConnTest.Params) do
-    begin
-      UserName := TxtUserSource.Text;
-      Password := TxtPasswordSource.Text;
-      Database := TxtDbSource.Text;
-      Protocol := ipLocal;
-    end;
-
-    try
-      ConnTest.Open;
-
-      ShowMessage('Conexão Ok!');
-    Except on E: Exception do
-    begin
-      ShowMessage('Erro: ' + E.Message);
-    end;
-    end;
-  finally
-    ConnTest.Close;
-    FreeAndNil(ConnTest);
-    FBDriverLink.Release;
-    FreeAndNil(FBDriverLink);
-    BtnTestConn.Enabled := true;
-  end;
+//  BtnTestConn.Enabled := false;
+//
+//  with MigrationConfig.Source do
+//  begin
+//    User := TxtUserSource.Text;
+//    Password := TxtPasswordSource.Text;
+//    Version := TVersion(BoxVersionSource.ItemIndex);
+//    Database := TxtDbSource.Text;
+//  end;
+//
+//  FBDriverLink := TFDPhysFBDriverLink.Create(self);
+//
+//  ConnTest := TFDConnection.Create(self);
+//
+//  try
+//    FBDriverLink.Embedded := true;
+//    FBDriverLink.VendorLib := MigrationConfig.GetPathSourceDll;
+//    FBDriverLink.DriverID := 'FB';
+//
+//    ConnTest.DriverName := 'FB';
+//
+//    with TFDPhysFBConnectionDefParams(ConnTest.Params) do
+//    begin
+//      UserName := TxtUserSource.Text;
+//      Password := TxtPasswordSource.Text;
+//      Database := TxtDbSource.Text;
+//      Protocol := ipLocal;
+//    end;
+//
+//    try
+//      ConnTest.Open;
+//
+//      ShowMessage('Conexão Ok!');
+//    Except on E: Exception do
+//    begin
+//      ShowMessage('Erro: ' + E.Message);
+//    end;
+//    end;
+//  finally
+//    ConnTest.Close;
+//    FreeAndNil(ConnTest);
+//    FBDriverLink.Release;
+//    FreeAndNil(FBDriverLink);
+//    BtnTestConn.Enabled := true;
+//  end;
 end;
 
 procedure TWindowMain.ActMigrateExecute(Sender: TObject);
 var
   Migration: TMigration;
 begin
-  SaveConfigs;
-
-  MemoLog.Clear;
-  MemoErrors.Clear;
-
-  try
-    with MigrationConfig.Source do
-    begin
-      User := TxtUserSource.Text;
-      Password := TxtPasswordSource.Text;
-      Version := TVersion(BoxVersionSource.ItemIndex);
-      Database := TxtDbSource.Text;
-    end;
-
-    with MigrationConfig.Dest do
-    begin
-      Version := TVersion(BoxVersionDest.ItemIndex);
-      Database := TxtDbDest.Text;
-    end;
-
-    Migration := TMigration.Create(MigrationConfig);
-
-    Migration.Migrate(MemoLog, MemoErrors);
-  finally
-    Migration.Free;
-  end;
+//  SaveConfigs;
+//
+//  MemoLog.Clear;
+//  MemoErrors.Clear;
+//
+//  try
+//    with MigrationConfig.Source do
+//    begin
+//      User := TxtUserSource.Text;
+//      Password := TxtPasswordSource.Text;
+//      Version := TVersion(BoxVersionSource.ItemIndex);
+//      Database := TxtDbSource.Text;
+//    end;
+//
+//    with MigrationConfig.Dest do
+//    begin
+//      Version := TVersion(BoxVersionDest.ItemIndex);
+//      Database := TxtDbDest.Text;
+//    end;
+//
+//    Migration := TMigration.Create(MigrationConfig);
+//
+//    Migration.Migrate(MemoLog, MemoErrors);
+//  finally
+//    Migration.Free;
+//  end;
 end;
 
 /////////////
-//ADMIN//////
+////ADMIN////
 /////////////
 
 procedure TWindowMain.LoadAdminConfigs;
@@ -293,15 +271,15 @@ begin
   Arq := TIniFile.Create(TUtils.AppPath + 'Config.ini');
 
   try
-    TxtDb.Text := Arq.ReadString('GENERAL', 'Database', '');
-    TxtUser.Text := Arq.ReadString('GENERAL', 'User', 'SYSDBA');
-    TxtPassword.Text := Arq.ReadString('GENERAL', 'Password', 'masterkey');
-    RadioGroupConnMethod.ItemIndex := Arq.ReadString('GENERAL', 'ConnMethod', '0').ToInteger;
-    BoxProtocol.ItemIndex := Arq.ReadString('GENERAL', 'Protocol', '1').ToInteger;
-    TxtHost.Text := Arq.ReadString('GENERAL', 'Host', 'localhost');
-    TxtPort.Text := Arq.ReadString('GENERAL', 'Port', '3050');
-    TxtDll.Text := Arq.ReadString('GENERAL', 'Dll', '');
-    TxtBackupFile.Text := Arq.ReadString('GENERAL', 'BackupFile', '');
+    TxtDbAdmin.Text := Arq.ReadString('GENERAL', 'Database', '');
+    TxtUserAdmin.Text := Arq.ReadString('GENERAL', 'User', 'SYSDBA');
+    TxtPasswordAdmin.Text := Arq.ReadString('GENERAL', 'Password', 'masterkey');
+    RadioGroupConnMethodAdmin.ItemIndex := Arq.ReadString('GENERAL', 'ConnMethod', '0').ToInteger;
+    BoxProtocolAdmin.ItemIndex := Arq.ReadString('GENERAL', 'Protocol', '1').ToInteger;
+    TxtHostAdmin.Text := Arq.ReadString('GENERAL', 'Host', 'localhost');
+    TxtPortAdmin.Text := Arq.ReadString('GENERAL', 'Port', '3050');
+    TxtDllAdmin.Text := Arq.ReadString('GENERAL', 'Dll', '');
+    TxtBackupFileAdmin.Text := Arq.ReadString('GENERAL', 'BackupFile', '');
   finally
     Arq.Free;
   end;
@@ -314,60 +292,55 @@ begin
   Arq := TIniFile.Create(TUtils.AppPath + 'Config.ini');
 
   try
-    Arq.WriteString('GENERAL', 'Database', TxtDb.Text);
-    Arq.WriteString('GENERAL', 'User', TxtUser.Text);
-    Arq.WriteString('GENERAL', 'Password', TxtPassword.Text);
-    Arq.WriteString('GENERAL', 'ConnMethod', RadioGroupConnMethod.ItemIndex.ToString);
-    Arq.WriteString('GENERAL', 'Protocol', BoxProtocol.ItemIndex.ToString);
-    Arq.WriteString('GENERAL', 'Host', TxtHost.Text);
-    Arq.WriteString('GENERAL', 'Port', TxtPort.Text);
-    Arq.WriteString('GENERAL', 'Dll', TxtDll.Text);
-    Arq.WriteString('GENERAL', 'BackupFile', TxtBackupFile.Text);
+    Arq.WriteString('GENERAL', 'Database', TxtDbAdmin.Text);
+    Arq.WriteString('GENERAL', 'User', TxtUserAdmin.Text);
+    Arq.WriteString('GENERAL', 'Password', TxtPasswordAdmin.Text);
+    Arq.WriteString('GENERAL', 'ConnMethod', RadioGroupConnMethodAdmin.ItemIndex.ToString);
+    Arq.WriteString('GENERAL', 'Protocol', BoxProtocolAdmin.ItemIndex.ToString);
+    Arq.WriteString('GENERAL', 'Host', TxtHostAdmin.Text);
+    Arq.WriteString('GENERAL', 'Port', TxtPortAdmin.Text);
+    Arq.WriteString('GENERAL', 'Dll', TxtDllAdmin.Text);
+    Arq.WriteString('GENERAL', 'BackupFile', TxtBackupFileAdmin.Text);
   finally
     Arq.Free;
   end;
 end;
 
 procedure TWindowMain.CopyFirebirdMsg;
-var
-  Arq: string;
 begin
-  Arq := ExtractFilePath(TxtDll.Text) + 'Firebird.msg';
+  var Arq := ExtractFilePath(TxtDllAdmin.Text) + '\Firebird.msg';
 
   if FileExists(Arq) then
-  begin
-    CopyFile(PWideChar(Arq), PWideChar(ExtractFilePath(Application.ExeName) + 'Firebird.msg'), false);
-  end;
+    CopyFile(PWideChar(Arq), PWideChar(ExtractFilePath(Application.ExeName) + '\Firebird.msg'), false);
 end;
 
-procedure TWindowMain.RadioGroupConnMethodClick(Sender: TObject);
+procedure TWindowMain.RadioGroupConnMethodAdminClick(Sender: TObject);
 begin
-  case RadioGroupConnMethod.ItemIndex of
+  case RadioGroupConnMethodAdmin.ItemIndex of
   0:
   begin
-    BoxProtocol.Enabled := true;
-    TxtHost.Enabled := true;
-    TxtPort.Enabled := true;
-//    TxtDll.Enabled := false;
+    BoxProtocolAdmin.Enabled := true;
+    TxtHostAdmin.Enabled := true;
+    TxtPortAdmin.Enabled := true;
   end;
 
   1:
   begin
-    BoxProtocol.Enabled := false;
-    TxtHost.Enabled := false;
-    TxtPort.Enabled := false;
-    TxtDll.Enabled := true;
+    BoxProtocolAdmin.Enabled := false;
+    TxtHostAdmin.Enabled := false;
+    TxtPortAdmin.Enabled := false;
+    TxtDllAdmin.Enabled := true;
   end;
 
   end;
 end;
 
-procedure TWindowMain.RadioGroupMethodClick(Sender: TObject);
+procedure TWindowMain.RadioGroupMethodAdminClick(Sender: TObject);
 begin
-  case RadioGroupMethod.ItemIndex of
+  case RadioGroupMethodAdmin.ItemIndex of
   0:
   begin
-    with CheckListOptions.Items do
+    with CheckListOptionsAdmin.Items do
     begin
       Clear;
 
@@ -384,7 +357,7 @@ begin
 
   1:
   begin
-    with CheckListOptions.Items do
+    with CheckListOptionsAdmin.Items do
     begin
       Clear;
 
@@ -404,34 +377,34 @@ begin
   end;
 end;
 
-procedure TWindowMain.TxtDbBtnClick(Sender: TObject);
+procedure TWindowMain.TxtDbAdminBtnClick(Sender: TObject);
 begin
-  case RadioGroupMethod.ItemIndex of
+  case RadioGroupMethodAdmin.ItemIndex of
   0:
-    OpenFileFB(Sender);
+    TFileDialogs.OpenFileFB(Sender);
   1:
-    SaveFileFB(Sender);
+    TFileDialogs.SaveFileFB(Sender);
   end;
 end;
 
-procedure TWindowMain.TxtBackupFileBtnClick(Sender: TObject);
+procedure TWindowMain.TxtBackupFileAdminBtnClick(Sender: TObject);
 begin
-  case RadioGroupMethod.ItemIndex of
+  case RadioGroupMethodAdmin.ItemIndex of
   0:
-    SaveFileFBK(Sender);
+    TFileDialogs.SaveFileFBK(Sender);
   1:
-    OpenFileFBK(Sender);
+    TFileDialogs.OpenFileFBK(Sender);
   end;
 end;
 
-procedure TWindowMain.TxtDllBtnClick(Sender: TObject);
+procedure TWindowMain.Dll(Sender: TObject);
 begin
-  OpenFileDLL(Sender);
+  TFileDialogs.OpenFileDLL(Sender);
 end;
 
-procedure TWindowMain.BtnStartClick(Sender: TObject);
+procedure TWindowMain.BtnStartAdminClick(Sender: TObject);
 begin
-  case RadioGroupMethod.ItemIndex of
+  case RadioGroupMethodAdmin.ItemIndex of
   0:
     ActBackup.Execute;
   1:
@@ -455,31 +428,31 @@ begin
   FBDriverLink := TFDPhysFBDriverLink.Create(nil);
 
   try
-    FBBackup.Database := TxtDb.Text;
-    FBBackup.UserName := TxtUser.Text;
-    FBBackup.Password := TxtPassword.Text;
+    FBBackup.Database := TxtDbAdmin.Text;
+    FBBackup.UserName := TxtUserAdmin.Text;
+    FBBackup.Password := TxtPasswordAdmin.Text;
 
     FBBackup.BackupFiles.Clear;
-    FBBackup.BackupFiles.Text := TxtBackupFile.Text;
+    FBBackup.BackupFiles.Text := TxtBackupFileAdmin.Text;
 
     //TCPIP
-    case RadioGroupConnMethod.ItemIndex of
+    case RadioGroupConnMethodAdmin.ItemIndex of
     0:
     begin
       FBDriverLink.Embedded := false;
 
-      FBDriverLink.VendorLib := TxtDll.Text;
+      FBDriverLink.VendorLib := TxtDllAdmin.Text;
 
-      FBBackup.Protocol := TIBProtocol(BoxProtocol.ItemIndex);
-      FBBackup.Host := TxtHost.Text;
-      FBBackup.Port := StrToInt(TxtPort.Text);
+      FBBackup.Protocol := TIBProtocol(BoxProtocolAdmin.ItemIndex);
+      FBBackup.Host := TxtHostAdmin.Text;
+      FBBackup.Port := StrToInt(TxtPortAdmin.Text);
     end;
     //EMBEDDED
     1:
     begin
       FBDriverLink.Embedded := true;
 
-      FBDriverLink.VendorLib := TxtDll.Text;
+      FBDriverLink.VendorLib := TxtDllAdmin.Text;
 
       FBBackup.Protocol := ipLocal;
 
@@ -490,12 +463,12 @@ begin
 
     FBBackup.DriverLink := FBDriverLink;
 
-    FBBackup.Verbose := CheckVerbose.Checked;
+    FBBackup.Verbose := CheckVerboseAdmin.Checked;
     FBBackup.Options := [];
 
-    for I := 0 to CheckListOptions.Count - 1 do
+    for I := 0 to CheckListOptionsAdmin.Count - 1 do
     begin
-      if CheckListOptions.Checked[I] then
+      if CheckListOptionsAdmin.Checked[I] then
       begin
         case I of
         0: FBBackup.Options := FBBackup.Options + [boIgnoreChecksum];
@@ -533,28 +506,28 @@ begin
   FBDriverLink := TFDPhysFBDriverLink.Create(nil);
 
   try
-    FBRestore.Database := TxtDb.Text;
-    FBRestore.UserName := TxtUser.Text;
-    FBRestore.Password := TxtPassword.Text;
+    FBRestore.Database := TxtDbAdmin.Text;
+    FBRestore.UserName := TxtUserAdmin.Text;
+    FBRestore.Password := TxtPasswordAdmin.Text;
 
     FBRestore.BackupFiles.Clear;
-    FBRestore.BackupFiles.Text := TxtBackupFile.Text;
+    FBRestore.BackupFiles.Text := TxtBackupFileAdmin.Text;
 
-    case RadioGroupConnMethod.ItemIndex of
+    case RadioGroupConnMethodAdmin.ItemIndex of
     0:
     begin
       FBDriverLink.Embedded := false;
 
-      FBRestore.Protocol := TIBProtocol(BoxProtocol.ItemIndex);
-      FBRestore.Host := TxtHost.Text;
-      FBRestore.Port := StrToInt(TxtPort.Text);
+      FBRestore.Protocol := TIBProtocol(BoxProtocolAdmin.ItemIndex);
+      FBRestore.Host := TxtHostAdmin.Text;
+      FBRestore.Port := StrToInt(TxtPortAdmin.Text);
     end;
 
     1:
     begin
       FBDriverLink.Embedded := true;
 
-      FBDriverLink.VendorLib := TxtDll.Text;
+      FBDriverLink.VendorLib := TxtDllAdmin.Text;
 
       FBRestore.Protocol := ipLocal;
 
@@ -565,12 +538,12 @@ begin
 
     FBRestore.DriverLink := FBDriverLink;
 
-    FBRestore.Verbose := CheckVerbose.Checked;
+    FBRestore.Verbose := CheckVerboseAdmin.Checked;
     FBRestore.Options := [];
 
-    for I := 0 to CheckListOptions.Count - 1 do
+    for I := 0 to CheckListOptionsAdmin.Count - 1 do
     begin
-      if CheckListOptions.Checked[I] then
+      if CheckListOptionsAdmin.Checked[I] then
       begin
         case I of
         0: FBRestore.Options := FBRestore.Options + [roDeactivateIdx];
@@ -605,78 +578,6 @@ begin
 end;
 
 //OTHERS
-
-//Load
-procedure TWindowMain.OpenFileAll(Sender: TObject);
-var
-  FileName: string;
-begin
-  if TUTils.OpenFileAll(FileName) then
-    (Sender as TNsEditBtn).Text := FileName;
-end;
-
-procedure TWindowMain.OpenFile(Sender: TObject; DisplayName, FileMask: string; IncludeAllFiles: boolean);
-var
-  FileName: string;
-begin
-  if TUTils.OpenFile(DisplayName, FileMask, IncludeAllFiles, FileName) then
-    (Sender as TNsEditBtn).Text := FileName;
-end;
-
-procedure TWindowMain.OpenFileFB(Sender: TObject);
-begin
-  OpenFile(Sender, 'Firebird Database (*.FDB)', '*.FDB', true);
-end;
-
-procedure TWindowMain.OpenFileFBK(Sender: TObject);
-begin
-  OpenFile(Sender, 'Firebird Backup (*.FBK)', '*.FBK', true);
-end;
-
-procedure TWindowMain.OpenFileDLL(Sender: TObject);
-begin
-  OpenFile(Sender, 'Dynamic Link Library (*.DLL)', '*.DLL', true);
-end;
-
-procedure TWindowMain.OpenFolder(Sender: TObject);
-var
-  FileName: string;
-begin
-  if TUTils.OpenFolder(FileName) then
-    (Sender as TNsEditBtn).Text := FileName;
-end;
-
-procedure TWindowMain.PageChange(Sender: TObject);
-begin
-
-end;
-
-//Save
-procedure TWindowMain.SaveFile(Sender: TObject; DisplayName, FileMask: string; IncludeAllFiles: boolean);
-var
-  FileName: string;
-begin
-  if TUTils.SaveFile(DisplayName, FileMask, IncludeAllFiles, FileName) then
-    (Sender as TNsEditBtn).Text := FileName;
-end;
-
-procedure TWindowMain.SaveFileFB(Sender: TObject);
-begin
-  SaveFile(Sender, 'Firebird Database (*.FDB)', '*.FDB', false);
-end;
-
-procedure TWindowMain.SaveFileFBK(Sender: TObject);
-begin
-  SaveFile(Sender, 'Firebird Backup (*.FBK)', '*.FBK', true);
-end;
-
-procedure TWindowMain.SaveFolder(Sender: TObject);
-var
-  FileName: string;
-begin
-  if TUTils.SaveFolder(FileName) then
-    (Sender as TNsEditBtn).Text := FileName;
-end;
 
 procedure TWindowMain.ActEscExecute(Sender: TObject);
 begin
